@@ -6,7 +6,13 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "format": "prettier --write \"src/**/*.{json,js,jsx}\"",
+    "test": "jest --verbose",
+    "test:update": "jest --verbose --coverage --updateSnapshot",
+    "test:watch": "jest --verbose --watch",
+    "test:coverage:watch": "jest --verbose --watch --coverage",
+    "test:coverage": "jest --verbose --coverage && open ./coverage/lcov-report/index.html"
   },
   "dependencies": {
     "expo": "~42.0.1",
@@ -18,13 +24,23 @@
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
+    "@babel/plugin-transform-react-jsx": "^7.14.9",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react-native": "^7.2.0",
+    "babel-jest": "^27.1.0",
+    "babel-preset-expo": "^8.4.1",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-jest": "^24.4.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.25.1",
     "husky": "^7.0.2",
+    "jest": "^27.1.0",
+    "jest-expo": "^42.1.0",
+    "jest-watch-typeahead": "^0.6.4",
     "lint-staged": "^11.1.2",
-    "prettier": "^2.3.2"
+    "prettier": "^2.3.2",
+    "react-test-renderer": "^17.0.2"
   },
   "private": true,
   "lint-staged": {
