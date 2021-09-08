@@ -1,5 +1,6 @@
 {
   "prettier.requireConfig": true,
   "prettier.trailingComma": "all",
-  "prettier.jsxSingleQuote": true
+  "prettier.jsxSingleQuote": true,
+  "jest.jestCommandLine": "npm run test"
 }
