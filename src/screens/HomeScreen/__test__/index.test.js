@@ -21,7 +21,7 @@ describe('Should render HomeScreen', () => {
     });
   });
   describe('Navigation', () => {
-    it('Should navigate to "Mi Billetera"', () => {
+    it('Should navigate to MyWallet', () => {
       const { getByText, navigation } = setup();
 
       const button = getByText('MI BILLETERA');
@@ -30,7 +30,7 @@ describe('Should render HomeScreen', () => {
 
       expect(navigation.navigate).toBeCalledWith('MyWallet');
     });
-    it('Should navigate to "Mis Ahorros"', () => {
+    it('Should navigate to MySavings', () => {
       const { getByText, navigation } = setup();
 
       const button = getByText('MIS AHORROS');
