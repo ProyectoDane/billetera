@@ -1,9 +1,7 @@
+import React from 'react';
 
-import React from 'react'
-import AppNavigation from './navigation/AppNavigation';
+import AppNavigation from './src/navigation/AppNavigation';
 
-export default function App() {
-  return (
-    <AppNavigation />
-  );
-}
+const App = () => <AppNavigation />;
+
+export default App;
