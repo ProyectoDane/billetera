@@ -18,4 +18,17 @@ export const colors = {
   white: 'white',
   black: 'black',
   darkGray: '#595b7a',
+  blueText: '#0070c0',
+
+  // colors dane icon
+  purple: '#8a4894',
+  lavenderPurple: '#9e80b7',
+  lilac: '#bcadc6',
+  green: '#266a8e',
+  lightGreen: '#50a0bb',
+  lightBlue: '#b1d2e1',
+  orange: '#ef933f',
+  lightOrange: '#f6c9a8',
+  red: '#e03c37',
+  terracotta: '#b11c20',
 };
