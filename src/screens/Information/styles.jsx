@@ -10,7 +10,6 @@ export const styles = StyleSheet.create({
     marginVertical: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    // backgroundColor: colors.menu,
     height: 60,
     width: '100%',
     shadowColor: colors.black,
