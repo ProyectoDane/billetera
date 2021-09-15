@@ -15,6 +15,13 @@ import FulfillWish from '../../screens/FulfillWish';
 import ProfileButton from '../../components/ProfileButton';
 import AddRemove from '../../screens/AddRemove';
 import Buy from '../../screens/Buy';
+import Survey from '../../screens/Survey/Survey';
+import About from '../../screens/About/About';
+import Information from '../../screens/Information';
+import HowToUseApp from '../../screens/HowToUseApp';
+import SignLanguage from '../../screens/SignLanguage';
+import Logos from '../../screens/Logos/Logos';
+
 import {
   colors,
   SCREEN_NAME,
@@ -25,7 +32,7 @@ import {
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
 const MyWishesStack = createStackNavigator();
-const ProfileStack = createStackNavigator();
+const InformationStack = createStackNavigator();
 
 const HomeNavigation = () => (
   <HomeStack.Navigator
@@ -71,6 +78,13 @@ const HomeNavigation = () => (
         title: NAVIGATION_TITLE.ADD_REMOVE,
       }}
     />
+    <HomeStack.Screen
+      name={SCREEN_NAME.PROFILE}
+      component={Profile}
+      options={{
+        title: NAVIGATION_TITLE.PROFILE,
+      }}
+    />
   </HomeStack.Navigator>
 );
 
@@ -89,31 +103,86 @@ const MyWishesNavigation = () => (
         title: NAVIGATION_TITLE.MY_WISHES,
       }}
     />
-    <MyWishesStack.Screen name={SCREEN_NAME.NEW_WISH} component={NewWish} />
+    <MyWishesStack.Screen
+      name={SCREEN_NAME.NEW_WISH}
+      component={NewWish}
+      options={{
+        title: NAVIGATION_TITLE.NEW_WISH,
+      }}
+    />
     <MyWishesStack.Screen
       name={SCREEN_NAME.FULFILL_WISH}
       component={FulfillWish}
       options={{ headerShown: false }}
     />
-  </MyWishesStack.Navigator>
-);
-
-const ProfileNavigation = () => (
-  <ProfileStack.Navigator
-    screenOptions={{
-      headerStyle: { backgroundColor: colors.menu, elevation: 0 },
-      headerTintColor: colors.white,
-      headerRight: () => <ProfileButton sizeIcon={18} />,
-      headerTitleAlign: 'center',
-    }}>
-    <ProfileStack.Screen
+    <MyWishesStack.Screen
       name={SCREEN_NAME.PROFILE}
       component={Profile}
       options={{
         title: NAVIGATION_TITLE.PROFILE,
       }}
     />
-  </ProfileStack.Navigator>
+  </MyWishesStack.Navigator>
+);
+
+const InformationNavigation = () => (
+  <InformationStack.Navigator
+    screenOptions={{
+      headerStyle: { backgroundColor: colors.menu, elevation: 0 },
+      headerTintColor: colors.white,
+      headerRight: () => <ProfileButton sizeIcon={18} />,
+      headerTitleAlign: 'center',
+    }}>
+    <InformationStack.Screen
+      name={SCREEN_NAME.INFORMATION}
+      component={Information}
+      options={{
+        title: NAVIGATION_TITLE.INFO,
+      }}
+    />
+    <InformationStack.Screen
+      name={SCREEN_NAME.PROFILE}
+      component={Profile}
+      options={{
+        title: NAVIGATION_TITLE.PROFILE,
+      }}
+    />
+    <InformationStack.Screen
+      name={SCREEN_NAME.SIGN_LANGUAGE}
+      component={SignLanguage}
+      options={{
+        title: NAVIGATION_TITLE.SIGN_LANGUAGE,
+      }}
+    />
+    <InformationStack.Screen
+      name={SCREEN_NAME.ABOUT}
+      component={About}
+      options={{
+        title: NAVIGATION_TITLE.ABOUT,
+      }}
+    />
+    <InformationStack.Screen
+      name={SCREEN_NAME.HOW_TO_USE_APP}
+      component={HowToUseApp}
+      options={{
+        title: NAVIGATION_TITLE.HOW_TO_USE_APP,
+      }}
+    />
+    <InformationStack.Screen
+      name={SCREEN_NAME.SURVEY}
+      component={Survey}
+      options={{
+        title: NAVIGATION_TITLE.SURVEY,
+      }}
+    />
+    <InformationStack.Screen
+      name={SCREEN_NAME.LOGOS}
+      component={Logos}
+      options={{
+        title: NAVIGATION_TITLE.LOGOS,
+      }}
+    />
+  </InformationStack.Navigator>
 );
 
 const AppNavigation = () => (
@@ -154,12 +223,12 @@ const AppNavigation = () => (
         }}
       />
       <Tab.Screen
-        name={TABS_NAME.PROFILE}
-        component={ProfileNavigation}
+        name={TABS_NAME.INFORMATION}
+        component={InformationNavigation}
         options={{
-          title: NAVIGATION_TITLE.PROFILE,
+          title: NAVIGATION_TITLE.INFO,
           tabBarIcon: ({ color }) => (
-            <Ionicons name="person-circle-outline" size={24} color={color} />
+            <Ionicons name="information-circle" size={24} color={color} />
           ),
         }}
       />

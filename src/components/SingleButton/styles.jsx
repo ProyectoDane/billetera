@@ -27,5 +27,6 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
     color: colors.white,
+    textAlign: 'center',
   },
 });
