@@ -20,4 +20,8 @@ export const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'center',
   },
+  retryBtn: {
+    width: 160,
+    height: 70,
+  },
 });

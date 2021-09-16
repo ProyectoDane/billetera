@@ -9,6 +9,7 @@ export const styles = StyleSheet.create({
     height: 40,
     borderRadius: 15,
     alignSelf: 'center',
+    justifyContent: 'center',
     marginTop: 20,
     marginBottom: 25,
     backgroundColor: colors.secondary,
@@ -16,10 +17,10 @@ export const styles = StyleSheet.create({
   icon: {
     flex: 0.2,
     alignSelf: 'center',
-    textAlign: 'right',
+    textAlign: 'center',
   },
   textContainer: {
-    flex: 0.75,
+    flex: 0.65,
     justifyContent: 'center',
     alignItems: 'center',
   },
