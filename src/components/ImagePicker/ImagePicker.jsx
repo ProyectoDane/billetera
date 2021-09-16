@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, Alert, useWindowDimensions } from 'react-native';
+import { View, Alert, useWindowDimensions, Text } from 'react-native';
 import * as ImagePickerExpo from 'expo-image-picker';
 
 import IconButton from '../IconButton';
 
-import { colors } from '../../constants';
-import { labels } from '../../constants';
+import { colors, labels } from '../../constants';
+import { styles } from './styles';
 
 const ImagePicker = ({ setImage }) => {
   const pickImage = async () => {
@@ -49,7 +49,7 @@ const ImagePicker = ({ setImage }) => {
     <View
       style={{
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        justifyContent: 'space-evenly',
         marginVertical: size,
       }}>
       <View>
@@ -58,8 +58,9 @@ const ImagePicker = ({ setImage }) => {
           color={colors.white}
           sizeIcon={size}
           onPress={pickImage}
-          backgroundColor={colors.terracotta}
+          backgroundColor={colors.primary}
         />
+        <Text style={styles.text}>GALERIA</Text>
       </View>
       <View>
         <IconButton
@@ -67,8 +68,9 @@ const ImagePicker = ({ setImage }) => {
           color={colors.white}
           sizeIcon={size}
           onPress={takePhoto}
-          backgroundColor={colors.terracotta}
+          backgroundColor={colors.primary}
         />
+        <Text style={styles.text}>CAMARA</Text>
       </View>
     </View>
   );

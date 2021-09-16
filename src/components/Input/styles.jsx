@@ -5,9 +5,10 @@ import { colors } from '../../constants/colors';
 export const styles = StyleSheet.create({
   text: {
     flex: 1,
-    fontSize: 20,
+    fontSize: 30,
     fontWeight: 'bold',
-    color: colors.green,
-    marginVertical: 20,
+    color: colors.miBilletera,
+    marginVertical: 35,
+    textAlign: 'center',
   },
 });

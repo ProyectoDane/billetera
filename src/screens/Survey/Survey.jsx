@@ -30,7 +30,7 @@ const Survey = () => {
           label={again}
           icon="redo-alt"
           sizeIcon={width < 300 ? 10 : 20}
-          color="lightGreen"
+          style={styles.retryBtn}
           onPress={() => setDone(false)}
         />
       </View>

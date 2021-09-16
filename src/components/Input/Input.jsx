@@ -16,13 +16,13 @@ const Input = ({ text, placeholder, onFinish }) => {
     <View style={{ flexDirection: 'row' }}>
       <TextInput
         style={styles.text}
-        autoCapitalize="words"
+        autoCapitalize="characters"
         value={insideText}
         onChangeText={setInsideText}
         onEndEditing={endEditingHandler}
         maxLength={50}
-        multiline={true}
-        placeholder={placeholder}
+        multiline={false}
+        placeholder={placeholder.toUpperCase()}
       />
     </View>
   );
