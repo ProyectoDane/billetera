@@ -1,4 +1,5 @@
 import React from 'react';
+import { Text } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
@@ -28,11 +29,13 @@ import {
   NAVIGATION_TITLE,
   TABS_NAME,
 } from '../../constants';
+import NavTitle from '../../components/NavTitle';
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
 const MyWishesStack = createStackNavigator();
 const InformationStack = createStackNavigator();
+const CalculatorStack = createStackNavigator();
 
 const HomeNavigation = () => (
   <HomeStack.Navigator
@@ -76,6 +79,7 @@ const HomeNavigation = () => (
       component={AddRemove}
       options={{
         title: NAVIGATION_TITLE.ADD_REMOVE,
+        headerTitle: () => <NavTitle />,
       }}
     />
     <HomeStack.Screen
@@ -185,6 +189,24 @@ const InformationNavigation = () => (
   </InformationStack.Navigator>
 );
 
+const CalculatorNavigation = () => (
+  <CalculatorStack.Navigator
+    screenOptions={{
+      headerStyle: { backgroundColor: colors.menu, elevation: 0 },
+      headerTintColor: colors.white,
+      headerRight: () => <ProfileButton sizeIcon={18} />,
+      headerTitleAlign: 'center',
+    }}>
+    <CalculatorStack.Screen
+      name={SCREEN_NAME.CALCULATOR}
+      component={Calculator}
+      options={{
+        title: NAVIGATION_TITLE.CALCULATOR,
+      }}
+    />
+  </CalculatorStack.Navigator>
+);
+
 const AppNavigation = () => (
   <NavigationContainer>
     <Tab.Navigator
@@ -204,7 +226,7 @@ const AppNavigation = () => (
       />
       <Tab.Screen
         name={TABS_NAME.CALCULATOR}
-        component={Calculator}
+        component={CalculatorNavigation}
         options={{
           title: NAVIGATION_TITLE.CALCULATOR,
           tabBarIcon: ({ color }) => (

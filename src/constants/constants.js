@@ -38,6 +38,10 @@ export const NAVIGATION_TITLE = {
   LOGOS: 'LOGOS',
 };
 
+export const NAVIGATION_ICONS = {
+  ADD_REMOVE: 'hand-holding-usd',
+};
+
 // Title for navigation tab
 export const TABS_NAME = {
   HOME: 'HomeScreenTab',
