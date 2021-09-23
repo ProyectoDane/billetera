@@ -1,10 +1,13 @@
 import { colors } from '../../constants';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   button: {
     borderRadius: 10,
-    width: 330,
+    width: windowWidth - 45,
+    height: 180,
     paddingBottom: 15,
     elevation: 5,
   },

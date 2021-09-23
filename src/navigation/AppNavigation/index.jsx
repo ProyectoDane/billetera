@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import HomeScreen from '../../screens/HomeScreen';
 import Calculator from '../../screens/Calculator';
@@ -11,7 +12,6 @@ import MyWishes from '../../screens/MyWishes';
 import MySavings from '../../screens/MySavings';
 import Profile from '../../screens/Profile';
 import NewWish from '../../screens/NewWish';
-import FulfillWish from '../../screens/FulfillWish';
 import ProfileButton from '../../components/ProfileButton';
 import AddRemove from '../../screens/AddRemove';
 import Buy from '../../screens/Buy';
@@ -21,6 +21,7 @@ import Information from '../../screens/Information';
 import HowToUseApp from '../../screens/HowToUseApp';
 import SignLanguage from '../../screens/SignLanguage';
 import Logos from '../../screens/Logos/Logos';
+import WishesFulfilled from '../../screens/WishesFulfilled';
 
 import {
   colors,
@@ -33,6 +34,7 @@ const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
 const MyWishesStack = createStackNavigator();
 const InformationStack = createStackNavigator();
+const WishesTopTab = createMaterialTopTabNavigator();
 
 const HomeNavigation = () => (
   <HomeStack.Navigator
@@ -98,7 +100,7 @@ const MyWishesNavigation = () => (
     }}>
     <MyWishesStack.Screen
       name={SCREEN_NAME.MY_WISHES}
-      component={MyWishes}
+      component={WishesTab}
       options={{
         title: NAVIGATION_TITLE.MY_WISHES,
       }}
@@ -111,9 +113,11 @@ const MyWishesNavigation = () => (
       }}
     />
     <MyWishesStack.Screen
-      name={SCREEN_NAME.FULFILL_WISH}
-      component={FulfillWish}
-      options={{ headerShown: false }}
+      name={SCREEN_NAME.WISHES_FULLFILLED}
+      component={WishesFulfilled}
+      options={{
+        title: NAVIGATION_TITLE.WISHES_FULLFILLED,
+      }}
     />
     <MyWishesStack.Screen
       name={SCREEN_NAME.PROFILE}
@@ -183,6 +187,20 @@ const InformationNavigation = () => (
       }}
     />
   </InformationStack.Navigator>
+);
+
+const WishesTab = () => (
+  <WishesTopTab.Navigator
+    screenOptions={{
+      tabBarLabelStyle: { fontSize: 14, fontWeight: 'bold' },
+      tabBarStyle: { backgroundColor: '#e9e9e9' },
+    }}>
+    <WishesTopTab.Screen name={NAVIGATION_TITLE.WISHES} component={MyWishes} />
+    <WishesTopTab.Screen
+      name={NAVIGATION_TITLE.WISHES_FULLFILLED}
+      component={WishesFulfilled}
+    />
+  </WishesTopTab.Navigator>
 );
 
 const AppNavigation = () => (

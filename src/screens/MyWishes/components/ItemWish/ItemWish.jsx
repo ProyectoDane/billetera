@@ -1,33 +1,71 @@
 import React, { useState } from 'react';
 import { Text, View, TouchableOpacity, Alert } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import * as Progress from 'react-native-progress/';
+import { useNavigation, TabActions } from '@react-navigation/native';
 import { FontAwesome5 } from '@expo/vector-icons';
+import * as Progress from 'react-native-progress/';
 
+import { colors, NAVIGATION_TITLE, SCREEN_NAME } from '../../../../constants';
+import { deleteWish, fulfillWish } from '../../../../dataAccess/Wish';
 import { styles } from './styles';
-import { colors, SCREEN_NAME } from '../../../../constants';
 
-const ItemWish = ({ name, value, savings, testID, icon }) => {
-  const progress = savings ? savings / value : 0;
+const ItemWish = ({ name, value, savings, wishId, testID, icon, done }) => {
   const [collapse, setCollapse] = useState(false);
+  const progress = savings ? savings / value : 0;
   const missingMoney = value - savings < 0 ? 0 : value - savings;
   const remainingMoney = savings - Number(value);
+
   const textColor = {
-    color: missingMoney === 0 ? colors.primary : colors.disable,
+    color: missingMoney === 0 && done === 0 ? colors.primary : colors.disable,
   };
   const navigation = useNavigation();
+  const jumpToWishesFullfilled = TabActions.jumpTo(
+    NAVIGATION_TITLE.WISHES_FULLFILLED,
+  );
+
   const handleEdit = () =>
     navigation.navigate(SCREEN_NAME.NEW_WISH, {
       name,
       value: value.toString(),
       icon,
+      wishId,
+      done,
     });
-  const handleAchieve = () =>
+
+  const handleAchieve = () => {
     Alert.alert(
-      'FELICIDADES! CUMPLISTE TU DESEO !! 🎉',
-      ` TUS AHORROS RESTANTES SON $${remainingMoney}`,
-      [{ text: 'OK' }],
+      'ESTAS POR CUMPLIR TU DESEO',
+      ` TUS AHORROS RESTANTES SERAN $${remainingMoney}`,
+      [
+        {
+          text: 'CONTINUAR',
+          onPress: async () => {
+            await fulfillWish(wishId);
+            navigation.dispatch(jumpToWishesFullfilled);
+          },
+        },
+        {
+          text: 'CANCELAR',
+          style: 'cancel',
+        },
+      ],
     );
+  };
+
+  const handleDelete = () => {
+    Alert.alert('ADVERTENCIA', 'ESTAS SEGURO QUE QUERES ELIMINAR TU DESEO?', [
+      {
+        text: 'CONTINUAR',
+        onPress: async () => {
+          await deleteWish(wishId);
+          //TODO: rerender para actualizar lista de deseos
+        },
+      },
+      {
+        text: 'CANCELAR',
+        style: 'cancel',
+      },
+    ]);
+  };
 
   return (
     <View style={styles.container}>
@@ -43,7 +81,7 @@ const ItemWish = ({ name, value, savings, testID, icon }) => {
           <Progress.Bar
             color={colors.white}
             unfilledColor={colors.darkCyan}
-            progress={progress}
+            progress={!done ? progress : 1}
             width={240}
             height={10}
             borderWidth={0}
@@ -68,20 +106,14 @@ const ItemWish = ({ name, value, savings, testID, icon }) => {
           <Text style={styles.itemDetails}>TE FALTAN: ${missingMoney}</Text>
           <View style={styles.actionsContainer}>
             <TouchableOpacity
-              disabled={missingMoney === 0 ? false : true}
+              disabled={missingMoney === 0 && done === 0 ? false : true}
               onPress={handleAchieve}>
               <Text style={[styles.actionBtn, textColor]}>CUMPLIR</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleEdit}>
               <Text style={styles.actionBtn}>EDITAR</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() =>
-                Alert.alert(
-                  'Advertencia',
-                  'Estas seguro que queres eliminar tu deseo?',
-                )
-              }>
+            <TouchableOpacity onPress={handleDelete}>
               <Text style={styles.actionBtn}>ELIMINAR</Text>
             </TouchableOpacity>
           </View>

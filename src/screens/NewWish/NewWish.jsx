@@ -6,9 +6,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import InputText from '../../components/InputText';
 import Layout from '../../components/Layout';
 import SingleButton from '../../components/SingleButton';
+import IconCarousel from '../../components/IconCarousel';
+
 import { styles } from './styles';
 import { WishSchema } from '../../validations/FormSchemas';
-import IconCarousel from '../../components/IconCarousel';
+import { getWishById, insertWish, updateWish } from '../../dataAccess/Wish';
+import { Wish } from '../../models/Wish';
 
 const NuevoDeseo = ({ navigation, route }) => {
   const methods = useForm({
@@ -18,8 +21,22 @@ const NuevoDeseo = ({ navigation, route }) => {
 
   const { handleSubmit, reset } = methods;
 
-  const onSubmit = (data) => {
-    console.log(data);
+  // Insert wish
+  const onSubmitNew = async (data) => {
+    const { icon, name, value } = data;
+    await insertWish(new Wish(name, value, icon)); // por defecto le pone el user 1 y que no esta cumplido
+    reset();
+    navigation.navigate('MyWishes');
+  };
+
+  // Edit Wish
+  const onSubmitEdit = async (data) => {
+    const { icon, name, value } = data;
+    const wishViejo = await getWishById(route.params.wishId);
+    wishViejo.icon = icon;
+    wishViejo.name = name;
+    wishViejo.value = value;
+    void (await updateWish(wishViejo)); // por defecto le pone el user 1 y que no esta cumplido
     reset();
     navigation.navigate('MyWishes');
   };
@@ -49,7 +66,11 @@ const NuevoDeseo = ({ navigation, route }) => {
             icon="magic"
             sizeIcon={22}
             label="CREAR DESEO"
-            onPress={handleSubmit(onSubmit)}
+            onPress={
+              route.params === undefined
+                ? handleSubmit(onSubmitNew)
+                : handleSubmit(onSubmitEdit)
+            }
           />
         </FormProvider>
       </ScrollView>

@@ -44,7 +44,7 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   valueItem: {
-    flex: 0.5,
+    flex: 0.6,
     textAlign: 'right',
     fontWeight: 'bold',
     color: colors.white,
