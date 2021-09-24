@@ -22,6 +22,7 @@ import HowToUseApp from '../../screens/HowToUseApp';
 import SignLanguage from '../../screens/SignLanguage';
 import Logos from '../../screens/Logos/Logos';
 import WishesFulfilled from '../../screens/WishesFulfilled';
+import NavTitle from '../../components/NavTitle';
 
 import {
   colors,
@@ -35,6 +36,7 @@ const HomeStack = createStackNavigator();
 const MyWishesStack = createStackNavigator();
 const InformationStack = createStackNavigator();
 const WishesTopTab = createMaterialTopTabNavigator();
+const CalculatorStack = createStackNavigator();
 
 const HomeNavigation = () => (
   <HomeStack.Navigator
@@ -78,6 +80,7 @@ const HomeNavigation = () => (
       component={AddRemove}
       options={{
         title: NAVIGATION_TITLE.ADD_REMOVE,
+        headerTitle: () => <NavTitle />,
       }}
     />
     <HomeStack.Screen
@@ -189,6 +192,24 @@ const InformationNavigation = () => (
   </InformationStack.Navigator>
 );
 
+const CalculatorNavigation = () => (
+  <CalculatorStack.Navigator
+    screenOptions={{
+      headerStyle: { backgroundColor: colors.menu, elevation: 0 },
+      headerTintColor: colors.white,
+      headerRight: () => <ProfileButton sizeIcon={18} />,
+      headerTitleAlign: 'center',
+    }}>
+    <CalculatorStack.Screen
+      name={SCREEN_NAME.CALCULATOR}
+      component={Calculator}
+      options={{
+        title: NAVIGATION_TITLE.CALCULATOR,
+      }}
+    />
+  </CalculatorStack.Navigator>
+);
+
 const WishesTab = () => (
   <WishesTopTab.Navigator
     screenOptions={{
@@ -202,7 +223,6 @@ const WishesTab = () => (
     />
   </WishesTopTab.Navigator>
 );
-
 const AppNavigation = () => (
   <NavigationContainer>
     <Tab.Navigator
@@ -222,7 +242,7 @@ const AppNavigation = () => (
       />
       <Tab.Screen
         name={TABS_NAME.CALCULATOR}
-        component={Calculator}
+        component={CalculatorNavigation}
         options={{
           title: NAVIGATION_TITLE.CALCULATOR,
           tabBarIcon: ({ color }) => (

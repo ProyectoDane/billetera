@@ -57,7 +57,6 @@ const ItemWish = ({ name, value, savings, wishId, testID, icon, done }) => {
         text: 'CONTINUAR',
         onPress: async () => {
           await deleteWish(wishId);
-          //TODO: rerender para actualizar lista de deseos
         },
       },
       {
