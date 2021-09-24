@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'center',
     marginTop: 20,
-    marginBottom: 25,
+    marginBottom: 20,
     backgroundColor: colors.secondary,
   },
   icon: {

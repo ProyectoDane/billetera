@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -6,11 +6,17 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import InputText from '../../components/InputText';
 import Layout from '../../components/Layout';
 import SingleButton from '../../components/SingleButton';
-import { styles } from './styles';
-import { WishSchema } from '../../validations/FormSchemas';
 import IconCarousel from '../../components/IconCarousel';
 
+import { styles } from './styles';
+import { WishSchema } from '../../validations/FormSchemas';
+import { getWishById, insertWish, updateWish } from '../../dataAccess/Wish';
+import { Wish } from '../../models/Wish';
+import { SCREEN_NAME } from '../../constants';
+
 const NuevoDeseo = ({ navigation, route }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const methods = useForm({
     defaultValues: { ...route.params },
     resolver: yupResolver(WishSchema),
@@ -18,10 +24,38 @@ const NuevoDeseo = ({ navigation, route }) => {
 
   const { handleSubmit, reset } = methods;
 
-  const onSubmit = (data) => {
-    console.log(data);
-    reset();
-    navigation.navigate('MyWishes');
+  // Insert wish
+  const onSubmitNew = async (data) => {
+    setIsLoading(true);
+    const { icon, name, value } = data;
+    try {
+      await insertWish(new Wish(name, value, icon));
+      reset();
+      setIsLoading(false);
+      navigation.navigate(SCREEN_NAME.MY_WISHES);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
+
+  // Edit Wish
+  const onSubmitEdit = async (data) => {
+    setIsLoading(true);
+    const { icon, name, value } = data;
+    try {
+      const wishViejo = await getWishById(route.params.wishId);
+      wishViejo.icon = icon;
+      wishViejo.name = name;
+      wishViejo.value = value;
+      void (await updateWish(wishViejo));
+      reset();
+      setIsLoading(false);
+      navigation.navigate(SCREEN_NAME.MY_WISHES);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -48,8 +82,14 @@ const NuevoDeseo = ({ navigation, route }) => {
           <SingleButton
             icon="magic"
             sizeIcon={22}
-            label="CREAR DESEO"
-            onPress={handleSubmit(onSubmit)}
+            label={route.params === undefined ? 'CREAR DESEO' : 'EDITAR DESEO'}
+            isLoading={isLoading}
+            disabled={isLoading}
+            onPress={
+              route.params === undefined
+                ? handleSubmit(onSubmitNew)
+                : handleSubmit(onSubmitEdit)
+            }
           />
         </FormProvider>
       </ScrollView>

@@ -16,6 +16,7 @@ export const SCREEN_NAME = {
   HOW_TO_USE_APP: 'HowToUseApp',
   SIGN_LANGUAGE: 'SignLanguage',
   LOGOS: 'Logos',
+  WISHES_FULLFILLED: 'WishesFulfilled',
 };
 
 // Title navigation style
@@ -24,6 +25,8 @@ export const NAVIGATION_TITLE = {
   CALCULATOR: 'CALCULADORA',
   MY_WALLET: 'MI BILLETERA',
   MY_WISHES: 'MIS DESEOS',
+  WISHES: 'DESEOS',
+  WISHES_FULLFILLED: 'DESEOS CUMPLIDOS',
   MY_SAVINGS: 'MIS AHORROS',
   PROFILE: 'PERFIL',
   NEW_WISH: 'NUEVO DESEO',

@@ -1,33 +1,47 @@
 import React from 'react';
-import { View, FlatList, Text } from 'react-native';
+import { View, FlatList, Text, ActivityIndicator } from 'react-native';
 
 import ItemWish from '../ItemWish/';
-import { savings, whishesList } from '../../../../mockData/deseos';
+
 import { styles } from './styles';
+import { savings } from '../../../../mockData/deseos';
+import { useGetWishes } from '../../hooks/useGetWishes';
+import { colors } from '../../../../constants';
 
 const WishList = () => {
-  return (
+  const { wishes, loading } = useGetWishes();
+
+  return !loading ? (
     <View style={styles.list}>
-      {whishesList.length > 0 ? (
+      {wishes.length > 0 ? (
         <FlatList
-          data={whishesList}
+          data={wishes}
           renderItem={({ item }) => (
             <ItemWish
               name={item.name}
               value={item.value}
+              icon={item.icon}
+              done={item.done}
+              userId={item.userId}
+              wishId={item.id}
               savings={savings}
               testID={`testId-itemWish-${item.id}`}
-              icon={item.icon}
             />
           )}
           keyExtractor={(item) => item.id.toString()}
         />
       ) : (
         <View style={styles.withOutList}>
-          <Text>No tienes nungun deseo! agrega uno!</Text>
+          <Text>¡NO TENES NINGUN DESEO, AGREGA UNO!</Text>
         </View>
       )}
     </View>
+  ) : (
+    <ActivityIndicator
+      style={styles.spinner}
+      size="large"
+      color={colors.miBilletera}
+    />
   );
 };
 

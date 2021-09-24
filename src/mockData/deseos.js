@@ -7,7 +7,7 @@ export const whishesList = [
   },
   {
     id: 2,
-    name: 'AUTO JUGUETE',
+    name: 'AUTO DE JUGUETE',
     value: 1000,
     icon: 'car',
   },
@@ -19,7 +19,7 @@ export const whishesList = [
   },
   {
     id: 4,
-    name: 'ENTRADA CINE',
+    name: 'ENTRADA DE CINE',
     value: 500,
     icon: 'ticket-alt',
   },
@@ -31,13 +31,13 @@ export const whishesList = [
   },
   {
     id: 6,
-    name: 'CONSOLA JUEGOS',
+    name: 'CONSOLA DE JUEGOS',
     value: 3000,
     icon: 'gamepad',
   },
   {
     id: 7,
-    name: 'MOTO JUGUETE',
+    name: 'MOTO DE JUGUETE',
     value: 3500,
     icon: 'motorcycle',
   },
