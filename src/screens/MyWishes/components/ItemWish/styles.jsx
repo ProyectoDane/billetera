@@ -25,7 +25,7 @@ export const styles = StyleSheet.create({
     flex: 0.22,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.darkGray,
+    backgroundColor: colors.darkBlue,
     borderRadius: 50,
     height: 70,
   },

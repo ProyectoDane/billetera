@@ -1,10 +1,3 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import Calculator from './Calculator';
 
-export default function Calculator() {
-  return (
-    <View>
-      <Text>Calculator</Text>
-    </View>
-  );
-}
+export default Calculator;
