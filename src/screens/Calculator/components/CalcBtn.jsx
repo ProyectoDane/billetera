@@ -1,10 +1,18 @@
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 import { colors } from '../../../constants';
 import { styles } from './styles';
 
-const CalcBtn = ({ style, styleText, button, onPress, isNumber }) => {
+const CalcBtn = ({
+  arrowBackIcon,
+  style,
+  styleText,
+  button,
+  onPress,
+  isNumber,
+}) => {
   return (
     <TouchableOpacity
       key={button}
@@ -19,7 +27,11 @@ const CalcBtn = ({ style, styleText, button, onPress, isNumber }) => {
           : { ...styles.button, ...style }
       }
       onPress={onPress}>
-      <Text style={{ ...styles.textButton, ...styleText }}>{button}</Text>
+      {arrowBackIcon ? (
+        <Ionicons name="arrow-back-outline" size={30} color={colors.darkGray} />
+      ) : (
+        <Text style={{ ...styles.textButton, ...styleText }}>{button}</Text>
+      )}
     </TouchableOpacity>
   );
 };

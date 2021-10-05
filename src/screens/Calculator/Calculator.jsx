@@ -20,7 +20,7 @@ const Calculator = () => {
         {buttons.map((button) =>
           button === '=' ||
           button === '/' ||
-          button === '*' ||
+          button === 'x' ||
           button === '-' ||
           button === '+' ? (
             <CalcBtn
@@ -39,6 +39,7 @@ const Calculator = () => {
             />
           ) : button === '.' || button === 'DEL' ? (
             <CalcBtn
+              arrowBackIcon={button === 'DEL'}
               key={button}
               button={button}
               style={{

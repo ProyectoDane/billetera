@@ -12,7 +12,7 @@ export const useCalculator = () => {
     7,
     8,
     9,
-    '*',
+    'x',
     4,
     5,
     6,
@@ -60,9 +60,9 @@ export const useCalculator = () => {
         setCurrentNumber(currentNumber + buttonPressed);
         break;
 
-      case '*':
+      case 'x':
         Vibration.vibrate(35);
-        if (buttonPressed.includes('*') && currentNumber === '*') return;
+        if (buttonPressed.includes('x') && currentNumber === 'x') return;
         setCurrentNumber(currentNumber + buttonPressed);
         break;
 
@@ -97,6 +97,13 @@ export const useCalculator = () => {
           setCurrentNumber(
             currentNumber.substring(0, currentNumber.length - 1),
           );
+        }
+        return;
+      case 'x':
+        Vibration.vibrate(35);
+        if (buttonPressed === 'x') {
+          setLastNumber(currentNumber);
+          setCurrentNumber(currentNumber + buttonPressed.replace('x', '*'));
         }
         return;
       case 'C':
