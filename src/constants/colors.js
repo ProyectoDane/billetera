@@ -17,7 +17,10 @@ export const colors = {
   positive: 'green',
   white: 'white',
   black: 'black',
-  darkGray: '#595b7a',
+  darkGray: '#7c7c7c',
+  darkBlue: '#595b7a',
+  softGray: '#ededed',
+  gray: '#f5f5f5',
   blueText: '#0070c0',
 
   // colors dane icon
@@ -31,4 +34,5 @@ export const colors = {
   lightOrange: '#f6c9a8',
   red: '#e03c37',
   terracotta: '#b11c20',
+  skyBlue: '#1f93d1',
 };
