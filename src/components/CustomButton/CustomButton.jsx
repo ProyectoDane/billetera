@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { FontAwesome5 } from '@expo/vector-icons';
 
 import styles from './styles';
@@ -15,6 +15,11 @@ const CustomButton = ({
   amount,
   onPress,
 }) => {
+
+  const route = useRoute()
+
+  console.log(route)
+
   const navigation = useNavigation();
   const buttonColor = {
     backgroundColor: colors[color],

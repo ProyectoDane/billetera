@@ -22,7 +22,7 @@ const HomeScreen = ({ navigation }) => {
               amount={1000}
               icon="wallet"
               sizeIcon={90}
-              onPress={() => navigation.navigate(SCREEN_NAME.MY_WALLET)}
+              onPress={() => navigation.navigate(SCREEN_NAME.MY_WALLET, {from: "wallet"})}
               color="miBilletera"
             />
           </View>
@@ -33,7 +33,7 @@ const HomeScreen = ({ navigation }) => {
             amount={savings}
             icon="piggy-bank"
             sizeIcon={90}
-            onPress={() => navigation.navigate(SCREEN_NAME.MY_SAVINGS)}
+            onPress={() => navigation.navigate(SCREEN_NAME.MY_SAVINGS, {from: "savings"})}
             color="misAhorros"
           />
         </View>
