@@ -8,9 +8,9 @@ import { styles } from "./WalletCarrouselStyles";
 
 export default function WalletCarrousel({ moneyType, dataCarrousel }){
   const [step, setStep] = useState(0)
-  const [item, setItem] = useState(dataCarrousel[step])
+  const [item, setItem] = useState(dataCarrousel ? dataCarrousel[step] : [])
 
-  const lastStep = dataCarrousel.length - 1;
+  const lastStep = dataCarrousel && dataCarrousel.length > 0 ? dataCarrousel.length - 1 : 0;
 
   const firstStep = 0;
 
@@ -35,11 +35,18 @@ export default function WalletCarrousel({ moneyType, dataCarrousel }){
           ¿QUÉ {moneyType.toUpperCase()} TENGO?
         </Text>
       </View>
-      <WalletCarrouselItem
-        itemInfo={item} 
-        nextStep={nextStep}
-        prevStep={prevStep}
-      />
+      {
+        lastStep ? 
+        <WalletCarrouselItem
+          itemInfo={item} 
+          nextStep={nextStep}
+          prevStep={prevStep}
+        />  
+        :
+        <Text>
+          AÚN NO TIENES {moneyType.toUpperCase()}
+        </Text>
+      }
     </Fragment>
   )
 }

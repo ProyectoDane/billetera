@@ -1,3 +1,4 @@
+// import { getPendingResultAsync } from 'expo-image-picker';
 import * as SQLite from 'expo-sqlite';
 import {
   queryCreateTables,
@@ -6,6 +7,40 @@ import {
 } from '../constants/bdStructure';
 
 export const db = SQLite.openDatabase('db.DaneWallet');
+
+export const executeQuery2 = async (query, params) =>
+  new Promise((resolve, reject) => {
+        db.transaction((tx) => {
+          tx.executeSql(
+            query,
+            params,
+            (tx, results) => resolve(results),
+            (_, err) => {
+              reject(err);
+              return false;
+            }
+          );
+        })
+  });
+
+export const insertQuery = async(query, params) => {
+        return db.transaction((tx) => {
+          return tx.executeSql(
+            query,
+            params,
+            (tx,results) => {
+              console.log('Results', results.rowsAffected);
+              console.log(results);
+              if (results.rowsAffected > 0) {
+                console.log('Data Inserted Successfully....');
+              } else console.log('Failed....');
+
+              return results
+            }
+          );
+        })
+  };
+
 
 export const executeQuery = async (querys) =>
   new Promise((resolve, reject) => {

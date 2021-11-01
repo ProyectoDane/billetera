@@ -8,6 +8,7 @@ import { SCREEN_NAME } from '../../constants';
 import { savings } from '../../mockData/deseos';
 
 const HomeScreen = ({ navigation }) => {
+  
   return (
     <Layout hideTextFooter>
       <View style={styles.titleContainer}>
@@ -22,7 +23,8 @@ const HomeScreen = ({ navigation }) => {
               amount={1000}
               icon="wallet"
               sizeIcon={90}
-              onPress={() => navigation.navigate(SCREEN_NAME.MY_WALLET, {from: "wallet"})}
+              onPress={() => navigation.navigate(SCREEN_NAME.MY_WALLET)}
+              from="wallet"
               color="miBilletera"
             />
           </View>
@@ -33,7 +35,8 @@ const HomeScreen = ({ navigation }) => {
             amount={savings}
             icon="piggy-bank"
             sizeIcon={90}
-            onPress={() => navigation.navigate(SCREEN_NAME.MY_SAVINGS, {from: "savings"})}
+            onPress={() => navigation.navigate(SCREEN_NAME.MY_SAVINGS)}
+            from="savings"
             color="misAhorros"
           />
         </View>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { FontAwesome5 } from '@expo/vector-icons';
 
 import styles from './styles';
@@ -14,11 +14,8 @@ const CustomButton = ({
   color = 'primary',
   amount,
   onPress,
+  from
 }) => {
-
-  const route = useRoute()
-
-  console.log(route)
 
   const navigation = useNavigation();
   const buttonColor = {
@@ -39,7 +36,7 @@ const CustomButton = ({
       <View style={styles.btnGroup}>
         <TouchableOpacity
           style={styles.modifyBtn}
-          onPress={() => navigation.navigate(SCREEN_NAME.ADD_REMOVE)}>
+          onPress={() => navigation.navigate(SCREEN_NAME.ADD_REMOVE, {from: from})}>
           <Text style={styles.btnText}>AGREGAR / QUITAR</Text>
         </TouchableOpacity>
         <TouchableOpacity

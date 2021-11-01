@@ -38,11 +38,3 @@ export const queryCreateTables = [
   export const queryInsertUser = [
     'INSERT INTO User (name, photo) SELECT "", "" WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 1);'
   ];
-
-  export const queryInsertWallet = [
-    'INSERT INTO Wallet (quantity, moneyId, userId) SELECT 0, "" WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 1);'
-  ]
-
-  export const queryInsertSaving = [
-    'INSERT INTO User (name, photo) SELECT "", "" WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 1);'
-  ]
