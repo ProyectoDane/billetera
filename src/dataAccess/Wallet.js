@@ -8,6 +8,7 @@ export const getTotalWallet = async (userId = 1) => {
     );
 
     if(result.length === 0){
+      console.log("result = ", 0)
         return 0
     }
 
@@ -15,21 +16,38 @@ export const getTotalWallet = async (userId = 1) => {
       money.push(result.item(i))
     }
 
+    return money
+
   } catch (err) {
     console.log('Error: ', err);
   }
 
-  return money;
 };
 
 
-export const getDineroWallet = async(user_id = 1) => {
+export const getDineroWallet = async(money_id = 1) => {
+    let money = [];
+    
     let query = `SELECT * FROM Wallet AS w , Money AS m WHERE w.moneyId = m.id AND w.userId =?`;
 
-    let results = await executeQuery2(query, [user_id]);
+    try{
+      let result = await executeQuery2(query, [money_id]);
 
+      if(result.rows.length === 0){
+        console.log("result = ", 0)
+          return 0
+      }
 
-    return results
+      for(let i = 0; i < result.rows.length; i++){
+        money.push(result.rows.item(i))
+      }
+
+      return money
+
+    } catch (err) {
+      console.log('Error: ', err);
+    }
+
 }
 
 export const insertMoneyToWallet = async (
@@ -101,23 +119,4 @@ export const insertMoneyToWallet = async (
       console.log('Error: ', err);
     }
   
-  };
-
-
-export const getCoins = async () => {
-    let coins = [];
-    try {
-      const result = await executeSelect(
-        `SELECT * FROM Money WHERE isCoins = 1`,
-      );
-  
-      for(let i = 0; i < result.length; i++){
-        coins.push(result.item(i))
-      }
-
-    } catch (err) {
-      console.log('Error: ', err);
-    }
-  
-    return coins;
   };
