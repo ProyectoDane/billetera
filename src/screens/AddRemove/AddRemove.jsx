@@ -18,13 +18,13 @@ const AddRemove = ({route}) => {
     const obj = {};
 
     moneyArray.forEach((item) => {
-      const { amount } = item;
-      if(obj[amount]){
-        obj[amount]["items"].push(item)
-      } else {
-        obj[amount] = {items: []}
-        obj[amount]["items"].push(item)
-      }
+        const { amount } = item;
+        if(obj[amount]){
+          obj[amount]["items"].push(item)
+        } else {
+          obj[amount] = {items: []}
+          obj[amount]["items"].push(item)
+        }
       }
     )
 
@@ -48,20 +48,22 @@ const AddRemove = ({route}) => {
 
     async function getTotal(){
       const wallet = await getTotalWallet();
-      const total = 0;
+      let total = 0;
 
       if(wallet){
         let money = await getDineroWallet(wallet.moneyId)
-
         console.log(money)
-      }
 
-      // for(let item of wallet){
-      //   const { moneyId, quantity, userId } = item
-      //   let money = await getDineroWallet(moneyId);
-        
-      //   console.log(moneyId, money)
-      // }
+        for(let property of money){
+          console.log(property)
+          const { amount, quantity } = property
+
+          total = total + amount * quantity
+
+        }
+
+        setTotal(total)
+      }
     }
 
     async function getMoney(){
