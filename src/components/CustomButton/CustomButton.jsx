@@ -15,6 +15,7 @@ const CustomButton = ({
   amount,
   onPress,
   isWallet,
+  from,
 }) => {
   const navigation = useNavigation();
   const buttonColor = {
@@ -35,7 +36,9 @@ const CustomButton = ({
       <View style={styles.btnGroup}>
         <TouchableOpacity
           style={styles.modifyBtn}
-          onPress={() => navigation.navigate(SCREEN_NAME.ADD_REMOVE)}>
+          onPress={() =>
+            navigation.navigate(SCREEN_NAME.ADD_REMOVE, { from: from })
+          }>
           <Text style={styles.btnText}>AGREGAR / QUITAR</Text>
         </TouchableOpacity>
         <TouchableOpacity

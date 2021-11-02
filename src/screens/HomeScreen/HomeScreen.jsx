@@ -25,6 +25,7 @@ const HomeScreen = ({ navigation }) => {
               icon="wallet"
               sizeIcon={90}
               onPress={() => navigation.navigate(SCREEN_NAME.MY_WALLET)}
+              from="wallet"
               color="miBilletera"
               isWallet
             />
@@ -37,6 +38,7 @@ const HomeScreen = ({ navigation }) => {
             icon="piggy-bank"
             sizeIcon={90}
             onPress={() => navigation.navigate(SCREEN_NAME.MY_SAVINGS)}
+            from="savings"
             color="misAhorros"
           />
         </View>
