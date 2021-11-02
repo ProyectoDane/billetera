@@ -9,11 +9,12 @@ import { colors, SCREEN_NAME } from '../../constants/index';
 const CustomButton = ({
   icon,
   sizeIcon,
-  colorIcon = 'white',
+  colorIcon = colors.white,
   label,
-  color = 'primary',
+  color = colors.primary,
   amount,
   onPress,
+  isWallet,
 }) => {
   const navigation = useNavigation();
   const buttonColor = {
@@ -39,7 +40,11 @@ const CustomButton = ({
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.buyBtn}
-          onPress={() => navigation.navigate(SCREEN_NAME.BUY)}>
+          onPress={() =>
+            isWallet
+              ? navigation.navigate(SCREEN_NAME.BUY, { isWallet: true })
+              : navigation.navigate(SCREEN_NAME.BUY, { isWallet: false })
+          }>
           <Text style={styles.btnText}>COMPRAR</Text>
         </TouchableOpacity>
       </View>

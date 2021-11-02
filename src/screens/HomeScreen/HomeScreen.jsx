@@ -5,9 +5,11 @@ import { styles } from './styles';
 import CustomButton from '../../components/CustomButton';
 import Layout from '../../components/Layout';
 import { SCREEN_NAME } from '../../constants';
-import { savings } from '../../mockData/deseos';
+import useCalcTotal from './hooks/useCalcTotal';
 
 const HomeScreen = ({ navigation }) => {
+  const { amountWallet, amountSavings } = useCalcTotal();
+
   return (
     <Layout hideTextFooter>
       <View style={styles.titleContainer}>
@@ -19,18 +21,19 @@ const HomeScreen = ({ navigation }) => {
           <View style={styles.button}>
             <CustomButton
               label="MI BILLETERA"
-              amount={1000}
+              amount={amountWallet}
               icon="wallet"
               sizeIcon={90}
               onPress={() => navigation.navigate(SCREEN_NAME.MY_WALLET)}
               color="miBilletera"
+              isWallet
             />
           </View>
         </View>
         <View style={styles.button}>
           <CustomButton
             label="MIS AHORROS"
-            amount={savings}
+            amount={amountSavings}
             icon="piggy-bank"
             sizeIcon={90}
             onPress={() => navigation.navigate(SCREEN_NAME.MY_SAVINGS)}

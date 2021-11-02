@@ -10,7 +10,7 @@ describe('Should render NewWish screen', () => {
       const { getByText } = setup();
 
       expect(getByText(/nombre/i)).toBeTruthy();
-      expect(getByText(/valor/i)).toBeTruthy();
+      expect(getByText(/value/i)).toBeTruthy();
     });
     it('Should find button, press it, and show error message', async () => {
       const { getByText, queryByText } = setup();

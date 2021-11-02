@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 
 const AddRemove = () => {
   return (
@@ -10,5 +10,3 @@ const AddRemove = () => {
 };
 
 export default AddRemove;
-
-const styles = StyleSheet.create({});
