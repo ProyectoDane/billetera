@@ -1,4 +1,5 @@
 import React from 'react';
+import {Text} from "react-native";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
@@ -14,6 +15,7 @@ import Profile from '../../screens/Profile';
 import NewWish from '../../screens/NewWish';
 import ProfileButton from '../../components/ProfileButton';
 import AddRemove from '../../screens/AddRemove';
+import AddRemoveWallet from '../../screens/AddRemoveWallet';
 import Buy from '../../screens/Buy';
 import Survey from '../../screens/Survey/Survey';
 import About from '../../screens/About/About';
@@ -37,6 +39,7 @@ const MyWishesStack = createStackNavigator();
 const InformationStack = createStackNavigator();
 const WishesTopTab = createMaterialTopTabNavigator();
 const CalculatorStack = createStackNavigator();
+const MoneyTobTab = createStackNavigator();
 
 const HomeNavigation = () => (
   <HomeStack.Navigator
@@ -80,6 +83,14 @@ const HomeNavigation = () => (
       component={AddRemove}
       options={{
         title: NAVIGATION_TITLE.ADD_REMOVE,
+        headerTitle: () => <NavTitle />,
+      }}
+    />
+    <HomeStack.Screen
+      name={SCREEN_NAME.ADD_REMOVE_WALLET}
+      component={AddRemoveWallet}
+      options={{
+        title: NAVIGATION_TITLE.ADD_REMOVE_WALLET,
         headerTitle: () => <NavTitle />,
       }}
     />
@@ -223,6 +234,21 @@ const WishesTab = () => (
     />
   </WishesTopTab.Navigator>
 );
+
+
+const MoneyTab = () => (
+  <MoneyTobTab.Navigator>
+    <MoneyTopTab.Screen 
+      name={NAVIGATION_TITLE.BILLETES}
+      component={<Text>Billetes</Text>}
+    />
+    <MoneyTopTab.Screen 
+      name={NAVIGATION_TITLE.MONEDAS}
+      component={<Text>Monedas</Text>}
+    />
+  </MoneyTobTab.Navigator>
+);
+
 const AppNavigation = () => (
   <NavigationContainer>
     <Tab.Navigator

@@ -8,7 +8,6 @@ export const getTotalWallet = async (userId = 1) => {
     );
 
     if(result.length === 0){
-      console.log("result = ", 0)
         return 0
     }
 
@@ -34,7 +33,6 @@ export const getDineroWallet = async(money_id = 1) => {
       let result = await executeQuery2(query, [money_id]);
 
       if(result.rows.length === 0){
-        console.log("result = ", 0)
           return 0
       }
 

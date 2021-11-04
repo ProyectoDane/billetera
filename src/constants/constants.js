@@ -10,6 +10,7 @@ export const SCREEN_NAME = {
   FULFILL_WISH: 'FulfillWish',
   BUY: 'Buy',
   ADD_REMOVE: 'AddRemove',
+  ADD_REMOVE_WALLET: 'AddRemoveWallet',
   ABOUT: 'About',
   SURVEY: 'Survey',
   INFORMATION: 'Information',
@@ -33,12 +34,15 @@ export const NAVIGATION_TITLE = {
   FULFILL_WISH: 'CUMPLIR DESEO',
   BUY: 'COMPRAR',
   ADD_REMOVE: 'AGREGAR / QUITAR',
+  ADD_REMOVE_WALLET: 'AGREGAR / QUITAR EN BILLETERA',
   ABOUT: 'SOBRE NOSOTROS',
   INFO: 'INFORMACION',
   SURVEY: 'ENCUESTA',
   HOW_TO_USE_APP: '¿COMO USAR LA APLICACION?',
   SIGN_LANGUAGE: 'LENGUAJE DE SEÑAS',
   LOGOS: 'LOGOS',
+  BILLETES: 'BILLETES',
+  MONEDAS: 'MONEDAS'
 };
 
 export const NAVIGATION_ICONS = {
@@ -57,6 +61,7 @@ export const TABS_NAME = {
   FULFILL_WISH: 'FulfillWishTab',
   BUY: 'BuyTab',
   ADD_REMOVE: 'AddRemoveTab',
+  ADD_REMOVE_WALLET: 'AddRemoveWalletTab',
   ABOUT: 'AboutTab',
   INFORMATION: 'InformationTab',
 };
