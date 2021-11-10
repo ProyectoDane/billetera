@@ -29,7 +29,10 @@
     "react-dom": "16.13.1",
     "react-hook-form": "^7.15.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
+    "react-native-currency-input": "^1.0.1",
+    "react-native-flash-message": "^0.2.0",
     "react-native-gesture-handler": "~1.10.2",
+    "react-native-pager-view": "5.0.12",
     "react-native-progress": "^5.0.0",
     "react-native-reanimated": "~2.2.0",
     "react-native-safe-area-context": "3.2.0",
@@ -38,8 +41,7 @@
     "react-native-tab-view": "^3.1.1",
     "react-native-web": "~0.13.12",
     "react-native-webview": "^11.6.2",
-    "yup": "^0.32.9",
-    "react-native-pager-view": "5.0.12"
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

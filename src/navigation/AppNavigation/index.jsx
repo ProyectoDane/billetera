@@ -14,7 +14,6 @@ import Profile from '../../screens/Profile';
 import NewWish from '../../screens/NewWish';
 import ProfileButton from '../../components/ProfileButton';
 import AddRemove from '../../screens/AddRemove';
-import Buy from '../../screens/Buy';
 import Survey from '../../screens/Survey/Survey';
 import About from '../../screens/About/About';
 import Information from '../../screens/Information';
@@ -23,6 +22,8 @@ import SignLanguage from '../../screens/SignLanguage';
 import Logos from '../../screens/Logos/Logos';
 import WishesFulfilled from '../../screens/WishesFulfilled';
 import NavTitle from '../../components/NavTitle';
+import WalletBuy from '../../screens/Buy/WalletBuy';
+import SavingsBuy from '../../screens/Buy/SavingsBuy';
 
 import {
   colors,
@@ -30,6 +31,7 @@ import {
   NAVIGATION_TITLE,
   TABS_NAME,
 } from '../../constants';
+import WalletManualPayment from '../../screens/AddRemove/WalletManualPayment';
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -69,10 +71,17 @@ const HomeNavigation = () => (
       }}
     />
     <HomeStack.Screen
-      name={SCREEN_NAME.BUY}
-      component={Buy}
+      name={SCREEN_NAME.WALLET_BUY}
+      component={WalletBuy}
       options={{
-        title: NAVIGATION_TITLE.BUY,
+        title: NAVIGATION_TITLE.WALLET_BUY,
+      }}
+    />
+    <HomeStack.Screen
+      name={SCREEN_NAME.SAVINGS_BUY}
+      component={SavingsBuy}
+      options={{
+        title: NAVIGATION_TITLE.SAVINGS_BUY,
       }}
     />
     <HomeStack.Screen
@@ -80,6 +89,14 @@ const HomeNavigation = () => (
       component={AddRemove}
       options={{
         title: NAVIGATION_TITLE.ADD_REMOVE,
+        headerTitle: () => <NavTitle />,
+      }}
+    />
+    <HomeStack.Screen
+      name={SCREEN_NAME.WALLET_MANUAL_PAYMENT}
+      component={WalletManualPayment}
+      options={{
+        title: NAVIGATION_TITLE.ADD_WALLET_MANUAL_PAYMENT,
         headerTitle: () => <NavTitle />,
       }}
     />
@@ -223,6 +240,7 @@ const WishesTab = () => (
     />
   </WishesTopTab.Navigator>
 );
+
 const AppNavigation = () => (
   <NavigationContainer>
     <Tab.Navigator

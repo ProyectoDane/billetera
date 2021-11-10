@@ -5,21 +5,22 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-import InputText from '../../components/InputText';
-import Layout from '../../components/Layout';
-import { BalanceSchema } from '../../validations/FormSchemas';
-import SingleButton from '../../components/SingleButton';
-import { wallet, mySavings } from '../../mockData/wallet';
+import InputText from '../../../components/InputText';
+import Layout from '../../../components/Layout';
+import { BalanceSchema } from '../../../validations/FormSchemas';
+import SingleButton from '../../../components/SingleButton';
+import { successNotification } from '../../../components/ToastNotification/successNotification';
 import {
   deleteMoneyWallet,
   getDineroWallet,
   insertMoneyToWallet,
-} from '../../dataAccess/Wallet';
+} from '../../../dataAccess/Wallet';
 
 import { styles } from './styles';
-import { colors, SCREEN_NAME } from '../../constants';
+import { colors, SCREEN_NAME } from '../../../constants';
+import { formatNum } from '../../../utils/functions/formatNum';
 
-const Buy = ({ route }) => {
+const WalletBuy = () => {
   const [valueBuy, setValueBuy] = useState();
   const [totalAmount, setTotalAmount] = useState();
   const [optionBill, setOptionBill] = useState('');
@@ -27,8 +28,8 @@ const Buy = ({ route }) => {
   const [optPay, setOptPay] = useState();
   const [hasError, setHasError] = useState();
   const [moneyDB, setMoneyDB] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const { isWallet } = route.params;
   const navigation = useNavigation();
 
   const schema = BalanceSchema(totalAmount);
@@ -38,8 +39,6 @@ const Buy = ({ route }) => {
   });
 
   const { handleSubmit, reset } = methods;
-
-  // // ALGORITMO NUEVO!!!
 
   // Total de money en la billetera
   const calcTotalWallet = async () => {
@@ -54,7 +53,7 @@ const Buy = ({ route }) => {
     const res = await getDineroWallet();
 
     let dineroBillDB = res.filter((item) => item.isCoins === 0).reverse();
-    let dineroCoinDB = res.filter((item) => item.isCoins === 1);
+    let dineroCoinDB = res.filter((item) => item.isCoins === 1).reverse();
 
     let dineroDB = [...dineroBillDB, ...dineroCoinDB];
     // console.log('dinero Coin DB', dineroCoinDB);
@@ -75,70 +74,45 @@ const Buy = ({ route }) => {
   useEffect(() => {
     // Se creo dinero manualmente para realizar pruebas
     // crearDinero();
+    // Obtiene y ordena el dinero de la billetera
     tomarDinero();
-
     calcTotalWallet();
-    // isWallet ? calcTotal(moneyDB) : calcTotal(mySavings);
-  }, [tomarDinero]);
+  }, [isLoading]);
 
   let optionPay = [];
   let optionsBills = [];
   let optionsCoins = [];
-  let money = 0;
-  let div = 0;
-  let quantyBill = 0;
+  let quantityMoney = 0;
 
   const onSubmit = (data) => {
     console.log('MONEY DB AL INCIO >>>', moneyDB);
     setOptionBill('');
     setOptionCoin('');
-    money = data.amount;
-    if (isWallet) {
-      for (let bill of moneyDB) {
-        if (money > 0) {
-          div = Math.floor(money / bill.amount);
+    // data trae los datos del formulario
+    let money = data.amount;
 
-          if (div > bill.quantity) {
-            quantyBill = bill.quantity;
-          } else {
-            quantyBill = div;
-          }
+    for (let bill of moneyDB) {
+      if (money > 0) {
+        let div = Math.floor(money / bill.amount);
 
-          optionPay.push({
-            money_id: bill.id,
-            amount: bill.amount,
-            quantity: quantyBill,
-            image: bill.image,
-            user_id: bill.userId,
-          });
-
-          money = money - bill.amount * quantyBill;
+        if (div > bill.quantity) {
+          quantityMoney = bill.quantity;
+        } else {
+          quantityMoney = div;
         }
-      }
-    } else {
-      //TODO: cambiar mySavings por el resultado de getMoneySavings
-      for (let bill of moneyDB) {
-        if (money > 0) {
-          div = Math.floor(money / bill.amount);
 
-          if (div > bill.quantity) {
-            quantyBill = bill.quantity;
-          } else {
-            quantyBill = div;
-          }
+        optionPay.push({
+          money_id: bill.id,
+          amount: bill.amount,
+          quantity: quantityMoney,
+          image: bill.image,
+          user_id: bill.userId,
+        });
 
-          optionPay.push({
-            money_id: bill.id,
-            amount: bill.amount,
-            quantity: quantyBill,
-            image: bill.image,
-            user_id: bill.userId,
-          });
-
-          money = money - bill.amount * quantyBill;
-        }
+        money = money - bill.amount * quantityMoney;
       }
     }
+
     setOptPay(optionPay);
     console.log('OPCION DE PAGO >>>>', optionPay);
 
@@ -159,38 +133,33 @@ const Buy = ({ route }) => {
         }
       }
     }
-
-    // console.log('optionsCoins', optionsCoins);
-    // console.log('optionsBill', optionsBills);
-
     setValueBuy(data.amount);
     reset();
   };
 
   const handleContinue = async () => {
-    for (let opt of optPay) {
-      if (opt.quantity > 0) {
-        console.log(
-          'PARAMS PARA DELETE:',
-          opt.user_id,
-          opt.money_id,
-          opt.quantity,
-        );
-        const algo = await deleteMoneyWallet(
-          opt.user_id,
-          opt.money_id,
-          opt.quantity,
-        );
-        console.log('ALGO>>>>>>>>>>>>>>>>', algo);
+    setValueBuy('');
+    setOptionBill('');
+    setOptionCoin('');
+    setIsLoading(true);
+    try {
+      for (let opt of optPay) {
+        if (opt.quantity > 0) {
+          await deleteMoneyWallet(opt.user_id, opt.money_id, opt.quantity);
+        }
       }
+      successNotification();
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
     }
-    console.log('Se elimino');
-    tomarDinero();
-    console.log('MONEY DB AL FINALIZAR BORRADO >>>', moneyDB);
   };
 
   const handleManualPay = () => {
-    navigation.navigate(SCREEN_NAME.ADD_REMOVE);
+    navigation.navigate(SCREEN_NAME.WALLET_MANUAL_PAYMENT, {
+      purchaseValue: valueBuy,
+    });
   };
 
   return (
@@ -198,7 +167,8 @@ const Buy = ({ route }) => {
       <ScrollView>
         <FormProvider {...methods}>
           <Text style={styles.amountAvaible}>
-            TU DINERO DISPONIBLE: ${totalAmount}
+            TU DINERO DISPONIBLE:{' '}
+            {totalAmount > 0 ? formatNum(totalAmount) : `$0`}
           </Text>
           <View style={styles.form}>
             <InputText
@@ -218,15 +188,13 @@ const Buy = ({ route }) => {
         </FormProvider>
         {valueBuy ? (
           <View>
-            <Text style={styles.valueBuy}>VALOR DE LA COMPRA: ${valueBuy}</Text>
+            <Text style={styles.valueBuy}>
+              VALOR DE LA COMPRA: {formatNum(valueBuy)}
+            </Text>
             <Text style={styles.optBuy}>FORMA DE PAGO SUGERIDA </Text>
             {!hasError ? (
               <>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-evenly',
-                  }}>
+                <View style={styles.optBuyContainer}>
                   {optionBill ? (
                     <View>
                       <FontAwesome5
@@ -258,17 +226,13 @@ const Buy = ({ route }) => {
                     </View>
                   ) : null}
                 </View>
-                <View
-                  style={{
-                    flex: 1,
-                    paddingTop: 20,
-                    flexDirection: 'row',
-                    justifyContent: 'space-around',
-                  }}>
+                <View style={styles.buttonsContainer}>
                   <SingleButton
                     icon="magic"
                     sizeIcon={22}
                     label="CONTINUAR"
+                    isLoading={isLoading}
+                    disabled={isLoading}
                     onPress={handleContinue}
                   />
                   <SingleButton
@@ -289,4 +253,4 @@ const Buy = ({ route }) => {
   );
 };
 
-export default Buy;
+export default WalletBuy;

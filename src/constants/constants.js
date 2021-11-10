@@ -17,6 +17,10 @@ export const SCREEN_NAME = {
   SIGN_LANGUAGE: 'SignLanguage',
   LOGOS: 'Logos',
   WISHES_FULLFILLED: 'WishesFulfilled',
+  SAVINGS_BUY: 'SavingsBuy',
+  WALLET_BUY: 'WalletBuy',
+  WALLET_MANUAL_PAYMENT: 'WalletManualPayment',
+  SAVINGS_MANUAL_PAYMENT: 'SavingsManualPayment',
 };
 
 // Title navigation style
@@ -39,6 +43,9 @@ export const NAVIGATION_TITLE = {
   HOW_TO_USE_APP: '¿COMO USAR LA APLICACION?',
   SIGN_LANGUAGE: 'LENGUAJE DE SEÑAS',
   LOGOS: 'LOGOS',
+  SAVINGS_BUY: 'COMPRAR CON AHORROS',
+  WALLET_BUY: 'COMPRAR CON BILLETERA',
+  WALLET_MANUAL_PAYMENT: 'PAGO CON BILLETERA',
 };
 
 export const NAVIGATION_ICONS = {
@@ -59,6 +66,8 @@ export const TABS_NAME = {
   ADD_REMOVE: 'AddRemoveTab',
   ABOUT: 'AboutTab',
   INFORMATION: 'InformationTab',
+  SAVINGS_BUY: 'SavingsBuyTab',
+  WALLET_BUY: 'WalletBuyTab',
 };
 
 export const labels = {

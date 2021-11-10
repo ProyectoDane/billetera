@@ -45,8 +45,10 @@ const CustomButton = ({
           style={styles.buyBtn}
           onPress={() =>
             isWallet
-              ? navigation.navigate(SCREEN_NAME.BUY, { isWallet: true })
-              : navigation.navigate(SCREEN_NAME.BUY, { isWallet: false })
+              ? navigation.navigate(SCREEN_NAME.WALLET_BUY, { isWallet: true })
+              : navigation.navigate(SCREEN_NAME.SAVINGS_BUY, {
+                  isWallet: false,
+                })
           }>
           <Text style={styles.btnText}>COMPRAR</Text>
         </TouchableOpacity>

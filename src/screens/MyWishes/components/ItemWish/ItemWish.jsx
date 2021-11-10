@@ -7,6 +7,10 @@ import * as Progress from 'react-native-progress/';
 import { colors, NAVIGATION_TITLE, SCREEN_NAME } from '../../../../constants';
 import { deleteWish, fulfillWish } from '../../../../dataAccess/Wish';
 import { styles } from './styles';
+import {
+  successDeleteWishNotification,
+  successFulfillWishNotification,
+} from '../../../../components/ToastNotification/successNotification';
 
 const ItemWish = ({ name, value, savings, wishId, testID, icon, done }) => {
   const [collapse, setCollapse] = useState(false);
@@ -41,6 +45,7 @@ const ItemWish = ({ name, value, savings, wishId, testID, icon, done }) => {
           onPress: async () => {
             await fulfillWish(wishId);
             navigation.dispatch(jumpToWishesFullfilled);
+            successFulfillWishNotification();
           },
         },
         {
@@ -57,6 +62,7 @@ const ItemWish = ({ name, value, savings, wishId, testID, icon, done }) => {
         text: 'CONTINUAR',
         onPress: async () => {
           await deleteWish(wishId);
+          successDeleteWishNotification();
         },
       },
       {
