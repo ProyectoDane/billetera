@@ -13,6 +13,7 @@ const Root = () => {
             setInitialBillsMoneyWallet,
             setActualBillsMoneyWallet,
             setInitialCoinsMoneyWallet,
+            setActualCoinsMoneyWallet,
             setTotalMoneyWallet,
             setActualMoneyWallet,
     } = useContext(AddRemoveContext)
@@ -74,13 +75,14 @@ const Root = () => {
       setInitialBillsMoneyWallet(totalBilletes);
       setActualBillsMoneyWallet(totalBilletes);
       setInitialCoinsMoneyWallet(totalCoins);
+      setActualCoinsMoneyWallet(totalCoins);
       setTotalMoneyWallet(total);
       setActualMoneyWallet(total);
     }
 
+    initialization();
     getMoney();
     getTotal();
-    initialization()
   },[])
 
     return (

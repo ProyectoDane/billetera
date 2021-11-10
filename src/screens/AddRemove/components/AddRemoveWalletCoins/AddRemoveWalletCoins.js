@@ -1,95 +1,158 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, ScrollView, Button } from 'react-native';
+import React, { useState, useContext, useEffect } from 'react';
+import { Text, View, ScrollView, Button, TouchableOpacity } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
 
 import ItemMoney from "../ItemMoney";
-
-import { getCoins } from "../../../../dataAccess/Money";
-import { getTotalWallet, getDineroWallet } from "../../../../dataAccess/Wallet";
-
+import { AddRemoveContext } from "../../AddRemoveContext";
+import { insertMoneyToWallet,deleteMoneyWallet } from "../../../../dataAccess/Wallet"
 
 
-const AddRemoveWalletBills = () => {
-  const [loading, setLoading] = useState(true)
-  const [coins, setCoins] = useState({});
-  const [total, setTotal] = useState(0)
+const MoneyObject = (elem) => {
+  const [total, setTotal] = useState(elem.quantity)
+
+  const add = () => setTotal(total + 1)
+  const sub = () => setTotal(total - 1)
+
+  return(
+      <View>
+        <ItemMoney 
+            {...elem}
+        />
+        <TouchableOpacity
+          disabled={elem.quantity === 0}
+          onPress={() => {
+              sub();
+              elem.handleSub();
+            }}
+        >
+          <AntDesign 
+            name="minuscircle"
+            size={20} 
+            color={elem.quantity === 0? "grey" : "red"} 
+          />
+        </TouchableOpacity>
+        <Text>{total}</Text>
+        <TouchableOpacity
+          onPress={() => {
+              add();
+              elem.handleAdd();
+            }}
+        >
+          <AntDesign 
+            name="pluscircle"
+            size={20} 
+            color="green" 
+          />
+        </TouchableOpacity>
+      </View>
+  )
+}
+
+const AddRemoveWalletCoins = () => {
+  const {
+    actualBills,
+    setActualBills,
+    actualCoins,
+    setActualCoins,
+    totalMoneyWallet,
+    setTotalMoneyWallet,
+    actualMoneyWallet,
+    setActualMoneyWallet,
+    initialCoinsMoneyWallet,
+    setInitialCoinsMoneyWallet,
+  } = useContext(AddRemoveContext)
+
 
   useEffect(() => {
+    if(totalMoneyWallet !== actualMoneyWallet){
+      setActualMoneyWallet(totalMoneyWallet)
+    }
+    setActualCoins(JSON.parse(JSON.stringify(initialCoinsMoneyWallet)));
+  }, [])
 
-    async function getTotal(){
-      const wallet = await getTotalWallet();
-      let total = 0;
-      let money = [];
+  const handleAdd = (elem, index) => {
+    let newCoins = actualCoins;
+    newCoins[index].quantity = newCoins[index].quantity + 1
+    setActualMoneyWallet(actualMoneyWallet + newCoins[index].amount)
+    setActualCoins(newCoins)
+  }
 
-      if(wallet){
-        money = await getDineroWallet(wallet.moneyId)
+  const handleSub = (elem, index) => {
+    let newCoins = actualCoins;
+    newCoins[index].quantity = newCoins[index].quantity - 1
+    setActualMoneyWallet(actualMoneyWallet - newCoins[index].amount)
+    setActualCoins(newCoins)
+  }
 
-        for(let property of money){
-          const { amount, quantity } = property
-          total = total + amount * quantity
-        }
+  const handleSave = async() => {
+    let addMoney = [];
+    let subMoney = [];
+    let moneyLength = actualCoins.length;
 
-        return {
-          money,
-          total
-        }
-      } 
+    for(let i = 0; moneyLength > i; i++){
+      let initialValue = initialCoinsMoneyWallet[i].quantity;
+      let actualValue = actualCoins[i].quantity;
 
-      return {
-          money,
-          total
+      if(initialValue > actualValue){
+        subMoney.push({
+          money_id: actualCoins[i].id,
+          quantity: initialValue - actualValue
+        })
+      }
+      if(actualValue > initialValue){
+        addMoney.push({
+          money_id: actualCoins[i].id,
+          quantity: actualValue - initialValue
+        })
       }
     }
 
-
-    async function getMoney(){
-      const monedas = await getCoins();
-      const { money, total } = await getTotal()
-
-      const idMoney = money.map(({moneyId}) => moneyId)
-
-      let totalMonedas = monedas.map((el) => {
-        let indexMoney = idMoney.indexOf(el.id);
-
-        if(indexMoney > -1){
-            el.quantity = el.quantity + money[indexMoney].quantity
-        }
-        return el
-      })
-
-      setTotal(total);
-      setCoins(totalMonedas);
-      setLoading(false)
+    if(addMoney.length){
+      for(let property in addMoney){
+        const { money_id, quantity } = property
+        await insertMoneyToWallet(1,money_id,quantity)
+      }
     }
 
-    getMoney();
-    getTotal();
-  }, [])
+    if(subMoney.length){
+      for(let property in addMoney){
+        const { money_id, quantity } = property
+        await deleteMoneyWallet(1,money_id,quantity)
+      }
+    }
 
+    setActualMoneyWallet(actualMoneyWallet)
+    setTotalMoneyWallet(actualMoneyWallet)
+    setInitialCoinsMoneyWallet(actualCoins)
+    setActualCoins(actualCoins)
+    setActualBills(actualBills)
+  }
 
   return (
-    <View>
+    <View style={{marginBottom: 60}}>
       <View>
-        <Text>Total ${total}</Text>
+        <Text>Total ${actualMoneyWallet}</Text>
+        <Button
+          title="Guardar"
+          onPress={() => handleSave()}
+        />
       </View>
       
       <ScrollView>
         {
-          loading ? 
-          <Text>Loading</Text> :
-          coins.map(elem => 
-              <ItemMoney 
-                  key={`${elem.id} + ${elem.image}`} 
-                  {...elem}
-              />)
+          actualCoins.map((elem, index) => {
+            return <MoneyObject 
+                    key={`name: ${elem.image} - amount: ${elem.amount}`}
+                    handleAdd={() => handleAdd(elem,index)} 
+                    handleSub={() => handleSub(elem,index)}
+                    {...elem}
+                  />
+            }
+          )
         }
       </ScrollView>
-        <Button
-          title="Guardar"
-        />
-      <View>
       </View>
-    </View>
   );
 };
 
-export default AddRemoveWalletBills;
+export default AddRemoveWalletCoins;
