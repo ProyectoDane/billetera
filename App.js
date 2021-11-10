@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import AppNavigation from './src/navigation/AppNavigation';
-import { initialization } from './src/db/queries';
+import { AddRemoveProvider } from './src/screens/AddRemove/AddRemoveContext';
+
+import Root from './Root';
+
 
 const App = () => {
-
-    useEffect(() => {
-        const init = async () => await initialization()
-
-        init()
-    }, [])
-
-    return <AppNavigation />
+ 
+    return (
+        <AddRemoveProvider>
+            <Root />
+        </AddRemoveProvider>
+    )
 };
 
 export default App;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
-import AddRemoveWallet from "../AddRemoveWallet"
+import AddRemoveWalletBills from "./components/AddRemoveWalletBills"
 
 import { getBills, getCoins } from "../../dataAccess/Money";
 import { getTotalWallet, getDineroWallet } from "../../dataAccess/Wallet";
@@ -14,7 +14,9 @@ const AddRemove = ({route}) => {
     <>
       {
         route.params.from === "wallet" ?
-        <AddRemoveWallet /> :
+        <>
+          <AddRemoveWalletBills />
+        </> :
         null
       }
     </>

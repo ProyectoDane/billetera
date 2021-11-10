@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useContext} from 'react';
 import {Text} from "react-native";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -15,7 +15,8 @@ import Profile from '../../screens/Profile';
 import NewWish from '../../screens/NewWish';
 import ProfileButton from '../../components/ProfileButton';
 import AddRemove from '../../screens/AddRemove';
-import AddRemoveWallet from '../../screens/AddRemoveWallet';
+import AddRemoveWalletBills from '../../screens/AddRemove/components/AddRemoveWalletBills';
+import AddRemoveWalletCoins from '../../screens/AddRemove/components/AddRemoveWalletCoins';
 import Buy from '../../screens/Buy';
 import Survey from '../../screens/Survey/Survey';
 import About from '../../screens/About/About';
@@ -25,6 +26,8 @@ import SignLanguage from '../../screens/SignLanguage';
 import Logos from '../../screens/Logos/Logos';
 import WishesFulfilled from '../../screens/WishesFulfilled';
 import NavTitle from '../../components/NavTitle';
+
+
 
 import {
   colors,
@@ -39,9 +42,12 @@ const MyWishesStack = createStackNavigator();
 const InformationStack = createStackNavigator();
 const WishesTopTab = createMaterialTopTabNavigator();
 const CalculatorStack = createStackNavigator();
-const MoneyTobTab = createStackNavigator();
+const MoneyTopTab = createMaterialTopTabNavigator();
 
-const HomeNavigation = () => (
+
+const HomeNavigation = () => {
+
+  return(
   <HomeStack.Navigator
     initialRouteName={SCREEN_NAME.HOME}
     screenOptions={{
@@ -80,7 +86,7 @@ const HomeNavigation = () => (
     />
     <HomeStack.Screen
       name={SCREEN_NAME.ADD_REMOVE}
-      component={AddRemove}
+      component={MoneyTab}
       options={{
         title: NAVIGATION_TITLE.ADD_REMOVE,
         headerTitle: () => <NavTitle />,
@@ -88,7 +94,7 @@ const HomeNavigation = () => (
     />
     <HomeStack.Screen
       name={SCREEN_NAME.ADD_REMOVE_WALLET}
-      component={AddRemoveWallet}
+      component={MoneyTab}
       options={{
         title: NAVIGATION_TITLE.ADD_REMOVE_WALLET,
         headerTitle: () => <NavTitle />,
@@ -102,7 +108,7 @@ const HomeNavigation = () => (
       }}
     />
   </HomeStack.Navigator>
-);
+)};
 
 const MyWishesNavigation = () => (
   <MyWishesStack.Navigator
@@ -142,6 +148,20 @@ const MyWishesNavigation = () => (
     />
   </MyWishesStack.Navigator>
 );
+
+const MoneyTab = () => (
+  <MoneyTopTab.Navigator>
+      <MoneyTopTab.Screen
+        name={NAVIGATION_TITLE.ADD_REMOVE_BILLS}
+        component={AddRemoveWalletBills}
+      />
+      <MoneyTopTab.Screen
+        name={NAVIGATION_TITLE.ADD_REMOVE_COINS}
+        component={AddRemoveWalletCoins}
+      />
+  </MoneyTopTab.Navigator>
+);
+
 
 const InformationNavigation = () => (
   <InformationStack.Navigator
@@ -235,19 +255,6 @@ const WishesTab = () => (
   </WishesTopTab.Navigator>
 );
 
-
-const MoneyTab = () => (
-  <MoneyTobTab.Navigator>
-    <MoneyTopTab.Screen 
-      name={NAVIGATION_TITLE.BILLETES}
-      component={<Text>Billetes</Text>}
-    />
-    <MoneyTopTab.Screen 
-      name={NAVIGATION_TITLE.MONEDAS}
-      component={<Text>Monedas</Text>}
-    />
-  </MoneyTobTab.Navigator>
-);
 
 const AppNavigation = () => (
   <NavigationContainer>

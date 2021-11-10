@@ -15,7 +15,8 @@ export const getBills = async () => {
           id,
           amount,
           image,
-          isCoins: !!isCoin
+          isCoins: !!isCoin,
+          quantity: 0
         })
     }
 
@@ -41,7 +42,8 @@ export const getCoins = async () => {
             id,
             amount,
             image,
-            isCoins: !!isCoin
+            isCoins: !!isCoin,
+            quantity: 0
           })
       }
 
