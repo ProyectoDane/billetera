@@ -23,7 +23,6 @@ import { formatNum } from '../../../utils/functions/formatNum';
 
 const WalletBuy = () => {
   const [valueBuy, setValueBuy] = useState();
-  const [totalAmount, setTotalAmount] = useState();
   const [optionBill, setOptionBill] = useState('');
   const [optionCoin, setOptionCoin] = useState('');
   const [optPay, setOptPay] = useState();
@@ -32,10 +31,11 @@ const WalletBuy = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigation = useNavigation();
+
   const { setTotalMoneyWallet, totalMoneyWallet } =
     useContext(AddRemoveContext);
 
-  const schema = BalanceSchema(totalAmount);
+  const schema = BalanceSchema(totalMoneyWallet);
   const methods = useForm({
     defaultValues: { amount: '' },
     resolver: yupResolver(schema),
@@ -43,20 +43,19 @@ const WalletBuy = () => {
 
   const { handleSubmit, reset } = methods;
 
-  // Total de money en la billetera
-  const calcTotalWallet = async () => {
-    const res = await getDineroWallet(1);
-    setTotalAmount(
-      res.map((item) => item.amount * item.quantity).reduce((a, b) => a + b, 0),
-    );
-  };
-
   const tomarDinero = async () => {
-    // ESTO SE ORDENA DESDE LA BD DIRECTAMENTE!!!! VER CON GONZA
     const res = await getDineroWallet();
 
-    let dineroBillDB = res.filter((item) => item.isCoins === 0).reverse();
-    let dineroCoinDB = res.filter((item) => item.isCoins === 1).reverse();
+    let dineroBillDB = res
+      .filter((item) => item.isCoins === 0)
+      .sort(function (a, b) {
+        return b.id - a.id;
+      });
+    let dineroCoinDB = res
+      .filter((item) => item.isCoins === 1)
+      .sort(function (a, b) {
+        return b.id - a.id;
+      });
 
     let dineroDB = [...dineroBillDB, ...dineroCoinDB];
     // console.log('dinero Coin DB', dineroCoinDB);
@@ -64,22 +63,9 @@ const WalletBuy = () => {
     setMoneyDB(dineroDB);
   };
 
-  const crearDinero = async () => {
-    await insertMoneyToWallet(1, 3, 1);
-    await insertMoneyToWallet(1, 4, 2);
-    await insertMoneyToWallet(1, 5, 1);
-    await insertMoneyToWallet(1, 6, 3);
-    await insertMoneyToWallet(1, 11, 3);
-    await insertMoneyToWallet(1, 14, 3);
-    await insertMoneyToWallet(1, 15, 3);
-  };
-
   useEffect(() => {
-    // Se creo dinero manualmente para realizar pruebas
-    // crearDinero();
     // Obtiene y ordena el dinero de la billetera
     tomarDinero();
-    calcTotalWallet();
   }, [isLoading]);
 
   let optionPay = [];
