@@ -1,23 +1,13 @@
-import React, { useEffect } from 'react';
-import { View } from 'react-native';
-import FlashMessage from 'react-native-flash-message';
+import React from 'react';
+import Root from './Root';
 
-import AppNavigation from './src/navigation/AppNavigation';
-import { initialization } from './src/db/queries';
+import { AddRemoveProvider } from './src/screens/AddRemove/AddRemoveContext';
 
 const App = () => {
-  useEffect(() => {
-    const init = async () => await initialization();
-
-    init();
-  }, []);
-
   return (
-    <View style={{ flex: 1 }}>
-      <AppNavigation />
-      <FlashMessage position="top" />
-    </View>
+    <AddRemoveProvider>
+      <Root />
+    </AddRemoveProvider>
   );
 };
-
 export default App;

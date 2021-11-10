@@ -1,1 +1,59 @@
-[{"E:\\Programacion\\Intive\\dane_billetera_JS\\src\\dataAccess\\Money.js":"1","E:\\Programacion\\Intive\\dane_billetera_JS\\src\\dataAccess\\Wallet.js":"2","E:\\Programacion\\Intive\\dane_billetera_JS\\src\\db\\queries.js":"3"},{"size":750,"mtime":1635886432642,"results":"4","hashOfConfig":"5"},{"size":3022,"mtime":1635886432643,"results":"6","hashOfConfig":"5"},{"size":2295,"mtime":1635886432643,"results":"7","hashOfConfig":"5"},{"filePath":"8","messages":"9","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},"i581ev",{"filePath":"10","messages":"11","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},{"filePath":"12","messages":"13","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},"E:\\Programacion\\Intive\\dane_billetera_JS\\src\\dataAccess\\Money.js",[],"E:\\Programacion\\Intive\\dane_billetera_JS\\src\\dataAccess\\Wallet.js",[],"E:\\Programacion\\Intive\\dane_billetera_JS\\src\\db\\queries.js",[]]
+[
+  {
+    "E:\\Programacion\\Intive\\dane_billetera_JS\\src\\dataAccess\\Money.js": "1",
+    "E:\\Programacion\\Intive\\dane_billetera_JS\\src\\dataAccess\\Wallet.js": "2",
+    "E:\\Programacion\\Intive\\dane_billetera_JS\\src\\db\\queries.js": "3"
+  },
+  {
+    "size": 750,
+    "mtime": 1635886432642,
+    "results": "4",
+    "hashOfConfig": "5"
+  },
+  {
+    "size": 3022,
+    "mtime": 1635886432643,
+    "results": "6",
+    "hashOfConfig": "5"
+  },
+  {
+    "size": 2295,
+    "mtime": 1635886432643,
+    "results": "7",
+    "hashOfConfig": "5"
+  },
+  {
+    "filePath": "8",
+    "messages": "9",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  "i581ev",
+  {
+    "filePath": "10",
+    "messages": "11",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  {
+    "filePath": "12",
+    "messages": "13",
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0
+  },
+  "E:\\Programacion\\Intive\\dane_billetera_JS\\src\\dataAccess\\Money.js",
+  [],
+  "E:\\Programacion\\Intive\\dane_billetera_JS\\src\\dataAccess\\Wallet.js",
+  [],
+  "E:\\Programacion\\Intive\\dane_billetera_JS\\src\\db\\queries.js",
+  []
+]

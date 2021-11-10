@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text } from 'react-native';
 
+import { AddRemoveContext } from '../AddRemove/AddRemoveContext';
 import { styles } from './styles';
 import CustomButton from '../../components/CustomButton';
 import Layout from '../../components/Layout';
 import { SCREEN_NAME } from '../../constants';
-import useCalcTotal from './hooks/useCalcTotal';
 
 const HomeScreen = ({ navigation }) => {
-  const { amountWallet, amountSavings } = useCalcTotal();
+  const { totalMoneyWallet } = useContext(AddRemoveContext);
 
   return (
     <Layout hideTextFooter>
@@ -21,7 +21,7 @@ const HomeScreen = ({ navigation }) => {
           <View style={styles.button}>
             <CustomButton
               label="MI BILLETERA"
-              amount={amountWallet}
+              amount={totalMoneyWallet}
               icon="wallet"
               sizeIcon={90}
               onPress={() => navigation.navigate(SCREEN_NAME.MY_WALLET)}
@@ -34,7 +34,7 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.button}>
           <CustomButton
             label="MIS AHORROS"
-            amount={amountSavings}
+            // amount={amountSavings}
             icon="piggy-bank"
             sizeIcon={90}
             onPress={() => navigation.navigate(SCREEN_NAME.MY_SAVINGS)}

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
+import { Text } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
@@ -13,7 +14,8 @@ import MySavings from '../../screens/MySavings';
 import Profile from '../../screens/Profile';
 import NewWish from '../../screens/NewWish';
 import ProfileButton from '../../components/ProfileButton';
-import AddRemove from '../../screens/AddRemove';
+import AddRemoveWalletBills from '../../screens/AddRemove/components/AddRemoveWalletBills';
+import AddRemoveWalletCoins from '../../screens/AddRemove/components/AddRemoveWalletCoins';
 import Survey from '../../screens/Survey/Survey';
 import About from '../../screens/About/About';
 import Information from '../../screens/Information';
@@ -40,82 +42,93 @@ const MyWishesStack = createStackNavigator();
 const InformationStack = createStackNavigator();
 const WishesTopTab = createMaterialTopTabNavigator();
 const CalculatorStack = createStackNavigator();
+const MoneyTopTab = createMaterialTopTabNavigator();
 
-const HomeNavigation = () => (
-  <HomeStack.Navigator
-    initialRouteName={SCREEN_NAME.HOME}
-    screenOptions={{
-      headerStyle: { backgroundColor: colors.menu, elevation: 0 },
-      headerTintColor: colors.white,
-      headerRight: () => <ProfileButton sizeIcon={18} />,
-      headerTitleAlign: 'center',
-    }}>
-    <HomeStack.Screen
-      name={SCREEN_NAME.HOME}
-      component={HomeScreen}
-      options={{
-        title: '',
-      }}
-    />
-    <HomeStack.Screen
-      name={SCREEN_NAME.MY_WALLET}
-      component={MyWallet}
-      options={{
-        title: NAVIGATION_TITLE.MY_WALLET,
-      }}
-    />
-    <HomeStack.Screen
-      name={SCREEN_NAME.MY_SAVINGS}
-      component={MySavings}
-      options={{
-        title: NAVIGATION_TITLE.MY_SAVINGS,
-      }}
-    />
-    <HomeStack.Screen
-      name={SCREEN_NAME.WALLET_BUY}
-      component={WalletBuy}
-      options={{
-        title: NAVIGATION_TITLE.WALLET_BUY,
-      }}
-    />
-    <HomeStack.Screen
-      name={SCREEN_NAME.SAVINGS_BUY}
-      component={SavingsBuy}
-      options={{
-        title: NAVIGATION_TITLE.SAVINGS_BUY,
-      }}
-    />
-    <HomeStack.Screen
-      name={SCREEN_NAME.ADD_REMOVE}
-      component={AddRemove}
-      options={{
-        title: NAVIGATION_TITLE.ADD_REMOVE,
-        headerTitle: () => <NavTitle />,
-      }}
-    />
-    <HomeStack.Screen
-      name={SCREEN_NAME.WALLET_MANUAL_PAYMENT}
-      component={WalletManualPayment}
-      options={{
-        title: NAVIGATION_TITLE.WALLET_MANUAL_PAYMENT,
-      }}
-    />
-    <HomeStack.Screen
-      name={SCREEN_NAME.SAVINGS_MANUAL_PAYMENT}
-      component={SavingsManualPayment}
-      options={{
-        title: NAVIGATION_TITLE.SAVINGS_MANUAL_PAYMENT,
-      }}
-    />
-    <HomeStack.Screen
-      name={SCREEN_NAME.PROFILE}
-      component={Profile}
-      options={{
-        title: NAVIGATION_TITLE.PROFILE,
-      }}
-    />
-  </HomeStack.Navigator>
-);
+const HomeNavigation = () => {
+  return (
+    <HomeStack.Navigator
+      initialRouteName={SCREEN_NAME.HOME}
+      screenOptions={{
+        headerStyle: { backgroundColor: colors.menu, elevation: 0 },
+        headerTintColor: colors.white,
+        headerRight: () => <ProfileButton sizeIcon={18} />,
+        headerTitleAlign: 'center',
+      }}>
+      <HomeStack.Screen
+        name={SCREEN_NAME.HOME}
+        component={HomeScreen}
+        options={{
+          title: '',
+        }}
+      />
+      <HomeStack.Screen
+        name={SCREEN_NAME.MY_WALLET}
+        component={MyWallet}
+        options={{
+          title: NAVIGATION_TITLE.MY_WALLET,
+        }}
+      />
+      <HomeStack.Screen
+        name={SCREEN_NAME.MY_SAVINGS}
+        component={MySavings}
+        options={{
+          title: NAVIGATION_TITLE.MY_SAVINGS,
+        }}
+      />
+      <HomeStack.Screen
+        name={SCREEN_NAME.WALLET_BUY}
+        component={WalletBuy}
+        options={{
+          title: NAVIGATION_TITLE.WALLET_BUY,
+        }}
+      />
+      <HomeStack.Screen
+        name={SCREEN_NAME.SAVINGS_BUY}
+        component={SavingsBuy}
+        options={{
+          title: NAVIGATION_TITLE.SAVINGS_BUY,
+        }}
+      />
+      <HomeStack.Screen
+        name={SCREEN_NAME.ADD_REMOVE}
+        component={MoneyTab}
+        options={{
+          title: NAVIGATION_TITLE.ADD_REMOVE,
+          headerTitle: () => <NavTitle />,
+        }}
+      />
+      <HomeStack.Screen
+        name={SCREEN_NAME.ADD_REMOVE_WALLET}
+        component={MoneyTab}
+        options={{
+          title: NAVIGATION_TITLE.ADD_REMOVE_WALLET,
+          headerTitle: () => <NavTitle />,
+        }}
+      />
+      <HomeStack.Screen
+        name={SCREEN_NAME.WALLET_MANUAL_PAYMENT}
+        component={WalletManualPayment}
+        options={{
+          title: NAVIGATION_TITLE.WALLET_MANUAL_PAYMENT,
+        }}
+      />
+      <HomeStack.Screen
+        name={SCREEN_NAME.SAVINGS_MANUAL_PAYMENT}
+        component={SavingsManualPayment}
+        options={{
+          title: NAVIGATION_TITLE.SAVINGS_MANUAL_PAYMENT,
+        }}
+      />
+      <HomeStack.Screen
+        name={SCREEN_NAME.PROFILE}
+        component={Profile}
+        options={{
+          title: NAVIGATION_TITLE.PROFILE,
+        }}
+      />
+    </HomeStack.Navigator>
+  );
+};
 
 const MyWishesNavigation = () => (
   <MyWishesStack.Navigator
@@ -154,6 +167,19 @@ const MyWishesNavigation = () => (
       }}
     />
   </MyWishesStack.Navigator>
+);
+
+const MoneyTab = () => (
+  <MoneyTopTab.Navigator>
+    <MoneyTopTab.Screen
+      name={NAVIGATION_TITLE.ADD_REMOVE_BILLS}
+      component={AddRemoveWalletBills}
+    />
+    <MoneyTopTab.Screen
+      name={NAVIGATION_TITLE.ADD_REMOVE_COINS}
+      component={AddRemoveWalletCoins}
+    />
+  </MoneyTopTab.Navigator>
 );
 
 const InformationNavigation = () => (

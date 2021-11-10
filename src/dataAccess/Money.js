@@ -5,14 +5,17 @@ export const getBills = async () => {
     const result = await executeSelect(
       `SELECT * FROM Money WHERE isCoins = 0 ORDER BY amount DESC, id DESC`,
     );
+
     for (let i = 0; i < result.length; i++) {
       let item = result.item(i);
       const { id, amount, image, isCoins: isCoin } = item;
+
       bills.push({
         id,
         amount,
         image,
         isCoins: !!isCoin,
+        quantity: 0,
       });
     }
   } catch (err) {
@@ -26,14 +29,17 @@ export const getCoins = async () => {
     const result = await executeSelect(
       `SELECT * FROM Money WHERE isCoins = 1 ORDER BY amount DESC, id DESC`,
     );
+
     for (let i = 0; i < result.length; i++) {
       let item = result.item(i);
       const { id, amount, image, isCoins: isCoin } = item;
+
       coins.push({
         id,
         amount,
         image,
         isCoins: !!isCoin,
+        quantity: 0,
       });
     }
   } catch (err) {

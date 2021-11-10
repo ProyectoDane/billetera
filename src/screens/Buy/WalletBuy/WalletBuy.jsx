@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -15,6 +15,7 @@ import {
   getDineroWallet,
   insertMoneyToWallet,
 } from '../../../dataAccess/Wallet';
+import { AddRemoveContext } from '../../AddRemove/AddRemoveContext';
 
 import { styles } from './styles';
 import { colors, SCREEN_NAME } from '../../../constants';
@@ -31,6 +32,8 @@ const WalletBuy = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigation = useNavigation();
+  const { setTotalMoneyWallet, totalMoneyWallet } =
+    useContext(AddRemoveContext);
 
   const schema = BalanceSchema(totalAmount);
   const methods = useForm({
@@ -146,6 +149,7 @@ const WalletBuy = () => {
       for (let opt of optPay) {
         if (opt.quantity > 0) {
           await deleteMoneyWallet(opt.user_id, opt.money_id, opt.quantity);
+          setTotalMoneyWallet(totalMoneyWallet - opt.amount * opt.quantity);
         }
       }
       successNotification();
@@ -168,7 +172,7 @@ const WalletBuy = () => {
         <FormProvider {...methods}>
           <Text style={styles.amountAvaible}>
             TU DINERO DISPONIBLE:{' '}
-            {totalAmount > 0 ? formatNum(totalAmount) : `$0`}
+            {totalMoneyWallet > 0 ? formatNum(totalMoneyWallet) : `$0`}
           </Text>
           <View style={styles.form}>
             <InputText
