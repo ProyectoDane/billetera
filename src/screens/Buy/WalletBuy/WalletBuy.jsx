@@ -85,7 +85,7 @@ const WalletBuy = () => {
   let quantityMoney = 0;
 
   const onSubmit = (data) => {
-    console.log('MONEY DB AL INCIO >>>', moneyDB);
+    // console.log('MONEY DB AL INCIO >>>', moneyDB);
     setOptionBill('');
     setOptionCoin('');
     // data trae los datos del formulario
@@ -114,7 +114,7 @@ const WalletBuy = () => {
     }
 
     setOptPay(optionPay);
-    console.log('OPCION DE PAGO >>>>', optionPay);
+    // console.log('OPCION DE PAGO >>>>', optionPay);
 
     if (money > 0) {
       setHasError(

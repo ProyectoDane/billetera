@@ -27,6 +27,10 @@ export const styles = StyleSheet.create({
     paddingTop: 15,
     textAlign: 'center',
   },
+  optBuyContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
   optBuy: {
     fontSize: 17,
     textAlign: 'center',
@@ -45,5 +49,11 @@ export const styles = StyleSheet.create({
   icon: {
     alignSelf: 'center',
     padding: 5,
+  },
+  buttonsContainer: {
+    flex: 1,
+    paddingTop: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
   },
 });

@@ -24,6 +24,8 @@ import WishesFulfilled from '../../screens/WishesFulfilled';
 import NavTitle from '../../components/NavTitle';
 import WalletBuy from '../../screens/Buy/WalletBuy';
 import SavingsBuy from '../../screens/Buy/SavingsBuy';
+import WalletManualPayment from '../../screens/AddRemove/WalletManualPayment';
+import SavingsManualPayment from '../../screens/AddRemove/SavingsManualPayment';
 
 import {
   colors,
@@ -31,7 +33,6 @@ import {
   NAVIGATION_TITLE,
   TABS_NAME,
 } from '../../constants';
-import WalletManualPayment from '../../screens/AddRemove/WalletManualPayment';
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -96,8 +97,14 @@ const HomeNavigation = () => (
       name={SCREEN_NAME.WALLET_MANUAL_PAYMENT}
       component={WalletManualPayment}
       options={{
-        title: NAVIGATION_TITLE.ADD_WALLET_MANUAL_PAYMENT,
-        headerTitle: () => <NavTitle />,
+        title: NAVIGATION_TITLE.WALLET_MANUAL_PAYMENT,
+      }}
+    />
+    <HomeStack.Screen
+      name={SCREEN_NAME.SAVINGS_MANUAL_PAYMENT}
+      component={SavingsManualPayment}
+      options={{
+        title: NAVIGATION_TITLE.SAVINGS_MANUAL_PAYMENT,
       }}
     />
     <HomeStack.Screen
