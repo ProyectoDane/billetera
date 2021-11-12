@@ -108,8 +108,8 @@ const AddRemoveWalletBills = () => {
     }
 
     if (subMoney.length) {
-      for (let property in addMoney) {
-        const { money_id, quantity } = addMoney[property];
+      for (let property in subMoney) {
+        const { money_id, quantity } = subMoney[property];
         await deleteMoneyWallet(1, money_id, quantity);
       }
     }

@@ -5,6 +5,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 import styles from './styles';
 import { colors, SCREEN_NAME } from '../../constants/index';
+import { formatNum } from '../../utils/functions/formatNum';
 
 const CustomButton = ({
   icon,
@@ -27,7 +28,7 @@ const CustomButton = ({
       <View style={styles.iconTextGroup}>
         <View style={styles.text}>
           <Text style={styles.label}>{label}</Text>
-          <Text style={styles.amount}>${amount}</Text>
+          <Text style={styles.amount}>{formatNum(amount)}</Text>
         </View>
         <View style={styles.icon}>
           <FontAwesome5 name={icon} size={sizeIcon} color={colors[colorIcon]} />
