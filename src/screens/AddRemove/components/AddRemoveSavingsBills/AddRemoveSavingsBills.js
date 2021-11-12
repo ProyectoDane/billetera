@@ -4,7 +4,7 @@ import { AntDesign } from '@expo/vector-icons';
 
 import ItemMoney from "../ItemMoney";
 import { AddRemoveContext } from "../../AddRemoveContext";
-import { insertMoneyToWallet,deleteMoneyWallet } from "../../../../dataAccess/Wallet"
+import { insertMoneyToSavings,deleteMoneySavings } from "../../../../dataAccess/Savings"
 
 
 const MoneyObject = (elem) => {
@@ -48,61 +48,60 @@ const MoneyObject = (elem) => {
   )
 }
 
-const AddRemoveWalletBills = () => {
+const AddRemoveSavingsBills = () => {
   const {
-    actualBills,
-    setActualBills,
-    actualCoins,
-    setActualCoins,
-    totalMoneyWallet,
-    setTotalMoneyWallet,
-    actualMoneyWallet,
-    setActualMoneyWallet,
-    initialBillsMoneyWallet,
-    setInitialBillsMoneyWallet,
+    actualBillsSavings,
+    setActualBillsSavings,
+    setActualCoinsSavings,
+    actualCoinsSavings,
+    totalMoneySavings,
+    setTotalMoneySavings,
+    actualMoneySavings,
+    setActualMoneySavings,
+    initialBillsMoneySavings,
+    setInitialBillsMoneySavings,
   } = useContext(AddRemoveContext)
 
 
-
   useEffect(() => {
-    if(totalMoneyWallet !== actualMoneyWallet){
-      setActualMoneyWallet(totalMoneyWallet)
+    if(totalMoneySavings !== actualMoneySavings){
+      setActualMoneySavings(totalMoneySavings)
     }
-    setActualBills(JSON.parse(JSON.stringify(initialBillsMoneyWallet)));
+    setActualBillsSavings(JSON.parse(JSON.stringify(initialBillsMoneySavings)));
   }, [])
 
   const handleAdd = (elem, index) => {
-    let newBills = actualBills;
+    let newBills = actualBillsSavings;
     newBills[index].quantity = newBills[index].quantity + 1
-    setActualMoneyWallet(actualMoneyWallet + newBills[index].amount)
-    setActualBills(newBills)
+    setActualMoneySavings(actualMoneySavings + newBills[index].amount)
+    setActualBillsSavings(newBills)
   }
 
   const handleSub = (elem, index) => {
-    let newBills = actualBills;
+    let newBills = actualBillsSavings;
     newBills[index].quantity = newBills[index].quantity - 1
-    setActualMoneyWallet(actualMoneyWallet - newBills[index].amount)
-    setActualBills(newBills)
+    setActualMoneySavings(actualMoneySavings - newBills[index].amount)
+    setActualBillsSavings(newBills)
   }
 
   const handleSave = async() => {
     let addMoney = [];
     let subMoney = [];
-    let moneyLength = actualBills.length;
+    let moneyLength = actualBillsSavings.length;
 
     for(let i = 0; moneyLength > i; i++){
-      let initialValue = initialBillsMoneyWallet[i].quantity;
-      let actualValue = actualBills[i].quantity;
+      let initialValue = initialBillsMoneySavings[i].quantity;
+      let actualValue = actualBillsSavings[i].quantity;
 
       if(initialValue > actualValue){
         subMoney.push({
-          money_id: actualBills[i].id,
+          money_id: actualBillsSavings[i].id,
           quantity: initialValue - actualValue
         })
       }
       if(actualValue > initialValue){
         addMoney.push({
-          money_id: actualBills[i].id,
+          money_id: actualBillsSavings[i].id,
           quantity: actualValue - initialValue
         })
       }
@@ -111,33 +110,37 @@ const AddRemoveWalletBills = () => {
     if(addMoney.length){
       for(let property in addMoney){
         const { money_id, quantity } = addMoney[property]
-        await insertMoneyToWallet(1,money_id,quantity)
+        await insertMoneyToSavings(1,money_id,quantity)
       }
     }
 
     if(subMoney.length){
       for(let property in addMoney){
         const { money_id, quantity } = addMoney[property]
-        await deleteMoneyWallet(1,money_id,quantity)
+        await deleteMoneySavings(1,money_id,quantity)
       }
     }
 
-    setActualMoneyWallet(actualMoneyWallet)
-    setTotalMoneyWallet(actualMoneyWallet)
-    setInitialBillsMoneyWallet(actualBills)
-    setActualBills(actualBills)
-    setActualCoins(actualCoins)
+    setActualMoneySavings(actualMoneySavings)
+    setTotalMoneySavings(actualMoneySavings)
+    setInitialBillsMoneySavings(actualBillsSavings)
+    setActualBillsSavings(actualBillsSavings)
+    setActualCoinsSavings(actualCoinsSavings)
   }
 
   return (
     <View style={{marginBottom: 60}}>
       <View>
-        <Text>Total ${actualMoneyWallet}</Text>
+        <Text>Total ${actualMoneySavings}</Text>
+        <Button
+          title="Guardar"
+          onPress={() => handleSave()}
+        />
       </View>
       
       <ScrollView>
         {
-          actualBills.map((elem, index) => {
+          actualBillsSavings.map((elem, index) => {
             return <MoneyObject 
                     key={`name: ${elem.image} - amount: ${elem.amount}`}
                     handleAdd={() => handleAdd(elem,index)} 
@@ -148,15 +151,8 @@ const AddRemoveWalletBills = () => {
           )
         }
       </ScrollView>
-      <View>
-        <Button
-          title="Guardar"
-          onPress={() => handleSave()}
-        />
-      </View>
-
       </View>
   );
 };
 
-export default AddRemoveWalletBills;
+export default AddRemoveSavingsBills;

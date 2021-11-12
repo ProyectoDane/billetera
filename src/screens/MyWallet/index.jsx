@@ -1,37 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { View } from 'react-native';
 
 import Layout from '../../components/Layout';
 import WalletBalance from "./WalletBalance";
 import WalletCarrousel from './WalletCarrousel';
+import { AddRemoveContext } from "../AddRemove/AddRemoveContext";
 import { styles } from '../HomeScreen/styles';
 
-import { getTotalWallet } from "../../dataAccess/Wallet";
 
 export default function MyWallet() {
-  const [balance, setBalance] = useState(0)
-  const [bills, setBills] = useState(null)
-  const [coins, setCoins] = useState(null)
+  const {
+    totalMoneyWallet,
+    actualBillsMoneyWallet,
+    initialCoinsMoneyWallet
+  } = useContext(AddRemoveContext)
 
-  useEffect(() => {
-    async function getTotalWalletData(){
-      const total = await getTotalWallet()
+  const handleMoney = (money) => {
+    let finalArray = [];
 
-      if(total){
-        //Do something with array result
+    for(let property of money){
+      if(property.quantity > 0){
+        finalArray.push(property)
       }
     }
 
-    getTotalWallet()
-  }, [])
+    return finalArray;
+  }
+
 
   return (
     <Layout>
       <View style={styles.wrapperBalance}>
-        <WalletBalance total={balance} />
+        <WalletBalance total={totalMoneyWallet} />
       </View>
-      <WalletCarrousel moneyType="billetes" dataCarrousel={bills}/>
-      <WalletCarrousel moneyType="monedas" dataCarrousel={coins}/>
+      <WalletCarrousel moneyType="billetes" dataCarrousel={handleMoney(actualBillsMoneyWallet)}/>
+      <WalletCarrousel moneyType="monedas" dataCarrousel={handleMoney(initialCoinsMoneyWallet)}/>
     </Layout>
   );
 }

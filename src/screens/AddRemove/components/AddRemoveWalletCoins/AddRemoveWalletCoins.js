@@ -109,14 +109,14 @@ const AddRemoveWalletCoins = () => {
 
     if(addMoney.length){
       for(let property in addMoney){
-        const { money_id, quantity } = property
+        const { money_id, quantity } = addMoney[property]
         await insertMoneyToWallet(1,money_id,quantity)
       }
     }
 
     if(subMoney.length){
       for(let property in addMoney){
-        const { money_id, quantity } = property
+        const { money_id, quantity } = addMoney[property]
         await deleteMoneyWallet(1,money_id,quantity)
       }
     }
@@ -130,28 +130,30 @@ const AddRemoveWalletCoins = () => {
 
   return (
     <View style={{marginBottom: 60}}>
-      <View>
-        <Text>Total ${actualMoneyWallet}</Text>
-        <Button
-          title="Guardar"
-          onPress={() => handleSave()}
-        />
-      </View>
-      
-      <ScrollView>
-        {
-          actualCoins.map((elem, index) => {
-            return <MoneyObject 
-                    key={`name: ${elem.image} - amount: ${elem.amount}`}
-                    handleAdd={() => handleAdd(elem,index)} 
-                    handleSub={() => handleSub(elem,index)}
-                    {...elem}
-                  />
-            }
-          )
-        }
-      </ScrollView>
-      </View>
+        <View>
+          <Text>Total ${actualMoneyWallet}</Text>
+
+        </View>
+        <ScrollView>
+          {
+            actualCoins.map((elem, index) => {
+              return <MoneyObject 
+                      key={`name: ${elem.image} - amount: ${elem.amount}`}
+                      handleAdd={() => handleAdd(elem,index)} 
+                      handleSub={() => handleSub(elem,index)}
+                      {...elem}
+                    />
+              }
+            )
+          }
+        </ScrollView>
+        <View>
+          <Button
+            title="Guardar"
+            onPress={() => handleSave()}
+          />
+        </View>
+    </View>
   );
 };
 

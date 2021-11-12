@@ -9,7 +9,7 @@ import { SCREEN_NAME } from '../../constants';
 import { savings } from '../../mockData/deseos';
 
 const HomeScreen = ({ navigation }) => {
-  const { totalMoneyWallet } = useContext(AddRemoveContext)
+  const { totalMoneyWallet, totalMoneySavings } = useContext(AddRemoveContext)
 
 
   return (
@@ -35,7 +35,7 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.button}>
           <CustomButton
             label="MIS AHORROS"
-            amount={savings}
+            amount={totalMoneySavings}
             icon="piggy-bank"
             sizeIcon={90}
             onPress={() => navigation.navigate(SCREEN_NAME.MY_SAVINGS)}

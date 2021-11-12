@@ -17,6 +17,8 @@ import ProfileButton from '../../components/ProfileButton';
 import AddRemove from '../../screens/AddRemove';
 import AddRemoveWalletBills from '../../screens/AddRemove/components/AddRemoveWalletBills';
 import AddRemoveWalletCoins from '../../screens/AddRemove/components/AddRemoveWalletCoins';
+import AddRemoveSavingsBills from '../../screens/AddRemove/components/AddRemoveSavingsBills';
+import AddRemoveSavingsCoins from '../../screens/AddRemove/components/AddRemoveSavingsCoins';
 import Buy from '../../screens/Buy';
 import Survey from '../../screens/Survey/Survey';
 import About from '../../screens/About/About';
@@ -43,6 +45,7 @@ const InformationStack = createStackNavigator();
 const WishesTopTab = createMaterialTopTabNavigator();
 const CalculatorStack = createStackNavigator();
 const MoneyTopTab = createMaterialTopTabNavigator();
+const MoneyTopTabSavings = createMaterialTopTabNavigator();
 
 
 const HomeNavigation = () => {
@@ -97,6 +100,14 @@ const HomeNavigation = () => {
       component={MoneyTab}
       options={{
         title: NAVIGATION_TITLE.ADD_REMOVE_WALLET,
+        headerTitle: () => <NavTitle />,
+      }}
+    />
+    <HomeStack.Screen
+      name={SCREEN_NAME.ADD_REMOVE_SAVINGS}
+      component={MoneyTabSavings}
+      options={{
+        title: NAVIGATION_TITLE.ADD_REMOVE_SAVINGS,
         headerTitle: () => <NavTitle />,
       }}
     />
@@ -160,6 +171,19 @@ const MoneyTab = () => (
         component={AddRemoveWalletCoins}
       />
   </MoneyTopTab.Navigator>
+);
+
+const MoneyTabSavings = () => (
+  <MoneyTopTabSavings.Navigator>
+      <MoneyTopTabSavings.Screen
+        name={NAVIGATION_TITLE.ADD_REMOVE_BILLS_SAVINGS}
+        component={AddRemoveSavingsBills}
+      />
+      <MoneyTopTabSavings.Screen
+        name={NAVIGATION_TITLE.ADD_REMOVE_COINS_SAVINGS}
+        component={AddRemoveSavingsCoins}
+      />
+  </MoneyTopTabSavings.Navigator>
 );
 
 
