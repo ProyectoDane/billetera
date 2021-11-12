@@ -228,7 +228,7 @@ const WalletBuy = () => {
                   <SingleButton
                     icon="magic"
                     sizeIcon={22}
-                    label="PAGO MANUAL"
+                    label="ELEGILOS"
                     onPress={handleManualPay}
                   />
                 </View>
