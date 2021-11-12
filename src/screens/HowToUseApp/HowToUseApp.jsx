@@ -3,8 +3,9 @@ import { Text, View } from 'react-native';
 
 const HowToUseApp = () => {
   return (
-    <View>
-      <Text>¿Como usar la App?</Text>
+    <View style={{ flex: 1, justifyContent: 'center' }}>
+      <Text style={{ textAlign: 'center' }}>¿ COMO USAR LA APP ?</Text>
+      <Text style={{ textAlign: 'center' }}>PROXIMAMENTE</Text>
     </View>
   );
 };

@@ -7,6 +7,11 @@ import * as Progress from 'react-native-progress/';
 import { colors, NAVIGATION_TITLE, SCREEN_NAME } from '../../../../constants';
 import { deleteWish, fulfillWish } from '../../../../dataAccess/Wish';
 import { styles } from './styles';
+import {
+  successDeleteWishNotification,
+  successFulfillWishNotification,
+} from '../../../../components/ToastNotification/successNotification';
+import { formatNum } from '../../../../utils/functions/formatNum';
 
 const ItemWish = ({ name, value, savings, wishId, testID, icon, done }) => {
   const [collapse, setCollapse] = useState(false);
@@ -17,6 +22,10 @@ const ItemWish = ({ name, value, savings, wishId, testID, icon, done }) => {
   const textColor = {
     color: missingMoney === 0 && done === 0 ? colors.primary : colors.disable,
   };
+  const editTextColor = {
+    color: missingMoney === 0 && done === 1 ? colors.disable : colors.primary,
+  };
+
   const navigation = useNavigation();
   const jumpToWishesFullfilled = TabActions.jumpTo(
     NAVIGATION_TITLE.WISHES_FULLFILLED,
@@ -34,13 +43,14 @@ const ItemWish = ({ name, value, savings, wishId, testID, icon, done }) => {
   const handleAchieve = () => {
     Alert.alert(
       'ESTAS POR CUMPLIR TU DESEO',
-      ` TUS AHORROS RESTANTES SERAN $${remainingMoney}`,
+      ` TUS AHORROS RESTANTES SERAN ${formatNum(remainingMoney)}`,
       [
         {
           text: 'CONTINUAR',
           onPress: async () => {
             await fulfillWish(wishId);
             navigation.dispatch(jumpToWishesFullfilled);
+            successFulfillWishNotification();
           },
         },
         {
@@ -57,6 +67,7 @@ const ItemWish = ({ name, value, savings, wishId, testID, icon, done }) => {
         text: 'CONTINUAR',
         onPress: async () => {
           await deleteWish(wishId);
+          successDeleteWishNotification();
         },
       },
       {
@@ -75,7 +86,7 @@ const ItemWish = ({ name, value, savings, wishId, testID, icon, done }) => {
         <View style={styles.dataItem}>
           <View style={styles.text}>
             <Text style={styles.title}>{name}</Text>
-            <Text style={styles.valueItem}>VALOR: ${value}</Text>
+            <Text style={styles.valueItem}>VALOR: {formatNum(value)}</Text>
           </View>
           <Progress.Bar
             color={colors.white}
@@ -101,16 +112,22 @@ const ItemWish = ({ name, value, savings, wishId, testID, icon, done }) => {
       </View>
       {collapse && (
         <View style={styles.collapse}>
-          <Text style={styles.itemDetails}>TENES AHORRADO: ${savings}</Text>
-          <Text style={styles.itemDetails}>TE FALTAN: ${missingMoney}</Text>
+          <Text style={styles.itemDetails}>
+            TENES AHORRADO: {formatNum(savings)}
+          </Text>
+          <Text style={styles.itemDetails}>
+            TE FALTAN: {formatNum(missingMoney)}
+          </Text>
           <View style={styles.actionsContainer}>
             <TouchableOpacity
               disabled={missingMoney === 0 && done === 0 ? false : true}
               onPress={handleAchieve}>
               <Text style={[styles.actionBtn, textColor]}>CUMPLIR</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleEdit}>
-              <Text style={styles.actionBtn}>EDITAR</Text>
+            <TouchableOpacity
+              disabled={missingMoney === 0 && done === 1 ? true : false}
+              onPress={handleEdit}>
+              <Text style={[styles.actionBtn, editTextColor]}>EDITAR</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleDelete}>
               <Text style={styles.actionBtn}>ELIMINAR</Text>

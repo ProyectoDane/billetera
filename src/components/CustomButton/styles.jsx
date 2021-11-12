@@ -17,11 +17,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   icon: {
-    padding: 15,
-    paddingRight: 25,
+    margin: 15,
+    paddingRight: 10,
   },
   text: {
-    paddingHorizontal: 30,
+    paddingLeft: 20,
   },
   label: {
     fontWeight: 'bold',
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   },
   amount: {
     color: colors.white,
-    fontSize: 35,
+    fontSize: 30,
     fontWeight: 'bold',
   },
   btnGroup: {

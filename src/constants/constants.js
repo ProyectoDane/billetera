@@ -10,6 +10,10 @@ export const SCREEN_NAME = {
   FULFILL_WISH: 'FulfillWish',
   BUY: 'Buy',
   ADD_REMOVE: 'AddRemove',
+  ADD_REMOVE_WALLET: 'AddRemoveWallet',
+  ADD_REMOVE_SAVINGS: 'AddRemoveSavings',
+  ADD_REMOVE_BILLS: 'AddRemoveBills',
+  ADD_REMOVE_COINS: 'AddRemoveCoins',
   ABOUT: 'About',
   SURVEY: 'Survey',
   INFORMATION: 'Information',
@@ -17,6 +21,10 @@ export const SCREEN_NAME = {
   SIGN_LANGUAGE: 'SignLanguage',
   LOGOS: 'Logos',
   WISHES_FULLFILLED: 'WishesFulfilled',
+  SAVINGS_BUY: 'SavingsBuy',
+  WALLET_BUY: 'WalletBuy',
+  WALLET_MANUAL_PAYMENT: 'WalletManualPayment',
+  SAVINGS_MANUAL_PAYMENT: 'SavingsManualPayment',
 };
 
 // Title navigation style
@@ -33,12 +41,24 @@ export const NAVIGATION_TITLE = {
   FULFILL_WISH: 'CUMPLIR DESEO',
   BUY: 'COMPRAR',
   ADD_REMOVE: 'AGREGAR / QUITAR',
+  ADD_REMOVE_WALLET: 'AGREGAR / QUITAR EN BILLETERA',
+  ADD_REMOVE_SAVINGS: 'AGREGAR / QUITAR EN MIS AHORROS',
+  ADD_REMOVE_BILLS: 'BILLETES',
+  ADD_REMOVE_COINS: 'MONEDAS',
+  ADD_REMOVE_BILLS_SAVINGS: 'BILLETES',
+  ADD_REMOVE_COINS_SAVINGS: 'MONEDAS',
   ABOUT: 'SOBRE NOSOTROS',
   INFO: 'INFORMACION',
   SURVEY: 'ENCUESTA',
   HOW_TO_USE_APP: '¿COMO USAR LA APLICACION?',
   SIGN_LANGUAGE: 'LENGUAJE DE SEÑAS',
   LOGOS: 'LOGOS',
+  SAVINGS_BUY: 'COMPRAR CON AHORROS',
+  WALLET_BUY: 'COMPRAR CON BILLETERA',
+  WALLET_MANUAL_PAYMENT: 'PAGO MANUAL BILLETERA',
+  SAVINGS_MANUAL_PAYMENT: 'PAGO MANUAL AHORROS',
+  BILLETES: 'BILLETES',
+  MONEDAS: 'MONEDAS',
 };
 
 export const NAVIGATION_ICONS = {
@@ -57,8 +77,11 @@ export const TABS_NAME = {
   FULFILL_WISH: 'FulfillWishTab',
   BUY: 'BuyTab',
   ADD_REMOVE: 'AddRemoveTab',
+  ADD_REMOVE_WALLET: 'AddRemoveWalletTab',
   ABOUT: 'AboutTab',
   INFORMATION: 'InformationTab',
+  SAVINGS_BUY: 'SavingsBuyTab',
+  WALLET_BUY: 'WalletBuyTab',
 };
 
 export const labels = {

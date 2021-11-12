@@ -2,47 +2,59 @@ import React, { Fragment } from 'react';
 import { Text, View, TouchableHighlight } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-import { styles } from "./WalletCarrouselItemStyles";
+import { styles } from './WalletCarrouselItemStyles';
 import { colors } from '../../constants';
-import Money from './Money';
+import ItemMoney from '../AddRemove/components/ItemMoney';
+import { formatNum } from '../../utils/functions/formatNum';
 
-export default function WalletCarrouselItem({ itemInfo, nextStep, prevStep }){
-    const { asset, nombre, cantidad, valor } = itemInfo
+export default function WalletCarrouselItem({
+  itemInfo,
+  nextStep,
+  prevStep,
+  oneStep,
+}) {
+  const { image, quantity, amount } = itemInfo;
 
-    //TODO: hacer switch segun imagen, no poner asset desde backend
-    const handleImage = () => require("../../../assets/billetes/20Guanaco.png")
-
-    return(
-        <Fragment>
-            <View style={styles.wrapperMoney}>
-                <TouchableHighlight onPress={prevStep}>
-                    <Ionicons name="arrow-back-circle" size={48} color={colors.miBilletera} />
-                </TouchableHighlight>
-                <Money src={handleImage()} name={nombre}/>
-                <TouchableHighlight onPress={nextStep}>
-                    <Ionicons style={styles.horizontalReverse} name="arrow-back-circle" size={48} color={colors.miBilletera} />
-                </TouchableHighlight>
-            </View>
-            <View style={styles.wrapperValues}>
-                <Text style={styles.value}>
-                    VALOR: 
-                    <Text style={{fontWeight: "bold"}}>
-                        ${valor}
-                    </Text>
-                </Text>
-                <Text style={styles.value}>
-                    CANTIDAD: 
-                    <Text style={{fontWeight: "bold"}}>
-                        {cantidad}
-                    </Text>
-                </Text>
-                <Text style={styles.value}>
-                    TOTAL: 
-                    <Text style={{fontWeight: "bold"}}>
-                        ${cantidad*valor}
-                    </Text>
-                </Text>
-            </View>
-        </Fragment>
-    )
+  return (
+    <Fragment>
+      <View style={styles.wrapperMoney}>
+        {oneStep ? null : (
+          <TouchableHighlight onPress={prevStep}>
+            <Ionicons
+              name="arrow-back-circle"
+              size={48}
+              color={colors.miBilletera}
+            />
+          </TouchableHighlight>
+        )}
+        <ItemMoney image={image} />
+        {oneStep ? null : (
+          <TouchableHighlight onPress={nextStep}>
+            <Ionicons
+              style={styles.horizontalReverse}
+              name="arrow-back-circle"
+              size={48}
+              color={colors.miBilletera}
+            />
+          </TouchableHighlight>
+        )}
+      </View>
+      <View style={styles.wrapperValues}>
+        <Text style={styles.value}>
+          VALOR:
+          <Text style={{ fontWeight: 'bold' }}>{formatNum(amount)}</Text>
+        </Text>
+        <Text style={styles.value}>
+          CANTIDAD:
+          <Text style={{ fontWeight: 'bold' }}>{quantity}</Text>
+        </Text>
+        <Text style={styles.value}>
+          TOTAL:
+          <Text style={{ fontWeight: 'bold' }}>
+            {formatNum(quantity * amount)}
+          </Text>
+        </Text>
+      </View>
+    </Fragment>
+  );
 }

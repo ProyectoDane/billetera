@@ -3,8 +3,9 @@ import { Text, View } from 'react-native';
 
 const Logos = () => {
   return (
-    <View>
-      <Text>Logos / Splash</Text>
+    <View style={{ flex: 1, justifyContent: 'center' }}>
+      <Text style={{ textAlign: 'center' }}>LOGOS</Text>
+      <Text style={{ textAlign: 'center' }}>PROXIMAMENTE</Text>
     </View>
   );
 };

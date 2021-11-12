@@ -23,14 +23,14 @@ describe('Should render MyWishes screen', () => {
     it('Should render ItemWish', () => {
       const { getAllByText } = setup();
 
-      expect(getAllByText(/valor/i)).toBeTruthy();
+      expect(getAllByText(/value/i)).toBeTruthy();
     });
   });
   describe('Component ItemWish', () => {
     it('Should render ItemWish', () => {
       const { getAllByText } = setup();
 
-      expect(getAllByText(/valor/i)).toBeTruthy();
+      expect(getAllByText(/value/i)).toBeTruthy();
     });
     it('Should press the button and collapse details', () => {
       const { getByTestId, getAllByText } = setup();

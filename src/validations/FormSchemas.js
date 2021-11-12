@@ -13,3 +13,23 @@ export const WishSchema = object().shape({
     .positive(validNumPositive)
     .typeError(validNumber),
 });
+
+export const BuySchema = object().shape({
+  amount: number()
+    .required(requiredField)
+    .positive(validNumPositive)
+    .typeError(validNumber),
+});
+
+export const BalanceSchema = (balance) =>
+  object().shape({
+    amount: number()
+      .positive(validNumPositive)
+      .required(requiredField)
+      .typeError(validNumber)
+      .test(
+        'Balance-Validation',
+        'DINERO INSUFICIENTE',
+        (value) => value <= balance,
+      ),
+  });

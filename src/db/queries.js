@@ -29,8 +29,6 @@ export const insertQuery = async(query, params) => {
             query,
             params,
             (tx,results) => {
-              console.log('Results', results.rowsAffected);
-              console.log(results);
               if (results.rowsAffected > 0) {
                 console.log('Data Inserted Successfully....');
               } else console.log('Failed....');

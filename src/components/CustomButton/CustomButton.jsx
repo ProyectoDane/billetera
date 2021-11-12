@@ -5,18 +5,19 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 import styles from './styles';
 import { colors, SCREEN_NAME } from '../../constants/index';
+import { formatNum } from '../../utils/functions/formatNum';
 
 const CustomButton = ({
   icon,
   sizeIcon,
-  colorIcon = 'white',
+  colorIcon = colors.white,
   label,
-  color = 'primary',
+  color = colors.primary,
   amount,
   onPress,
-  from
+  isWallet,
+  from,
 }) => {
-
   const navigation = useNavigation();
   const buttonColor = {
     backgroundColor: colors[color],
@@ -27,7 +28,7 @@ const CustomButton = ({
       <View style={styles.iconTextGroup}>
         <View style={styles.text}>
           <Text style={styles.label}>{label}</Text>
-          <Text style={styles.amount}>${amount}</Text>
+          <Text style={styles.amount}>{formatNum(amount)}</Text>
         </View>
         <View style={styles.icon}>
           <FontAwesome5 name={icon} size={sizeIcon} color={colors[colorIcon]} />
@@ -36,12 +37,20 @@ const CustomButton = ({
       <View style={styles.btnGroup}>
         <TouchableOpacity
           style={styles.modifyBtn}
-          onPress={() => navigation.navigate(SCREEN_NAME.ADD_REMOVE, {from: from})}>
+          onPress={() =>
+            navigation.navigate(SCREEN_NAME.ADD_REMOVE, { from: from })
+          }>
           <Text style={styles.btnText}>AGREGAR / QUITAR</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.buyBtn}
-          onPress={() => navigation.navigate(SCREEN_NAME.BUY)}>
+          onPress={() =>
+            isWallet
+              ? navigation.navigate(SCREEN_NAME.WALLET_BUY, { isWallet: true })
+              : navigation.navigate(SCREEN_NAME.SAVINGS_BUY, {
+                  isWallet: false,
+                })
+          }>
           <Text style={styles.btnText}>COMPRAR</Text>
         </TouchableOpacity>
       </View>

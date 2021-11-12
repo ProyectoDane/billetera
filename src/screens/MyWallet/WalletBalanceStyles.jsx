@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
         paddingVertical: 10,
         marginBottom: 10,
     },
-    balance: {
+    balance: {       
         fontSize: 25,
         fontWeight: "bold",
         color: colors.white,
