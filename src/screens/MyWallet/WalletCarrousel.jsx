@@ -10,7 +10,11 @@ export default function WalletCarrousel({ moneyType, dataCarrousel }){
   const [step, setStep] = useState(0)
   const [item, setItem] = useState(dataCarrousel ? dataCarrousel[step] : [])
 
-  const lastStep = dataCarrousel && dataCarrousel.length > 0 ? dataCarrousel.length - 1 : 0;
+  const lastStep = 
+    dataCarrousel && 
+    dataCarrousel.length == 1 ? 1 :
+    dataCarrousel.length > 0 ?
+    dataCarrousel.length - 1 : 0;
 
   const firstStep = 0;
 
@@ -38,7 +42,8 @@ export default function WalletCarrousel({ moneyType, dataCarrousel }){
       {
         lastStep ? 
         <WalletCarrouselItem
-          itemInfo={item} 
+          itemInfo={item}
+          oneStep={dataCarrousel.length === 1? true : false}
           nextStep={nextStep}
           prevStep={prevStep}
         />  

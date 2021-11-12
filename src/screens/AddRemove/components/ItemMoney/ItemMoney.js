@@ -31,21 +31,6 @@ const imageMap = {
     "5CentavosPlata.png": require("../../../../../assets/monedas/5CentavosPlata.png")
 }
 
-// const styles = StyleSheet.create({
-//     container: {
-//         flexDirection: "row",
-//         justifyContent: "space-around",
-//         alignItems: "center",
-//         margin: "10 0"
-//       },
-//     wrapper: {
-//         flexDirection: "row",
-//       },
-//     iconsWrapper: {
-//         flexDirection: "row",
-//         height: 20
-//       },
-// });
 
 export default function ItemMoney(props){
     const { image } = props

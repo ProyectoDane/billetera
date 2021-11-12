@@ -112,12 +112,14 @@ const WalletBuy = () => {
     } else {
       for (let e of optionPay) {
         if (e.quantity > 0 && e.amount >= 10) {
-          optionsBills.push(e.quantity + ' BILLETE/S DE $' + e.amount);
+          optionsBills.push(
+            e.quantity + ' BILLETE/S DE ' + formatNum(e.amount),
+          );
           setHasError(false);
           setOptionBill(optionsBills);
         } else if (e.quantity > 0 && e.amount < 10) {
           setHasError(false);
-          optionsCoins.push(e.quantity + ' MONEDA/S DE $' + e.amount);
+          optionsCoins.push(e.quantity + ' MONEDA/S DE ' + formatNum(e.amount));
           setOptionCoin(optionsCoins);
         }
       }

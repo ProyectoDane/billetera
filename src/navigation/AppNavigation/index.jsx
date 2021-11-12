@@ -43,6 +43,7 @@ const InformationStack = createStackNavigator();
 const WishesTopTab = createMaterialTopTabNavigator();
 const CalculatorStack = createStackNavigator();
 const MoneyTopTab = createMaterialTopTabNavigator();
+const MoneyTopTabSavings = createMaterialTopTabNavigator();
 
 const HomeNavigation = () => {
   return (

@@ -8,6 +8,7 @@ import {
   insertMoneyToWallet,
   deleteMoneyWallet,
 } from '../../../../dataAccess/Wallet';
+import { formatNum } from '../../../../utils/functions/formatNum';
 
 const MoneyObject = (elem) => {
   const [total, setTotal] = useState(elem.quantity);
@@ -124,8 +125,7 @@ const AddRemoveWalletBills = () => {
   return (
     <View style={{ marginBottom: 60 }}>
       <View>
-        <Text>Total ${actualMoneyWallet}</Text>
-        <Button title="Guardar" onPress={() => handleSave()} />
+        <Text>Total {formatNum(actualMoneyWallet)}</Text>
       </View>
 
       <ScrollView>
@@ -140,6 +140,9 @@ const AddRemoveWalletBills = () => {
           );
         })}
       </ScrollView>
+      <View>
+        <Button title="Guardar" onPress={() => handleSave()} />
+      </View>
     </View>
   );
 };
