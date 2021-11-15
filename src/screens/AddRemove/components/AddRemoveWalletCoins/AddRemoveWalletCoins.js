@@ -1,14 +1,18 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Text, View, ScrollView, Button, TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
 import ItemMoney from '../ItemMoney';
+import SingleButton from "../../../../components/SingleButton";
 import { AddRemoveContext } from '../../AddRemoveContext';
 import {
   insertMoneyToWallet,
   deleteMoneyWallet,
 } from '../../../../dataAccess/Wallet';
+import { SCREEN_NAME } from '../../../../constants';
 import { formatNum } from '../../../../utils/functions/formatNum';
+import { toastNotification } from '../../../../utils/functions/toastNotifcation';
+
 
 const MoneyObject = (elem) => {
   const [total, setTotal] = useState(elem.quantity);
@@ -43,7 +47,8 @@ const MoneyObject = (elem) => {
   );
 };
 
-const AddRemoveWalletCoins = () => {
+const AddRemoveWalletCoins = ({navigation}) => {
+  const [isLoading,setIsLoading] = useState(false)
   const {
     actualBills,
     setActualBills,
@@ -79,6 +84,7 @@ const AddRemoveWalletCoins = () => {
   };
 
   const handleSave = async () => {
+    setIsLoading(true)
     let addMoney = [];
     let subMoney = [];
     let moneyLength = actualCoins.length;
@@ -120,6 +126,12 @@ const AddRemoveWalletCoins = () => {
     setInitialCoinsMoneyWallet(actualCoins);
     setActualCoins(actualCoins);
     setActualBills(actualBills);
+    toastNotification(
+      'SE ACTUALIZO EL DINERO CORRECTAMENTE!',
+      'success',
+      'success',
+    );
+    navigation.navigate(SCREEN_NAME.HOME)
   };
 
   return (
@@ -140,10 +152,24 @@ const AddRemoveWalletCoins = () => {
         })}
       </ScrollView>
       <View>
-        <Button title="Guardar" onPress={() => handleSave()} />
+        <SingleButton
+          icon="money-bill-wave"
+          sizeIcon={22}
+          label="GUARDAR"
+          isLoading={isLoading}
+          disabled={isLoading}
+          onPress={handleSave}
+          style={styles.container}
+        />
       </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 0,
+  },
+});
 
 export default AddRemoveWalletCoins;
