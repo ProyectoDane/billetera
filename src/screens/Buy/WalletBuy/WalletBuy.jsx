@@ -10,11 +10,7 @@ import Layout from '../../../components/Layout';
 import { BalanceSchema } from '../../../validations/FormSchemas';
 import SingleButton from '../../../components/SingleButton';
 import { successNotification } from '../../../components/ToastNotification/successNotification';
-import {
-  deleteMoneyWallet,
-  getDineroWallet,
-  insertMoneyToWallet,
-} from '../../../dataAccess/Wallet';
+import { deleteMoneyWallet, getDineroWallet } from '../../../dataAccess/Wallet';
 import { AddRemoveContext } from '../../AddRemove/AddRemoveContext';
 
 import { styles } from './styles';
@@ -54,12 +50,12 @@ const WalletBuy = () => {
     let dineroCoinDB = res
       .filter((item) => item.isCoins === 1)
       .sort(function (a, b) {
-        return b.id - a.id;
+        return b.amount - a.amount;
       });
 
     let dineroDB = [...dineroBillDB, ...dineroCoinDB];
-    // console.log('dinero Coin DB', dineroCoinDB);
-    // console.log('dinero bill db', dineroBillDB);
+    // console.log('MONEDAS DISPONIBLES:', dineroCoinDB);
+    // console.log('BILLETES DISPONIBLES:', dineroBillDB);
     setMoneyDB(dineroDB);
   };
 
@@ -74,7 +70,7 @@ const WalletBuy = () => {
   let quantityMoney = 0;
 
   const onSubmit = (data) => {
-    // console.log('MONEY DB AL INCIO >>>', moneyDB);
+    // console.log('DINERO TOTAL AL INCIO >>>', moneyDB);
     setOptionBill('');
     setOptionCoin('');
     // data trae los datos del formulario
@@ -96,6 +92,7 @@ const WalletBuy = () => {
           quantity: quantityMoney,
           image: bill.image,
           user_id: bill.userId,
+          isCoins: bill.isCoins,
         });
 
         money = money - bill.amount * quantityMoney;
@@ -111,13 +108,13 @@ const WalletBuy = () => {
       );
     } else {
       for (let e of optionPay) {
-        if (e.quantity > 0 && e.amount >= 10) {
+        if (e.quantity > 0 && e.amount >= 10 && e.isCoins === 0) {
           optionsBills.push(
             e.quantity + ' BILLETE/S DE ' + formatNum(e.amount),
           );
           setHasError(false);
           setOptionBill(optionsBills);
-        } else if (e.quantity > 0 && e.amount < 10) {
+        } else if (e.quantity > 0 && e.amount <= 10 && e.isCoins === 1) {
           setHasError(false);
           optionsCoins.push(e.quantity + ' MONEDA/S DE ' + formatNum(e.amount));
           setOptionCoin(optionsCoins);
