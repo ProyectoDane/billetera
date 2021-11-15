@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Text, View, TouchableHighlight } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import { styles } from './WalletCarrouselItemStyles';
@@ -19,24 +19,24 @@ export default function WalletCarrouselItem({
     <Fragment>
       <View style={styles.wrapperMoney}>
         {oneStep ? null : (
-          <TouchableHighlight onPress={prevStep}>
+          <TouchableOpacity onPress={prevStep}>
             <Ionicons
               name="arrow-back-circle"
               size={48}
               color={colors.miBilletera}
             />
-          </TouchableHighlight>
+          </TouchableOpacity>
         )}
         <ItemMoney image={image} />
         {oneStep ? null : (
-          <TouchableHighlight onPress={nextStep}>
+          <TouchableOpacity onPress={nextStep}>
             <Ionicons
               style={styles.horizontalReverse}
               name="arrow-back-circle"
               size={48}
               color={colors.miBilletera}
             />
-          </TouchableHighlight>
+          </TouchableOpacity>
         )}
       </View>
       <View style={styles.wrapperValues}>
