@@ -20,6 +20,12 @@ const Root = () => {
   } = useContext(AddRemoveContext);
 
   useEffect(() => {
+    async function init() {
+      await initialization();
+      await getMoney();
+      await getTotal();
+    }
+
     async function getTotal() {
       const wallet = await getTotalWallet();
       let total = 0;
@@ -79,9 +85,7 @@ const Root = () => {
       setActualMoneyWallet(total);
     }
 
-    initialization();
-    getMoney();
-    getTotal();
+    init()
   }, []);
 
   return (
