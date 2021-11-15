@@ -1,17 +1,23 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Text, View, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
+import React, {useContext, useEffect, useState} from 'react';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
+import {AntDesign} from '@expo/vector-icons';
 
 import ItemMoney from '../ItemMoney';
 import SingleButton from "../../../../components/SingleButton";
-import { AddRemoveContext } from '../../AddRemoveContext';
+import {AddRemoveContext} from '../../AddRemoveContext';
 import {
-  insertMoneyToWallet,
   deleteMoneyWallet,
+  insertMoneyToWallet,
 } from '../../../../dataAccess/Wallet';
-import { SCREEN_NAME } from '../../../../constants';
-import { formatNum } from '../../../../utils/functions/formatNum';
-import { toastNotification } from '../../../../utils/functions/toastNotifcation';
+import {SCREEN_NAME} from '../../../../constants';
+import {formatNum} from '../../../../utils/functions/formatNum';
+import {toastNotification} from '../../../../utils/functions/toastNotifcation';
 
 const MoneyObject = (elem) => {
   const [total, setTotal] = useState(elem.quantity);
@@ -19,30 +25,47 @@ const MoneyObject = (elem) => {
   const add = () => setTotal(total + 1);
   const sub = () => setTotal(total - 1);
 
+  const BUTTON_FONT_SIZE = 40;
+
   return (
-    <View>
-      <ItemMoney {...elem} />
-      <TouchableOpacity
-        disabled={elem.quantity === 0}
-        onPress={() => {
-          sub();
-          elem.handleSub();
-        }}>
-        <AntDesign
-          name="minuscircle"
-          size={20}
-          color={elem.quantity === 0 ? 'grey' : 'red'}
-        />
-      </TouchableOpacity>
-      <Text>{total}</Text>
-      <TouchableOpacity
-        onPress={() => {
-          add();
-          elem.handleAdd();
-        }}>
-        <AntDesign name="pluscircle" size={20} color="green" />
-      </TouchableOpacity>
-    </View>
+      <View style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        paddingVertical: 3
+
+      }}>
+        <View style={{marginRight: 15}}>
+          <ItemMoney {...elem} />
+        </View>
+
+          <TouchableOpacity
+              // style={{flex: 2, justifyContent: 'center', flexDirection: 'column', backgroundColor: 'blue'}}
+              disabled={elem.quantity === 0}
+              onPress={() => {
+                sub();
+                elem.handleSub();
+              }}>
+            <AntDesign
+                name="minuscircle"
+                size={BUTTON_FONT_SIZE}
+                color={elem.quantity === 0 ? "grey" : "red"}
+
+            />
+          </TouchableOpacity>
+          <Text style={{textAlign: 'center', fontSize: BUTTON_FONT_SIZE, paddingHorizontal: 5, flex: 1}}>{total}</Text>
+          <TouchableOpacity
+              onPress={() => {
+                add();
+                elem.handleAdd();
+              }}>
+            <AntDesign name="pluscircle"
+                       size={BUTTON_FONT_SIZE}
+                       color="green"
+                       />
+          </TouchableOpacity>
+      </View>
   );
 };
 
@@ -134,12 +157,14 @@ const AddRemoveWalletBills = ({navigation}) => {
   };
 
   return (
-    <View style={{ marginBottom: 60 }}>
-      <View>
-        <Text>Total {formatNum(actualMoneyWallet)}</Text>
+    <View style={{
+      marginBottom: 90,
+    }}>
+      <View style={{backgroundColor: '#BBB'}}>
+        <Text style={{fontSize: 30, textAlign: 'center'}}>Total {formatNum(actualMoneyWallet)}</Text>
       </View>
 
-      <ScrollView>
+      <ScrollView contentContainerStyle={{paddingVertical: 10,   paddingHorizontal: 10}}>
         {actualBills.map((elem, index) => {
           return (
             <MoneyObject
@@ -151,7 +176,7 @@ const AddRemoveWalletBills = ({navigation}) => {
           );
         })}
       </ScrollView>
-      <View>
+      <View style={{paddingVertical: 5}}>
         <SingleButton
           icon="money-bill-wave"
           sizeIcon={22}

@@ -14,7 +14,8 @@ const MoneyObject = (elem) => {
   const sub = () => setTotal(total - 1)
 
   return(
-      <View>
+      <View styles={{flex:1, justifyContent:'center', alignItems:'center'}}>
+
         <ItemMoney 
             {...elem}
         />
@@ -31,7 +32,7 @@ const MoneyObject = (elem) => {
             color={elem.quantity === 0? "grey" : "red"} 
           />
         </TouchableOpacity>
-        <Text>{total}</Text>
+        <Text>{total + " - dj"} </Text>
         <TouchableOpacity
           onPress={() => {
               add();
@@ -138,7 +139,7 @@ const AddRemoveSavingsBills = () => {
         />
       </View>
       
-      <ScrollView>
+      <ScrollView contentContainerStyle={{paddingVertical: 10, paddingHorizontal: 10}}>
         {
           actualBillsSavings.map((elem, index) => {
             return <MoneyObject 

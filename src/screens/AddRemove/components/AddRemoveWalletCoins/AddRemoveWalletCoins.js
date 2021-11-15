@@ -20,9 +20,21 @@ const MoneyObject = (elem) => {
   const add = () => setTotal(total + 1);
   const sub = () => setTotal(total - 1);
 
+  const BUTTON_FONT_SIZE = 40;
+
   return (
-    <View>
+      <View style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        paddingVertical: 3
+
+      }}>
+        <View style={{marginRight: 15}}>
       <ItemMoney {...elem} />
+        </View>
+
       <TouchableOpacity
         disabled={elem.quantity === 0}
         onPress={() => {
@@ -31,17 +43,21 @@ const MoneyObject = (elem) => {
         }}>
         <AntDesign
           name="minuscircle"
-          size={20}
-          color={elem.quantity === 0 ? 'grey' : 'red'}
+                size={BUTTON_FONT_SIZE}
+                color={elem.quantity === 0 ? "grey" : "red"}
+
         />
       </TouchableOpacity>
-      <Text>{total}</Text>
+          <Text style={{textAlign: 'center', fontSize: BUTTON_FONT_SIZE, paddingHorizontal: 5, flex: 1}}>{total}</Text>
       <TouchableOpacity
         onPress={() => {
           add();
           elem.handleAdd();
         }}>
-        <AntDesign name="pluscircle" size={20} color="green" />
+            <AntDesign name="pluscircle"
+                       size={BUTTON_FONT_SIZE}
+                       color="green"
+                       />
       </TouchableOpacity>
     </View>
   );
@@ -135,11 +151,13 @@ const AddRemoveWalletCoins = ({navigation}) => {
   };
 
   return (
-    <View style={{ marginBottom: 60 }}>
-      <View>
-        <Text>Total {formatNum(actualMoneyWallet)}</Text>
+    <View style={{
+      marginBottom: 90,
+    }}>
+      <View style={{backgroundColor: '#BBB'}}>
+        <Text style={{fontSize: 30, textAlign: 'center'}}>Total {formatNum(actualMoneyWallet)}</Text>
       </View>
-      <ScrollView>
+      <ScrollView  contentContainerStyle={{paddingVertical: 10,   paddingHorizontal: 10}}>
         {actualCoins.map((elem, index) => {
           return (
             <MoneyObject
@@ -151,7 +169,7 @@ const AddRemoveWalletCoins = ({navigation}) => {
           );
         })}
       </ScrollView>
-      <View>
+      <View style={{paddingVertical: 5}}>
         <SingleButton
           icon="money-bill-wave"
           sizeIcon={22}
