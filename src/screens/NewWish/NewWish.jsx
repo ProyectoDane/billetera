@@ -13,10 +13,7 @@ import { WishSchema } from '../../validations/FormSchemas';
 import { getWishById, insertWish, updateWish } from '../../dataAccess/Wish';
 import { Wish } from '../../models/Wish';
 import { SCREEN_NAME } from '../../constants';
-import {
-  editWishNotification,
-  newWishNotification,
-} from '../../components/ToastNotification/successNotification';
+import { toastNotification } from '../../utils/functions/toastNotifcation';
 
 const NuevoDeseo = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -36,7 +33,11 @@ const NuevoDeseo = ({ navigation, route }) => {
       await insertWish(new Wish(name, value, icon));
       reset();
       setIsLoading(false);
-      newWishNotification();
+      toastNotification(
+        'EL DESEO SE CREÓ CORRECTAMENTE!',
+        'success',
+        'success',
+      );
       navigation.navigate(SCREEN_NAME.MY_WISHES);
     } catch (error) {
       console.log(error);
@@ -56,7 +57,11 @@ const NuevoDeseo = ({ navigation, route }) => {
       void (await updateWish(wishViejo));
       reset();
       setIsLoading(false);
-      editWishNotification();
+      toastNotification(
+        'EL DESEO SE EDITÓ CORRECTAMENTE!',
+        'success',
+        'success',
+      );
       navigation.navigate(SCREEN_NAME.MY_WISHES);
     } catch (error) {
       console.log(error);

@@ -9,13 +9,13 @@ import InputText from '../../../components/InputText';
 import Layout from '../../../components/Layout';
 import { BalanceSchema } from '../../../validations/FormSchemas';
 import SingleButton from '../../../components/SingleButton';
-import { successNotification } from '../../../components/ToastNotification/successNotification';
 import { deleteMoneyWallet, getDineroWallet } from '../../../dataAccess/Wallet';
 import { AddRemoveContext } from '../../AddRemove/AddRemoveContext';
 
 import { styles } from './styles';
 import { colors, SCREEN_NAME } from '../../../constants';
 import { formatNum } from '../../../utils/functions/formatNum';
+import { toastNotification } from '../../../utils/functions/toastNotifcation';
 
 const WalletBuy = () => {
   const [valueBuy, setValueBuy] = useState();
@@ -137,7 +137,11 @@ const WalletBuy = () => {
           setTotalMoneyWallet(totalMoneyWallet - opt.amount * opt.quantity);
         }
       }
-      successNotification();
+      toastNotification(
+        'LA COMPRA SE REALIZÓ CORRECTAMENTE!',
+        'success',
+        'success',
+      );
       setIsLoading(false);
     } catch (error) {
       console.log(error);

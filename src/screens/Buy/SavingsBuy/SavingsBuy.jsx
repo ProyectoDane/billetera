@@ -9,7 +9,6 @@ import InputText from '../../../components/InputText';
 import Layout from '../../../components/Layout';
 import { BalanceSchema } from '../../../validations/FormSchemas';
 import SingleButton from '../../../components/SingleButton';
-import { successNotification } from '../../../components/ToastNotification/successNotification';
 import {
   deleteMoneyWallet,
   getDineroWallet,
@@ -59,16 +58,6 @@ const SavingsBuy = () => {
     // console.log('dinero Coin DB', dineroCoinDB);
     // console.log('dinero bill db', dineroBillDB);
     setMoneyDB(dineroDB);
-  };
-
-  const crearDinero = async () => {
-    await insertMoneyToWallet(1, 3, 1);
-    await insertMoneyToWallet(1, 4, 2);
-    await insertMoneyToWallet(1, 5, 1);
-    await insertMoneyToWallet(1, 6, 3);
-    await insertMoneyToWallet(1, 11, 3);
-    await insertMoneyToWallet(1, 14, 3);
-    await insertMoneyToWallet(1, 15, 3);
   };
 
   useEffect(() => {
@@ -149,7 +138,7 @@ const SavingsBuy = () => {
           await deleteMoneyWallet(opt.user_id, opt.money_id, opt.quantity);
         }
       }
-      successNotification();
+
       setIsLoading(false);
     } catch (error) {
       console.log(error);

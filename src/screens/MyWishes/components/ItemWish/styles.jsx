@@ -42,10 +42,12 @@ export const styles = StyleSheet.create({
     textAlign: 'left',
     color: colors.white,
     fontWeight: 'bold',
+    alignSelf: 'center',
   },
   valueItem: {
-    flex: 0.6,
+    flex: 0.7,
     textAlign: 'right',
+    alignSelf: 'center',
     fontWeight: 'bold',
     color: colors.white,
   },
