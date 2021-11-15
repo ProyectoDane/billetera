@@ -42,15 +42,16 @@ export default function WalletCarrouselItem({
       <View style={styles.wrapperValues}>
         <Text style={styles.value}>
           VALOR:
-          <Text style={{ fontWeight: 'bold' }}>{formatNum(amount)}</Text>
+          <Text style={{ fontWeight: 'bold' }}> {formatNum(amount)}</Text>
         </Text>
         <Text style={styles.value}>
           CANTIDAD:
-          <Text style={{ fontWeight: 'bold' }}>{quantity}</Text>
+          <Text style={{ fontWeight: 'bold' }}> {quantity}</Text>
         </Text>
         <Text style={styles.value}>
           TOTAL:
           <Text style={{ fontWeight: 'bold' }}>
+            {' '}
             {formatNum(quantity * amount)}
           </Text>
         </Text>
