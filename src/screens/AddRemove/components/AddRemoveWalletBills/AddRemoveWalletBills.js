@@ -1,23 +1,23 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
-import {AntDesign} from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 
 import ItemMoney from '../ItemMoney';
-import SingleButton from "../../../../components/SingleButton";
-import {AddRemoveContext} from '../../AddRemoveContext';
+import SingleButton from '../../../../components/SingleButton';
+import { AddRemoveContext } from '../../AddRemoveContext';
 import {
   deleteMoneyWallet,
   insertMoneyToWallet,
 } from '../../../../dataAccess/Wallet';
-import {SCREEN_NAME} from '../../../../constants';
-import {formatNum} from '../../../../utils/functions/formatNum';
-import {toastNotification} from '../../../../utils/functions/toastNotifcation';
+import { SCREEN_NAME } from '../../../../constants';
+import { formatNum } from '../../../../utils/functions/formatNum';
+import { toastNotification } from '../../../../utils/functions/toastNotifcation';
 
 const MoneyObject = (elem) => {
   const [total, setTotal] = useState(elem.quantity);
@@ -28,49 +28,53 @@ const MoneyObject = (elem) => {
   const BUTTON_FONT_SIZE = 40;
 
   return (
-      <View style={{
+    <View
+      style={{
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
-        paddingVertical: 3
-
+        paddingVertical: 3,
       }}>
-        <View style={{marginRight: 15}}>
-          <ItemMoney {...elem} />
-        </View>
-
-          <TouchableOpacity
-              // style={{flex: 2, justifyContent: 'center', flexDirection: 'column', backgroundColor: 'blue'}}
-              disabled={elem.quantity === 0}
-              onPress={() => {
-                sub();
-                elem.handleSub();
-              }}>
-            <AntDesign
-                name="minuscircle"
-                size={BUTTON_FONT_SIZE}
-                color={elem.quantity === 0 ? "grey" : "red"}
-
-            />
-          </TouchableOpacity>
-          <Text style={{textAlign: 'center', fontSize: BUTTON_FONT_SIZE, paddingHorizontal: 5, flex: 1}}>{total}</Text>
-          <TouchableOpacity
-              onPress={() => {
-                add();
-                elem.handleAdd();
-              }}>
-            <AntDesign name="pluscircle"
-                       size={BUTTON_FONT_SIZE}
-                       color="green"
-                       />
-          </TouchableOpacity>
+      <View style={{ marginRight: 15 }}>
+        <ItemMoney {...elem} />
       </View>
+
+      <TouchableOpacity
+        // style={{flex: 2, justifyContent: 'center', flexDirection: 'column', backgroundColor: 'blue'}}
+        disabled={elem.quantity === 0}
+        onPress={() => {
+          sub();
+          elem.handleSub();
+        }}>
+        <AntDesign
+          name="minuscircle"
+          size={BUTTON_FONT_SIZE}
+          color={elem.quantity === 0 ? 'grey' : 'red'}
+        />
+      </TouchableOpacity>
+      <Text
+        style={{
+          textAlign: 'center',
+          fontSize: BUTTON_FONT_SIZE,
+          paddingHorizontal: 5,
+          flex: 1,
+        }}>
+        {total}
+      </Text>
+      <TouchableOpacity
+        onPress={() => {
+          add();
+          elem.handleAdd();
+        }}>
+        <AntDesign name="pluscircle" size={BUTTON_FONT_SIZE} color="green" />
+      </TouchableOpacity>
+    </View>
   );
 };
 
-const AddRemoveWalletBills = ({navigation}) => {
-  const [isLoading,setIsLoading] = useState(false)
+const AddRemoveWalletBills = ({ navigation }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const {
     actualBills,
     setActualBills,
@@ -84,46 +88,49 @@ const AddRemoveWalletBills = ({navigation}) => {
     setInitialBillsMoneyWallet,
   } = useContext(AddRemoveContext);
 
+  const [bills, setBills] = useState(actualBills);
+
   useEffect(() => {
     if (totalMoneyWallet !== actualMoneyWallet) {
       setActualMoneyWallet(totalMoneyWallet);
     }
     setActualBills(JSON.parse(JSON.stringify(initialBillsMoneyWallet)));
+    setBills(JSON.parse(JSON.stringify(initialBillsMoneyWallet)));
   }, []);
 
   const handleAdd = (elem, index) => {
-    let newBills = actualBills;
+    let newBills = bills;
     newBills[index].quantity = newBills[index].quantity + 1;
     setActualMoneyWallet(actualMoneyWallet + newBills[index].amount);
-    setActualBills(newBills);
+    setBills(newBills);
   };
 
   const handleSub = (elem, index) => {
-    let newBills = actualBills;
+    let newBills = bills;
     newBills[index].quantity = newBills[index].quantity - 1;
     setActualMoneyWallet(actualMoneyWallet - newBills[index].amount);
-    setActualBills(newBills);
+    setBills(newBills);
   };
 
   const handleSave = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     let addMoney = [];
     let subMoney = [];
-    let moneyLength = actualBills.length;
+    let moneyLength = bills.length;
 
     for (let i = 0; moneyLength > i; i++) {
       let initialValue = initialBillsMoneyWallet[i].quantity;
-      let actualValue = actualBills[i].quantity;
+      let actualValue = bills[i].quantity;
 
       if (initialValue > actualValue) {
         subMoney.push({
-          money_id: actualBills[i].id,
+          money_id: bills[i].id,
           quantity: initialValue - actualValue,
         });
       }
       if (actualValue > initialValue) {
         addMoney.push({
-          money_id: actualBills[i].id,
+          money_id: bills[i].id,
           quantity: actualValue - initialValue,
         });
       }
@@ -145,27 +152,32 @@ const AddRemoveWalletBills = ({navigation}) => {
 
     setActualMoneyWallet(actualMoneyWallet);
     setTotalMoneyWallet(actualMoneyWallet);
-    setInitialBillsMoneyWallet(actualBills);
-    setActualBills(actualBills);
+    setInitialBillsMoneyWallet(bills);
+    setBills(bills);
+    setActualBills(bills);
     setActualCoins(actualCoins);
     toastNotification(
       'SE ACTUALIZO EL DINERO CORRECTAMENTE!',
       'success',
       'success',
     );
-    navigation.navigate(SCREEN_NAME.HOME)
+    navigation.navigate(SCREEN_NAME.HOME);
   };
 
   return (
-    <View style={{
-      marginBottom: 90,
-    }}>
-      <View style={{backgroundColor: '#BBB'}}>
-        <Text style={{fontSize: 30, textAlign: 'center'}}>Total {formatNum(actualMoneyWallet)}</Text>
+    <View
+      style={{
+        marginBottom: 90,
+      }}>
+      <View style={{ backgroundColor: '#BBB' }}>
+        <Text style={{ fontSize: 30, textAlign: 'center' }}>
+          Total {formatNum(actualMoneyWallet)}
+        </Text>
       </View>
 
-      <ScrollView contentContainerStyle={{paddingVertical: 10,   paddingHorizontal: 10}}>
-        {actualBills.map((elem, index) => {
+      <ScrollView
+        contentContainerStyle={{ paddingVertical: 10, paddingHorizontal: 10 }}>
+        {bills.map((elem, index) => {
           return (
             <MoneyObject
               key={`name: ${elem.image} - amount: ${elem.amount}`}
@@ -176,7 +188,7 @@ const AddRemoveWalletBills = ({navigation}) => {
           );
         })}
       </ScrollView>
-      <View style={{paddingVertical: 5}}>
+      <View style={{ paddingVertical: 5 }}>
         <SingleButton
           icon="money-bill-wave"
           sizeIcon={22}

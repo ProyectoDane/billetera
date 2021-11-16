@@ -1,9 +1,15 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Text, View, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  Text,
+  View,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
 import ItemMoney from '../ItemMoney';
-import SingleButton from "../../../../components/SingleButton";
+import SingleButton from '../../../../components/SingleButton';
 import { AddRemoveContext } from '../../AddRemoveContext';
 import {
   insertMoneyToWallet,
@@ -12,7 +18,6 @@ import {
 import { SCREEN_NAME } from '../../../../constants';
 import { formatNum } from '../../../../utils/functions/formatNum';
 import { toastNotification } from '../../../../utils/functions/toastNotifcation';
-
 
 const MoneyObject = (elem) => {
   const [total, setTotal] = useState(elem.quantity);
@@ -23,17 +28,17 @@ const MoneyObject = (elem) => {
   const BUTTON_FONT_SIZE = 40;
 
   return (
-      <View style={{
+    <View
+      style={{
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
-        paddingVertical: 3
-
+        paddingVertical: 3,
       }}>
-        <View style={{marginRight: 15}}>
-      <ItemMoney {...elem} />
-        </View>
+      <View style={{ marginRight: 15 }}>
+        <ItemMoney {...elem} />
+      </View>
 
       <TouchableOpacity
         disabled={elem.quantity === 0}
@@ -43,28 +48,32 @@ const MoneyObject = (elem) => {
         }}>
         <AntDesign
           name="minuscircle"
-                size={BUTTON_FONT_SIZE}
-                color={elem.quantity === 0 ? "grey" : "red"}
-
+          size={BUTTON_FONT_SIZE}
+          color={elem.quantity === 0 ? 'grey' : 'red'}
         />
       </TouchableOpacity>
-          <Text style={{textAlign: 'center', fontSize: BUTTON_FONT_SIZE, paddingHorizontal: 5, flex: 1}}>{total}</Text>
+      <Text
+        style={{
+          textAlign: 'center',
+          fontSize: BUTTON_FONT_SIZE,
+          paddingHorizontal: 5,
+          flex: 1,
+        }}>
+        {total}
+      </Text>
       <TouchableOpacity
         onPress={() => {
           add();
           elem.handleAdd();
         }}>
-            <AntDesign name="pluscircle"
-                       size={BUTTON_FONT_SIZE}
-                       color="green"
-                       />
+        <AntDesign name="pluscircle" size={BUTTON_FONT_SIZE} color="green" />
       </TouchableOpacity>
     </View>
   );
 };
 
-const AddRemoveWalletCoins = ({navigation}) => {
-  const [isLoading,setIsLoading] = useState(false)
+const AddRemoveWalletCoins = ({ navigation }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const {
     actualBills,
     setActualBills,
@@ -78,46 +87,49 @@ const AddRemoveWalletCoins = ({navigation}) => {
     setInitialCoinsMoneyWallet,
   } = useContext(AddRemoveContext);
 
+  const [coins, setCoins] = useState(actualCoins);
+
   useEffect(() => {
     if (totalMoneyWallet !== actualMoneyWallet) {
       setActualMoneyWallet(totalMoneyWallet);
     }
     setActualCoins(JSON.parse(JSON.stringify(initialCoinsMoneyWallet)));
+    setCoins(JSON.parse(JSON.stringify(initialCoinsMoneyWallet)));
   }, []);
 
   const handleAdd = (elem, index) => {
-    let newCoins = actualCoins;
+    let newCoins = coins;
     newCoins[index].quantity = newCoins[index].quantity + 1;
     setActualMoneyWallet(actualMoneyWallet + newCoins[index].amount);
-    setActualCoins(newCoins);
+    setCoins(newCoins);
   };
 
   const handleSub = (elem, index) => {
-    let newCoins = actualCoins;
+    let newCoins = coins;
     newCoins[index].quantity = newCoins[index].quantity - 1;
     setActualMoneyWallet(actualMoneyWallet - newCoins[index].amount);
-    setActualCoins(newCoins);
+    setCoins(newCoins);
   };
 
   const handleSave = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     let addMoney = [];
     let subMoney = [];
-    let moneyLength = actualCoins.length;
+    let moneyLength = coins.length;
 
     for (let i = 0; moneyLength > i; i++) {
       let initialValue = initialCoinsMoneyWallet[i].quantity;
-      let actualValue = actualCoins[i].quantity;
+      let actualValue = coins[i].quantity;
 
       if (initialValue > actualValue) {
         subMoney.push({
-          money_id: actualCoins[i].id,
+          money_id: coins[i].id,
           quantity: initialValue - actualValue,
         });
       }
       if (actualValue > initialValue) {
         addMoney.push({
-          money_id: actualCoins[i].id,
+          money_id: coins[i].id,
           quantity: actualValue - initialValue,
         });
       }
@@ -139,26 +151,31 @@ const AddRemoveWalletCoins = ({navigation}) => {
 
     setActualMoneyWallet(actualMoneyWallet);
     setTotalMoneyWallet(actualMoneyWallet);
-    setInitialCoinsMoneyWallet(actualCoins);
-    setActualCoins(actualCoins);
+    setInitialCoinsMoneyWallet(coins);
+    setCoins(coins);
+    setActualCoins(coins);
     setActualBills(actualBills);
     toastNotification(
       'SE ACTUALIZO EL DINERO CORRECTAMENTE!',
       'success',
       'success',
     );
-    navigation.navigate(SCREEN_NAME.HOME)
+    navigation.navigate(SCREEN_NAME.HOME);
   };
 
   return (
-    <View style={{
-      marginBottom: 90,
-    }}>
-      <View style={{backgroundColor: '#BBB'}}>
-        <Text style={{fontSize: 30, textAlign: 'center'}}>Total {formatNum(actualMoneyWallet)}</Text>
+    <View
+      style={{
+        marginBottom: 90,
+      }}>
+      <View style={{ backgroundColor: '#BBB' }}>
+        <Text style={{ fontSize: 30, textAlign: 'center' }}>
+          Total {formatNum(actualMoneyWallet)}
+        </Text>
       </View>
-      <ScrollView  contentContainerStyle={{paddingVertical: 10,   paddingHorizontal: 10}}>
-        {actualCoins.map((elem, index) => {
+      <ScrollView
+        contentContainerStyle={{ paddingVertical: 10, paddingHorizontal: 10 }}>
+        {coins.map((elem, index) => {
           return (
             <MoneyObject
               key={`name: ${elem.image} - amount: ${elem.amount}`}
@@ -169,7 +186,7 @@ const AddRemoveWalletCoins = ({navigation}) => {
           );
         })}
       </ScrollView>
-      <View style={{paddingVertical: 5}}>
+      <View style={{ paddingVertical: 5 }}>
         <SingleButton
           icon="money-bill-wave"
           sizeIcon={22}

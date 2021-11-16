@@ -28,8 +28,14 @@ const WalletBuy = () => {
 
   const navigation = useNavigation();
 
-  const { setTotalMoneyWallet, totalMoneyWallet } =
-    useContext(AddRemoveContext);
+  const {
+    setTotalMoneyWallet,
+    totalMoneyWallet,
+    setInitialCoinsMoneyWallet,
+    setInitialBillsMoneyWallet,
+    initialCoinsMoneyWallet,
+    initialBillsMoneyWallet,
+  } = useContext(AddRemoveContext);
 
   const schema = BalanceSchema(totalMoneyWallet);
   const methods = useForm({
@@ -124,7 +130,6 @@ const WalletBuy = () => {
     setValueBuy(data.amount);
     reset();
   };
-
   const handleContinue = async () => {
     setValueBuy('');
     setOptionBill('');
@@ -132,9 +137,30 @@ const WalletBuy = () => {
     setIsLoading(true);
     try {
       for (let opt of optPay) {
-        if (opt.quantity > 0) {
+        if (opt.quantity > 0 && opt.isCoins) {
           await deleteMoneyWallet(opt.user_id, opt.money_id, opt.quantity);
           setTotalMoneyWallet(totalMoneyWallet - opt.amount * opt.quantity);
+          const newCoins = initialCoinsMoneyWallet.map((item) => {
+            if (item.id === opt.money_id) {
+              item.quantity = item.quantity - opt.quantity;
+              return item;
+            }
+            return item;
+          });
+          setInitialCoinsMoneyWallet(newCoins);
+        }
+        if (opt.quantity > 0 && !opt.isCoins) {
+          await deleteMoneyWallet(opt.user_id, opt.money_id, opt.quantity);
+          setTotalMoneyWallet(totalMoneyWallet - opt.amount * opt.quantity);
+          const newBills = initialBillsMoneyWallet.map((item) => {
+            if (item.id === opt.money_id) {
+              item.quantity = item.quantity - opt.quantity;
+              return item;
+            }
+            return item;
+          });
+
+          setInitialBillsMoneyWallet(newBills);
         }
       }
       toastNotification(
