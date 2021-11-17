@@ -3,11 +3,23 @@ import { StyleSheet } from 'react-native';
 import { colors } from '../../constants';
 
 export const styles = StyleSheet.create({
+  baseBtn: {
+    flexDirection: 'row',
+    width: 175,
+    height: 40,
+    borderRadius: 10,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    // marginTop: 20,
+    // marginBottom: 20,
+    backgroundColor: colors.secondary,
+  },
+
   deseoBtn: {
     flexDirection: 'row',
     width: 175,
     height: 40,
-    borderRadius: 15,
+    borderRadius: 10,
     alignSelf: 'center',
     justifyContent: 'center',
     marginTop: 20,

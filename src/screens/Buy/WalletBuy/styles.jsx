@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
   form: {
@@ -18,26 +18,44 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     color: 'green',
-    paddingTop: 25,
+    // paddingTop: 25,
   },
   valueBuy: {
     fontSize: 17,
-    color: 'violet',
+    color: 'darkblue',
     fontWeight: 'bold',
     paddingTop: 15,
     textAlign: 'center',
   },
   optBuyContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    flexDirection: 'column',
+    justifyContent: 'space-evenly'
   },
   optBuy: {
     fontSize: 17,
     textAlign: 'center',
     padding: 20,
   },
+  itemOptBuy: {
+    flex: 1, flexDirection: 'row',
+    marginBottom: 5,
+    borderBottomColor: 'lightgray',
+    borderBottomWidth: 1,
+    paddingBottom: 3
+  },
+
   text: {
     fontSize: 17,
+  },
+  vuelto: {
+    marginTop: 5,
+    fontSize: 17,
+    paddingTop: 10,
+    paddingBottom: 10,
+    borderRadius: 3,
+    backgroundColor: '#70c585',
+    textAlign: 'center',
+
   },
   error: {
     fontSize: 17,

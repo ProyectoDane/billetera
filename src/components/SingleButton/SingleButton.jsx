@@ -18,7 +18,7 @@ const SingleButton = ({
 }) => {
   return (
     <TouchableOpacity
-      style={{ ...styles.deseoBtn, ...style }}
+      style={{ ...styles.baseBtn, ...style }}
       onPress={onPress}
       disabled={disabled}>
       {isLoading ? (
@@ -31,9 +31,11 @@ const SingleButton = ({
             size={sizeIcon}
             color={colors.white}
           />
-          <View style={styles.textContainer}>
-            <Text style={styles.text}>{label}</Text>
-          </View>
+          {label? (
+            <View style={styles.textContainer}>
+              <Text style={styles.text}>{label}</Text>
+            </View>
+          ):null}
         </>
       )}
     </TouchableOpacity>

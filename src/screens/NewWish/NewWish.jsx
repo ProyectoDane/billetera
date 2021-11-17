@@ -93,6 +93,7 @@ const NuevoDeseo = ({ navigation, route }) => {
           <SingleButton
             icon="magic"
             sizeIcon={22}
+            style={{marginTop: 20}}
             label={route.params === undefined ? 'CREAR DESEO' : 'EDITAR DESEO'}
             isLoading={isLoading}
             disabled={isLoading}
