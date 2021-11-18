@@ -2,11 +2,14 @@ import React from 'react';
 import Root from './Root';
 
 import { AddRemoveProvider } from './src/screens/AddRemove/AddRemoveContext';
+import { ManualPaymentProvider } from './src/screens/AddRemove/ManualPaymentContext';
 
 const App = () => {
   return (
     <AddRemoveProvider>
-      <Root />
+      <ManualPaymentProvider>
+        <Root />
+      </ManualPaymentProvider>
     </AddRemoveProvider>
   );
 };

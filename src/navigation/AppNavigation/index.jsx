@@ -1,5 +1,4 @@
-import React, { useEffect, useContext } from 'react';
-import { Text } from 'react-native';
+import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
@@ -28,6 +27,8 @@ import WalletBuy from '../../screens/Buy/WalletBuy';
 import SavingsBuy from '../../screens/Buy/SavingsBuy';
 import WalletManualPayment from '../../screens/AddRemove/WalletManualPayment';
 import SavingsManualPayment from '../../screens/AddRemove/SavingsManualPayment';
+import WalletManualPaymentBills from '../../screens/AddRemove/WalletManualPayment/WalletManualPaymentBills';
+import WalletManualPaymentCoins from '../../screens/AddRemove/WalletManualPayment/WalletManualPaymentCoins';
 
 import {
   colors,
@@ -43,7 +44,8 @@ const InformationStack = createStackNavigator();
 const WishesTopTab = createMaterialTopTabNavigator();
 const CalculatorStack = createStackNavigator();
 const MoneyTopTab = createMaterialTopTabNavigator();
-const MoneyTopTabSavings = createMaterialTopTabNavigator();
+// const MoneyTopTabSavings = createMaterialTopTabNavigator();
+const ManualPaymentTopTabWallet = createMaterialTopTabNavigator();
 
 const HomeNavigation = () => {
   return (
@@ -108,7 +110,7 @@ const HomeNavigation = () => {
       />
       <HomeStack.Screen
         name={SCREEN_NAME.WALLET_MANUAL_PAYMENT}
-        component={WalletManualPayment}
+        component={ManualPaymentWalletTab}
         options={{
           title: NAVIGATION_TITLE.WALLET_MANUAL_PAYMENT,
         }}
@@ -181,6 +183,19 @@ const MoneyTab = () => (
       component={AddRemoveWalletCoins}
     />
   </MoneyTopTab.Navigator>
+);
+
+const ManualPaymentWalletTab = () => (
+  <ManualPaymentTopTabWallet.Navigator>
+    <ManualPaymentTopTabWallet.Screen
+      name={NAVIGATION_TITLE.BILLETES}
+      component={WalletManualPaymentBills}
+    />
+    <ManualPaymentTopTabWallet.Screen
+      name={NAVIGATION_TITLE.MONEDAS}
+      component={WalletManualPaymentCoins}
+    />
+  </ManualPaymentTopTabWallet.Navigator>
 );
 
 const InformationNavigation = () => (

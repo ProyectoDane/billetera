@@ -16,6 +16,7 @@ import { styles } from './styles';
 import { colors, SCREEN_NAME } from '../../../constants';
 import { formatNum } from '../../../utils/functions/formatNum';
 import { toastNotification } from '../../../utils/functions/toastNotifcation';
+import { ManualPaymentContext } from '../../AddRemove/ManualPaymentContext';
 
 const WalletBuy = () => {
   const [valueBuy, setValueBuy] = useState();
@@ -36,6 +37,8 @@ const WalletBuy = () => {
     initialCoinsMoneyWallet,
     initialBillsMoneyWallet,
   } = useContext(AddRemoveContext);
+
+  const { setTotalPaymentWallet } = useContext(ManualPaymentContext);
 
   const schema = BalanceSchema(totalMoneyWallet);
   const methods = useForm({
@@ -176,9 +179,8 @@ const WalletBuy = () => {
   };
 
   const handleManualPay = () => {
-    navigation.navigate(SCREEN_NAME.WALLET_MANUAL_PAYMENT, {
-      purchaseValue: valueBuy,
-    });
+    setTotalPaymentWallet(valueBuy);
+    navigation.navigate(SCREEN_NAME.WALLET_MANUAL_PAYMENT);
   };
 
   return (
