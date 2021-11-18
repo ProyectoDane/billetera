@@ -66,7 +66,7 @@ const WalletBuy = () => {
 
     let dineroDB = [...dineroBillDB, ...dineroCoinDB];
     // console.log('MONEDAS DISPONIBLES:', dineroCoinDB);
-    console.log('BILLETES DISPONIBLES:', dineroBillDB);
+    // console.log('BILLETES DISPONIBLES:', dineroBillDB);
     setMoneyDB(dineroDB);
   };
 
@@ -114,10 +114,10 @@ const WalletBuy = () => {
     try {
       for (let opt of optPay) {
         if (opt.quantity > 0 && opt.isCoins) {
-          await deleteMoneyWallet(opt.user_id, opt.money_id, opt.quantity);
+          await deleteMoneyWallet(opt.userId, opt.moneyId, opt.quantity);
           setTotalMoneyWallet(totalMoneyWallet - opt.amount * opt.quantity);
           const newCoins = initialCoinsMoneyWallet.map((item) => {
-            if (item.id === opt.money_id) {
+            if (item.id === opt.moneyId) {
               item.quantity = item.quantity - opt.quantity;
               return item;
             }
@@ -126,10 +126,10 @@ const WalletBuy = () => {
           setInitialCoinsMoneyWallet(newCoins);
         }
         if (opt.quantity > 0 && !opt.isCoins) {
-          await deleteMoneyWallet(opt.user_id, opt.money_id, opt.quantity);
+          await deleteMoneyWallet(opt.userId, opt.moneyId, opt.quantity);
           setTotalMoneyWallet(totalMoneyWallet - opt.amount * opt.quantity);
           const newBills = initialBillsMoneyWallet.map((item) => {
-            if (item.id === opt.money_id) {
+            if (item.id === opt.moneyId) {
               item.quantity = item.quantity - opt.quantity;
               return item;
             }
@@ -139,6 +139,7 @@ const WalletBuy = () => {
           setInitialBillsMoneyWallet(newBills);
         }
       }
+      navigation.navigate(SCREEN_NAME.HOME);
       toastNotification(
         'LA COMPRA SE REALIZÓ CORRECTAMENTE!',
         'success',
@@ -193,11 +194,7 @@ const WalletBuy = () => {
               />
             </View>
             <View
-              style={{
-                flex: 2,
-                flexDirection: 'row',
-                alignItems: 'baseline',
-              }}>
+              style={{ flex: 2, flexDirection: 'row', alignItems: 'baseline' }}>
               <SingleButton
                 icon="calculator"
                 sizeIcon={22}

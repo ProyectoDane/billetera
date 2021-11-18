@@ -1,62 +1,3 @@
-// let money = [{
-//     "id": 13,
-//     "quantity": 14,
-//     "moneyId": 1,
-//     "userId": 1,
-//     "image": "1000Hornero.png",
-//     "amount": 1000,
-//     "isCoins": 0
-// }, {
-//     "id": 12,
-//     "quantity": 9,
-//     "moneyId": 12,
-//     "userId": 1,
-//     "image": "500Yaguarete.png",
-//     "amount": 500,
-//     "isCoins": 0
-// }, {
-//     "id": 11,
-//     "quantity": 10,
-//     "moneyId": 11,
-//     "userId": 1,
-//     "image": "200.png",
-//     "amount": 200,
-//     "isCoins": 0
-// }, {
-//     "id": 10,
-//     "quantity": 5,
-//     "moneyId": 10,
-//     "userId": 1,
-//     "image": "100Taruca.png",
-//     "amount": 100,
-//     "isCoins": 0
-// }, {
-//     "id": 10,
-//     "quantity": 0,
-//     "moneyId": 10,
-//     "userId": 1,
-//     "image": "5pe.png",
-//     "amount": 5,
-//     "isCoins": 0
-// }, {
-//     "id": 10,
-//     "quantity": 0,
-//     "moneyId": 10,
-//     "userId": 1,
-//     "image": "5pe_moneda.png",
-//     "amount": 5,
-//     "isCoins": 1
-// }
-//     , {
-//         "id": 10,
-//         "quantity": 10,
-//         "moneyId": 10,
-//         "userId": 1,
-//         "image": "1pe.png",
-//         "amount": 0.10,
-//         "isCoins": 0
-//     }];
-
 function copyMoney(moneyEntry, quantity) {
   let copy = { ...moneyEntry };
   copy.quantity = quantity;
@@ -91,15 +32,17 @@ function pagarConRecursivo(amount, myMoney) {
 
   let resultados = [];
 
-  for (let index of myMoney.entries()) {
+  for (let [index] of myMoney.entries()) {
     // your code goes here
     const moneyEntry = myMoney[index];
     if (moneyEntry.quantity === 0) continue;
 
     if (moneyEntry.amount >= amount) {
+      let auxBilletes = [copyMoney(moneyEntry, 1)];
       resultados.push({
-        billetes: [copyMoney(moneyEntry, 1)],
+        billetes: auxBilletes,
         vuelto: moneyEntry.amount - amount,
+        totales: getTotales(auxBilletes),
       });
     } else {
       //Lo que hay que pagar no entra en el billete
