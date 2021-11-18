@@ -89,7 +89,7 @@ function pagarConRecursivo(amount, myMoney) {
 
     let resultados = [];
 
-    for (let index of myMoney.entries()) {
+    for (let [index, entry] of myMoney.entries()) {
         // your code goes here
         const moneyEntry = myMoney[index];
         if (moneyEntry.quantity === 0)
