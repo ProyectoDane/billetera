@@ -1,61 +1,61 @@
-let money = [{
-    "id": 13,
-    "quantity": 10,
-    "moneyId": 13,
-    "userId": 1,
-    "image": "1000Hornero.png",
-    "amount": 1000,
-    "isCoins": 0
-}, {
-    "id": 12,
-    "quantity": 2,
-    "moneyId": 12,
-    "userId": 1,
-    "image": "500Yaguarete.png",
-    "amount": 500,
-    "isCoins": 0
-}, {
-    "id": 11,
-    "quantity": 2,
-    "moneyId": 11,
-    "userId": 1,
-    "image": "200.png",
-    "amount": 200,
-    "isCoins": 0
-}, {
-    "id": 10,
-    "quantity": 2,
-    "moneyId": 10,
-    "userId": 1,
-    "image": "100Taruca.png",
-    "amount": 100,
-    "isCoins": 0
-}, {
-    "id": 10,
-    "quantity": 5,
-    "moneyId": 10,
-    "userId": 1,
-    "image": "5pe.png",
-    "amount": 5,
-    "isCoins": 0
-}, {
-    "id": 10,
-    "quantity": 5,
-    "moneyId": 10,
-    "userId": 1,
-    "image": "5pe_moneda.png",
-    "amount": 5,
-    "isCoins": 1
-}
-    , {
-        "id": 10,
-        "quantity": 10,
-        "moneyId": 10,
-        "userId": 1,
-        "image": "1pe.png",
-        "amount": 1,
-        "isCoins": 0
-    }]
+// let money = [{
+//     "id": 13,
+//     "quantity": 14,
+//     "moneyId": 1,
+//     "userId": 1,
+//     "image": "1000Hornero.png",
+//     "amount": 1000,
+//     "isCoins": 0
+// }, {
+//     "id": 12,
+//     "quantity": 9,
+//     "moneyId": 12,
+//     "userId": 1,
+//     "image": "500Yaguarete.png",
+//     "amount": 500,
+//     "isCoins": 0
+// }, {
+//     "id": 11,
+//     "quantity": 10,
+//     "moneyId": 11,
+//     "userId": 1,
+//     "image": "200.png",
+//     "amount": 200,
+//     "isCoins": 0
+// }, {
+//     "id": 10,
+//     "quantity": 5,
+//     "moneyId": 10,
+//     "userId": 1,
+//     "image": "100Taruca.png",
+//     "amount": 100,
+//     "isCoins": 0
+// }, {
+//     "id": 10,
+//     "quantity": 0,
+//     "moneyId": 10,
+//     "userId": 1,
+//     "image": "5pe.png",
+//     "amount": 5,
+//     "isCoins": 0
+// }, {
+//     "id": 10,
+//     "quantity": 0,
+//     "moneyId": 10,
+//     "userId": 1,
+//     "image": "5pe_moneda.png",
+//     "amount": 5,
+//     "isCoins": 1
+// }
+//     , {
+//         "id": 10,
+//         "quantity": 10,
+//         "moneyId": 10,
+//         "userId": 1,
+//         "image": "1pe.png",
+//         "amount": 0.10,
+//         "isCoins": 0
+//     }];
 
 function copyMoney(moneyEntry, quantity) {
     let copy = {...moneyEntry};
@@ -75,7 +75,10 @@ function getTotales(billetes) {
     }, {amount: 0, cantBilletes: 0, cantMonedas: 0});
 }
 
-function pagarCon(amount, myMoney) {
+function pagarConRecursivo(amount, myMoney) {
+
+    if (amount === 0)
+        return [];
 
     let totalEnBilletera = myMoney.reduce((acum, current) => {
         return acum + current.amount * current.quantity;
@@ -86,9 +89,12 @@ function pagarCon(amount, myMoney) {
 
     let resultados = [];
 
-    for (let [index, moneyEntry] of myMoney.entries()) {
+    for (let index of myMoney.entries()) {
         // your code goes here
         const moneyEntry = myMoney[index];
+        if (moneyEntry.quantity === 0)
+            continue;
+
         if (moneyEntry.amount >= amount) {
             resultados.push({
                 billetes: [copyMoney(moneyEntry, 1)],
@@ -103,7 +109,8 @@ function pagarCon(amount, myMoney) {
             if (veces >= 1) {
                 let cantidadBilletes = Math.min(veces, moneyEntry.quantity)
 
-                let vuelto = amount % (moneyEntry.amount * cantidadBilletes);
+                let vuelto = amount - (moneyEntry.amount * cantidadBilletes);
+                vuelto = +vuelto.toFixed(2); //Se queda solo 2 decimales, elimina los ceros a la derecha
 
                 if (vuelto > 0 && moneyEntry.quantity > veces) {
                     let auxBilletes = [copyMoney(moneyEntry, cantidadBilletes + 1)];
@@ -115,19 +122,30 @@ function pagarCon(amount, myMoney) {
                     resultados.push(newResultado);
                 }
 
-                let ret = pagarCon(amount - moneyEntry.amount * cantidadBilletes, myMoney.slice(index + 1));
-                //Ret tiene un monton de resultados posibles, cada resultado se le agrega al resultado parcial actual
-
-                for (const unRet of ret) {
-                    let billetes = [copyMoney(moneyEntry, cantidadBilletes), ...(unRet.billetes || [])];
-                    let totales = getTotales(billetes);
+                if (vuelto === 0) {
+                    let auxBilletes = [copyMoney(moneyEntry, cantidadBilletes)];
                     let newResultado = {
-                        billetes: billetes,
-                        vuelto: totales.amount - amount,
-                        totales: totales
+                        billetes: auxBilletes,
+                        vuelto: moneyEntry.amount * cantidadBilletes - amount,
+                        totales: getTotales(auxBilletes)
                     };
                     resultados.push(newResultado);
+                } else {
 
+                    let ret = pagarConRecursivo(amount - moneyEntry.amount * cantidadBilletes, myMoney.slice(index + 1));
+                    //Ret tiene un monton de resultados posibles, cada resultado se le agrega al resultado parcial actual
+
+                    for (const unRet of ret) {
+                        let billetes = [copyMoney(moneyEntry, cantidadBilletes), ...(unRet.billetes || [])];
+                        let totales = getTotales(billetes);
+                        let newResultado = {
+                            billetes: billetes,
+                            vuelto: totales.amount - amount,
+                            totales: totales
+                        };
+                        resultados.push(newResultado);
+
+                    }
                 }
 
 
@@ -135,15 +153,37 @@ function pagarCon(amount, myMoney) {
 
 
         }
-        console.log("");
     }
 
 
     return resultados;
 }
 
-//let resultado = pagarCon(4001, money);
+function sortResultados(resultados) {
+     resultados.sort((a,b)=> {
+        if (a.vuelto < b.vuelto)
+            return -1;
+         if (a.vuelto > b.vuelto)
+             return 1;
+
+         if (a.totales.cantBilletes < b.totales.cantBilletes)
+             return -1
+         if (a.totales.cantBilletes > b.totales.cantBilletes)
+             return 1
+         return 0
+     })
+
+    return resultados;
+}
+
+function pagarCon(amount, myMoney ) {
+    let res = pagarConRecursivo(amount, myMoney);
+    sortResultados(res)
+    return res;
+}
+
+//let resultado = pagarCon(1000.1, money);
 //console.log(JSON.stringify(resultado, null, 2));
-//pagarCon(10, money);
+//pagarConRecursivo(10, money);
 
 export default pagarCon;

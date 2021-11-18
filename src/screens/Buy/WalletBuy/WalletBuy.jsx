@@ -23,6 +23,7 @@ const WalletBuy = () => {
   const [optionBill, setOptionBill] = useState('');
   const [optPay, setOptPay] = useState();
   const [vuelto, setVuelto] = useState();
+  const [cantidadPagar, setCantidadPagar] = useState();
   const [hasError, setHasError] = useState();
   const [moneyDB, setMoneyDB] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -82,11 +83,12 @@ const WalletBuy = () => {
 
     let resultados = pagarCon(money, moneyDB);
 
-    let resultado = resultados[resultados.length-1]; //La ultima es la que más justo paga
+    let resultado = resultados[0];
     let primeraOpcion = resultado.billetes;
 
     setOptPay(primeraOpcion);
     setVuelto(resultado.vuelto?formatNum(resultado.vuelto):null);
+    setCantidadPagar(resultado.totales.amount);
 
     for (let e of primeraOpcion) {
       if (e.quantity > 0 && e.amount >= 10 && e.isCoins === 0) {
@@ -196,7 +198,7 @@ const WalletBuy = () => {
                   <Text style={styles.valueBuy}>
                     VALOR DE LA COMPRA: {formatNum(valueBuy)}
                   </Text>
-                  <Text style={styles.optBuy}>FORMA DE PAGO SUGERIDA </Text>
+                  <Text style={styles.optBuy}>FORMA DE PAGO SUGERIDA {formatNum(cantidadPagar)}  </Text>
                   {optionBill ? (
                     <View>
                       {optionBill.map((item, index) => (
