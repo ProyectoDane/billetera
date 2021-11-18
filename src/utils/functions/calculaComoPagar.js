@@ -96,9 +96,11 @@ function pagarConRecursivo(amount, myMoney) {
             continue;
 
         if (moneyEntry.amount >= amount) {
+            let auxBilletes = [copyMoney(moneyEntry, 1)];
             resultados.push({
-                billetes: [copyMoney(moneyEntry, 1)],
-                vuelto: moneyEntry.amount - amount
+                billetes: auxBilletes,
+                vuelto: moneyEntry.amount - amount,
+                totales: getTotales(auxBilletes)
             });
         } else {
 

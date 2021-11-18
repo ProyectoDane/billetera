@@ -161,7 +161,7 @@ const WalletBuy = () => {
     <Layout>
       <ScrollView>
         <FormProvider {...methods}>
-          <View style={{ backgroundColor: 'lightgreen', flex: 1, flexWrap: 'no-wrap', alignItems: 'center', justifyContent: 'center', marginBottom: 10}}>
+          <View style={{ backgroundColor: 'lightgreen', flex: 1, flexWrap: 'nowrap', alignItems: 'center', justifyContent: 'center', marginBottom: 10}}>
             <Text style={{...styles.amountAvaible, padding: 5, flex: 1 }}>
               TENES {' '}
               {totalMoneyWallet > 0 ? formatNum(totalMoneyWallet) : `$0`}
@@ -178,7 +178,7 @@ const WalletBuy = () => {
                 required
               />
             </View>
-            <View  style={{flex: 2, flexDirection: 'row', alignItems: 'baselines'}}>
+            <View  style={{flex: 2, flexDirection: 'row', alignItems: 'baseline'}}>
               <SingleButton
                 icon="calculator"
                 sizeIcon={22}
@@ -202,8 +202,8 @@ const WalletBuy = () => {
                   {optionBill ? (
                     <View>
                       {optionBill.map((item, index) => (
-                          <View style={styles.itemOptBuy}>
-                            <Text key={index} style={{flex: 1, ...styles.text}}>
+                          <View  key={index} style={styles.itemOptBuy}>
+                            <Text style={{flex: 1, ...styles.text}}>
                               {item}
                             </Text>
                               <ItemMoney key={'money_' + index} {...optPay[index]} style={{
