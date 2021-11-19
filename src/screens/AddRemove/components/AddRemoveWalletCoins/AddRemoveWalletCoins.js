@@ -1,14 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
-} from 'react-native';
-import {AntDesign} from '@expo/vector-icons';
-
-import ItemMoney from '../ItemMoney';
+import {ScrollView, StyleSheet, Text, View,} from 'react-native';
 import SingleButton from '../../../../components/SingleButton';
 import {AddRemoveContext} from '../../AddRemoveContext';
 import {SCREEN_NAME} from '../../../../constants';
@@ -16,60 +7,7 @@ import {formatNum} from '../../../../utils/functions/formatNum';
 import {toastNotification} from '../../../../utils/functions/toastNotifcation';
 import getMoney from "../../../../utils/functions/loadMoneyToContext";
 import {innerSaveAddRemove} from "../../utils";
-
-const MoneyObject = (elem) => {
-    const [total, setTotal] = useState(elem.quantity);
-
-    const add = () => setTotal(total + 1);
-    const sub = () => setTotal(total - 1);
-
-    const BUTTON_FONT_SIZE = 40;
-
-    return (
-        <View
-            style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-                flexDirection: 'row',
-                paddingVertical: 3,
-            }}>
-            <View style={{marginRight: 15}}>
-                <ItemMoney {...elem} />
-            </View>
-
-            <TouchableOpacity
-                disabled={elem.quantity === 0}
-                onPress={() => {
-                    sub();
-                    elem.handleSub();
-                }}>
-                <AntDesign
-                    name="minuscircle"
-                    size={BUTTON_FONT_SIZE}
-                    color={elem.quantity === 0 ? 'grey' : 'red'}
-                />
-            </TouchableOpacity>
-            <Text
-                style={{
-                    textAlign: 'center',
-                    fontSize: BUTTON_FONT_SIZE,
-                    paddingHorizontal: 5,
-                    flex: 1,
-                }}>
-                {total}
-            </Text>
-            <TouchableOpacity
-                onPress={() => {
-                    add();
-                    elem.handleAdd();
-                }}>
-                <AntDesign name="pluscircle" size={BUTTON_FONT_SIZE}
-                           color="green"/>
-            </TouchableOpacity>
-        </View>
-    );
-};
+import MoneyObjectAddRemove from "../MoneyObjectAddRemove";
 
 
 const AddRemoveWalletCoins = ({navigation}) => {
@@ -148,7 +86,7 @@ const AddRemoveWalletCoins = ({navigation}) => {
                 }}>
                 {coins.map((elem, index) => {
                     return (
-                        <MoneyObject
+                        <MoneyObjectAddRemove
                             key={`name: ${elem.image} - amount: ${elem.amount}`}
                             handleAdd={() => handleAdd(elem, index)}
                             handleSub={() => handleSub(elem, index)}
