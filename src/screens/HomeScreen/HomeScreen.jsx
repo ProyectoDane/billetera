@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, {useContext, useEffect} from 'react';
 import { View, Text } from 'react-native';
 
 import { AddRemoveContext } from '../AddRemove/AddRemoveContext';
@@ -8,9 +8,21 @@ import Layout from '../../components/Layout';
 import { SCREEN_NAME } from '../../constants';
 import { styles } from './styles';
 import { savings } from '../../mockData/deseos';
+import getMoney from "../../utils/functions/loadMoneyToContext";
 
 const HomeScreen = ({ navigation }) => {
   const { totalMoneyWallet } = useContext(AddRemoveContext);
+  const context = useContext(AddRemoveContext);
+
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            console.log("entre a la home");
+            getMoney(context);
+        });
+        return unsubscribe;
+    }, [navigation]);
+
 
   return (
     <Layout hideTextFooter>

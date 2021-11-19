@@ -16,7 +16,7 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "icon": "./assets/favicon.png",
+      "icon": "./assets/favicon_white.png",
       "bundleIdentifier": "com.dane.comopago"
     },
     "android": {
