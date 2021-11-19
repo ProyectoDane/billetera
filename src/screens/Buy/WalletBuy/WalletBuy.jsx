@@ -52,24 +52,25 @@ const WalletBuy = () => {
 
   const tomarDinero = async () => {
     const res = await getDineroWallet();
+    if (res.length > 0) {
+      let dineroBillDB = res
+        .filter((item) => item.isCoins === 0)
+        .sort(function (a, b) {
+          return b.id - a.id;
+        });
+      let dineroCoinDB = res
+        .filter((item) => item.isCoins === 1)
+        .sort(function (a, b) {
+          return b.amount - a.amount;
+        });
 
-    let dineroBillDB = res
-      .filter((item) => item.isCoins === 0)
-      .sort(function (a, b) {
-        return b.id - a.id;
-      });
-    let dineroCoinDB = res
-      .filter((item) => item.isCoins === 1)
-      .sort(function (a, b) {
-        return b.amount - a.amount;
-      });
-
-    let dineroDB = [...dineroBillDB, ...dineroCoinDB];
-    // console.log('MONEDAS DISPONIBLES:', dineroCoinDB);
-    // console.log('BILLETES DISPONIBLES:', dineroBillDB);
-    setMoneyDB(dineroDB);
+      let dineroDB = [...dineroBillDB, ...dineroCoinDB];
+      // console.log('MONEDAS DISPONIBLES:', dineroCoinDB);
+      // console.log('BILLETES DISPONIBLES:', dineroBillDB);
+      setMoneyDB(dineroDB);
+    }
+    return res;
   };
-
   useEffect(() => {
     // Obtiene y ordena el dinero de la billetera
     tomarDinero();
