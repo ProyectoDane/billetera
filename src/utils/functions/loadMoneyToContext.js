@@ -60,13 +60,13 @@ async function getMoney(context) {
     context.setInitialBillsMoneyWallet(totalBilletes); //El ultimo estado recuperado de la BD
     context.setActualBillsMoneyWallet(totalBilletes); //Sujeto a cambios por la UI
 
-    context.setInitialCoinsMoneyWallet(totalCoins);
-    context.setActualCoinsMoneyWallet(totalCoins);
+    context.setInitialCoinsMoneyWallet(totalCoins); //El ultimo estado recuperado de la BD
+    context.setActualCoinsMoneyWallet(totalCoins); //Sujeto a cambios por la UI
     context.setTotalMoneyWallet(total);
     context.setActualMoneyWallet(total);
 
-    context.setActualBills(JSON.parse(JSON.stringify(totalBilletes)));
-    context.setActualCoins(JSON.parse(JSON.stringify(totalCoins)));
+    context.setActualBills(JSON.parse(JSON.stringify(totalBilletes))); //copia para usar en la UI
+    context.setActualCoins(JSON.parse(JSON.stringify(totalCoins)));  //copia para usar en la UI
 }
 
 export default getMoney;

@@ -1,9 +1,9 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
-import { Ionicons } from '@expo/vector-icons';
-import { NavigationContainer } from '@react-navigation/native';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
+import {Ionicons} from '@expo/vector-icons';
+import {NavigationContainer} from '@react-navigation/native';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
 import HomeScreen from '../../screens/HomeScreen';
 import Calculator from '../../screens/Calculator';
@@ -13,8 +13,6 @@ import MySavings from '../../screens/MySavings';
 import Profile from '../../screens/Profile';
 import NewWish from '../../screens/NewWish';
 import ProfileButton from '../../components/ProfileButton';
-import AddRemoveWalletBills from '../../screens/AddRemove/components/AddRemoveWalletBills';
-import AddRemoveWalletCoins from '../../screens/AddRemove/components/AddRemoveWalletCoins';
 import Survey from '../../screens/Survey/Survey';
 import About from '../../screens/About/About';
 import Information from '../../screens/Information';
@@ -25,17 +23,21 @@ import WishesFulfilled from '../../screens/WishesFulfilled';
 import NavTitle from '../../components/NavTitle';
 import WalletBuy from '../../screens/Buy/WalletBuy';
 import SavingsBuy from '../../screens/Buy/SavingsBuy';
-import WalletManualPayment from '../../screens/AddRemove/WalletManualPayment';
-import SavingsManualPayment from '../../screens/AddRemove/SavingsManualPayment';
-import WalletManualPaymentBills from '../../screens/AddRemove/WalletManualPayment/WalletManualPaymentBills';
-import WalletManualPaymentCoins from '../../screens/AddRemove/WalletManualPayment/WalletManualPaymentCoins';
+import SavingsManualPayment
+    from '../../screens/AddRemove/SavingsManualPayment';
+import WalletManualPaymentBills
+    from '../../screens/AddRemove/WalletManualPayment/WalletManualPaymentBills';
+import WalletManualPaymentCoins
+    from '../../screens/AddRemove/WalletManualPayment/WalletManualPaymentCoins';
 
 import {
-  colors,
-  SCREEN_NAME,
-  NAVIGATION_TITLE,
-  TABS_NAME,
+    colors,
+    NAVIGATION_TITLE,
+    SCREEN_NAME,
+    TABS_NAME,
 } from '../../constants';
+import AddRemoveWallet
+    from "../../screens/AddRemove/components/AddRemoveWallet/AddRemoveWallet";
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -43,7 +45,6 @@ const MyWishesStack = createStackNavigator();
 const InformationStack = createStackNavigator();
 const WishesTopTab = createMaterialTopTabNavigator();
 const CalculatorStack = createStackNavigator();
-const MoneyTopTab = createMaterialTopTabNavigator();
 // const MoneyTopTabSavings = createMaterialTopTabNavigator();
 const ManualPaymentTopTabWallet = createMaterialTopTabNavigator();
 
@@ -172,17 +173,8 @@ const MyWishesNavigation = () => (
   </MyWishesStack.Navigator>
 );
 
-const MoneyTab = () => (
-  <MoneyTopTab.Navigator>
-    <MoneyTopTab.Screen
-      name={NAVIGATION_TITLE.ADD_REMOVE_BILLS}
-      component={AddRemoveWalletBills}
-    />
-    <MoneyTopTab.Screen
-      name={NAVIGATION_TITLE.ADD_REMOVE_COINS}
-      component={AddRemoveWalletCoins}
-    />
-  </MoneyTopTab.Navigator>
+const MoneyTab = ({ navigation }) => (
+    <AddRemoveWallet navigation={navigation}/>
 );
 
 const ManualPaymentWalletTab = () => (
