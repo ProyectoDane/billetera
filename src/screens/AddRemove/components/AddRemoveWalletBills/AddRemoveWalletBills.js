@@ -29,38 +29,29 @@ const AddRemoveWalletBills = ({navigation}) => {
 
     const context = useContext(AddRemoveContext);
 
-    const coins = actualCoins;
-    const setCoins = setActualCoins;
-
-    const bills = actualBills;
-    const setBills = setActualBills;
-
     useEffect(() => {
         if (totalMoneyWallet !== actualMoneyWallet) {
             setActualMoneyWallet(totalMoneyWallet);
         }
         setActualBills(JSON.parse(JSON.stringify(initialBillsMoneyWallet)));
-        setBills(JSON.parse(JSON.stringify(initialBillsMoneyWallet)));
     }, []);
 
     const handleAdd = (elem, index) => {
-        let newBills = bills;
-        newBills[index].quantity = newBills[index].quantity + 1;
-        setActualMoneyWallet(actualMoneyWallet + newBills[index].amount);
-        setBills(newBills);
+        actualBills[index].quantity = actualBills[index].quantity + 1;
+        setActualMoneyWallet(actualMoneyWallet + actualBills[index].amount);
+        setActualBills(actualBills);
     };
 
     const handleSub = (elem, index) => {
-        let newBills = bills;
-        newBills[index].quantity = newBills[index].quantity - 1;
-        setActualMoneyWallet(actualMoneyWallet - newBills[index].amount);
-        setBills(newBills);
+        actualBills[index].quantity = actualBills[index].quantity - 1;
+        setActualMoneyWallet(actualMoneyWallet - actualBills[index].amount);
+        setActualBills(actualBills);
     };
 
     const handleSave = async () => {
         setIsLoading(true);
 
-        await innerSaveAddRemove(initialCoinsMoneyWallet, coins, initialBillsMoneyWallet, bills);
+        await innerSaveAddRemove(initialCoinsMoneyWallet, actualCoins, initialBillsMoneyWallet, actualBills);
         await getMoney(context);
         toastNotification(
             'SE ACTUALIZO EL DINERO CORRECTAMENTE!',
@@ -87,7 +78,7 @@ const AddRemoveWalletBills = ({navigation}) => {
                     paddingVertical: 10,
                     paddingHorizontal: 10
                 }}>
-                {bills.map((elem, index) => {
+                {actualBills.map((elem, index) => {
                     return (
                         <MoneyObjectAddRemove
                             key={`name: ${elem.image} - amount: ${elem.amount}`}
