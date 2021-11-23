@@ -30,7 +30,7 @@ const Calculator = () => {
               styleText={{ color: colors.white, fontSize: 28 }}
               onPress={() => handleInput(button)}
             />
-          ) : button === 0 ? (
+          ) : button === '0' ? (
             <CalcBtn
               key={button}
               button={button}

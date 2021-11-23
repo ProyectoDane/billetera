@@ -9,39 +9,39 @@ export const useCalculator = () => {
     'C',
     'DEL',
     '/',
-    7,
-    8,
-    9,
+    '7',
+    '8',
+    '9',
     'x',
-    4,
-    5,
-    6,
+    '4',
+    '5',
+    '6',
     '-',
-    1,
-    2,
-    3,
+    '1',
+    '2',
+    '3',
     '+',
-    0,
+    '0',
     '.',
     '=',
   ];
 
   const calculator = () => {
     try {
-      if (currentNumber.startsWith(0) && !currentNumber.includes('.')) {
+      if (currentNumber.startsWith('0') && !currentNumber.includes('.')) {
         let result = eval(currentNumber.substr(1)).toString();
         setCurrentNumber(result);
         setLastNumber(result);
       } else {
-        let aux = currentNumber.toString().replaceAll('x', '*');
+        let aux = currentNumber.replaceAll('x', '*');
         let result = eval(aux);
         result = +result.toString();
         setCurrentNumber(result);
         return;
       }
     } catch (error) {
-      console.log(error);
-      // setCurrentNumber('ERROR');
+      console.error(error);
+      setCurrentNumber('ERROR');
     }
   };
 
@@ -52,7 +52,7 @@ export const useCalculator = () => {
     switch (buttonPressed) {
       case 0:
         Vibration.vibrate(35);
-        if (buttonPressed === 0 && currentNumber === '0') return;
+        if (buttonPressed === '0' && currentNumber === '0') return;
         break;
       case '+':
       case '-':
@@ -105,16 +105,16 @@ export const useCalculator = () => {
         break;
     }
     if (
-      buttonPressed === 1 ||
-      buttonPressed === 2 ||
-      buttonPressed === 3 ||
-      buttonPressed === 4 ||
-      buttonPressed === 5 ||
-      buttonPressed === 6 ||
-      buttonPressed === 7 ||
-      buttonPressed === 8 ||
-      buttonPressed === 9 ||
-      buttonPressed === 0 ||
+      buttonPressed === '1' ||
+      buttonPressed === '2' ||
+      buttonPressed === '3' ||
+      buttonPressed === '4' ||
+      buttonPressed === '5' ||
+      buttonPressed === '6' ||
+      buttonPressed === '7' ||
+      buttonPressed === '8' ||
+      buttonPressed === '9' ||
+      buttonPressed === '0' ||
       buttonPressed === '.'
     ) {
       Vibration.vibrate(35);
