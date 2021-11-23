@@ -4,6 +4,7 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import ItemMoney from '../ItemMoney/ItemMoney';
 
 const MoneyObjectPayment = (elem) => {
+  console.log('elem>>>>>>>>>>>', elem);
   const totalStock = elem.quantity;
   const [total, setTotal] = useState(elem.quantity);
   const { index, bills, setBills, total: total2, setTotal: setTotal2 } = elem;

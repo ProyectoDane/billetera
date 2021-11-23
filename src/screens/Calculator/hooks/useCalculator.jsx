@@ -33,18 +33,19 @@ export const useCalculator = () => {
         setCurrentNumber(result);
         setLastNumber(result);
       } else {
-        let aux = currentNumber.replaceAll("x","*")
+        let aux = currentNumber.toString().replaceAll('x', '*');
         let result = eval(aux);
         result = +result.toString();
         setCurrentNumber(result);
         return;
       }
     } catch (error) {
-      setCurrentNumber('ERROR');
+      console.log(error);
+      // setCurrentNumber('ERROR');
     }
   };
 
-  const operations = "+-/x";
+  const operations = '+-/x';
   // Validacion para evitar tocar varias veces los operadores estando en 0
   const handleInput = (buttonPressed) => {
     let lastChar = currentNumber.toString().charAt(currentNumber.length - 1);
@@ -59,40 +60,35 @@ export const useCalculator = () => {
       case '/':
         Vibration.vibrate(35);
         let isMultiplicaDivide = buttonPressed === '/' || buttonPressed === 'x';
-        if (currentNumber.toString() === '' && isMultiplicaDivide)
-          return;
-        if (currentNumber.toString() === '+' && isMultiplicaDivide)
-          return;
+        if (currentNumber.toString() === '' && isMultiplicaDivide) return;
+        if (currentNumber.toString() === '+' && isMultiplicaDivide) return;
 
-        if (currentNumber.toString() === '-' && isMultiplicaDivide)
-          return;
-
+        if (currentNumber.toString() === '-' && isMultiplicaDivide) return;
 
         //no puee haber 2 operaciones seguidas
-        if  (operations.indexOf(lastChar) >-1 ) {
-          setCurrentNumber(currentNumber.toString().slice(0,-1) + buttonPressed);
+        if (operations.indexOf(lastChar) > -1) {
+          setCurrentNumber(
+            currentNumber.toString().slice(0, -1) + buttonPressed,
+          );
           return;
         }
         //no puede haber una operacion despues de un "."
-        if  (lastChar === '.' ) return;
+        if (lastChar === '.') return;
         setCurrentNumber(currentNumber.toString() + buttonPressed);
         break;
       case '.':
         Vibration.vibrate(35);
         //No puede haber mas de 1 . seguido
-        if  (lastChar === '.' )
-          return;
+        if (lastChar === '.') return;
 
         //Me fijo siempre que en el ultimo termino, haya solo 1 "."
         let terminos = currentNumber.toString().split(/[\-+x/]+/);
-        let ultimo = terminos[terminos.length-1];
-        if (ultimo.indexOf('.')>-1)
-          return;
+        let ultimo = terminos[terminos.length - 1];
+        if (ultimo.indexOf('.') > -1) return;
         break;
       case '=':
         //El ultimo caracter no puede ser una operacion
-        if  (operations.indexOf(lastChar) >-1 )
-          return;
+        if (operations.indexOf(lastChar) > -1) return;
 
         //me fijo que exista al menos una operacion
         let found = false;
@@ -102,13 +98,11 @@ export const useCalculator = () => {
             found = true;
             break;
           }
-
         }
-        if (!found)
-          return;
+        if (!found) return;
         //---------------
 
-        break
+        break;
     }
     if (
       buttonPressed === 1 ||
