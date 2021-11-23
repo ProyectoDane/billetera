@@ -5,10 +5,17 @@ import { AntDesign } from '@expo/vector-icons';
 import ItemMoney from '../ItemMoney';
 
 export const MoneyObjectAddRemove = ({ comprar = false, ...elem }) => {
+  const [restante, setRestante] = useState(elem.quantity);
   const [total, setTotal] = useState(comprar ? 0 : elem.quantity);
 
-  const add = () => setTotal(total + 1);
-  const sub = () => setTotal(total - 1);
+  const add = () => {
+    setTotal(total + 1);
+    setRestante(restante - 1);
+  };
+  const sub = () => {
+    setTotal(total - 1);
+    setRestante(restante + 1);
+  };
 
   const BUTTON_FONT_SIZE = 40;
 
@@ -22,16 +29,7 @@ export const MoneyObjectAddRemove = ({ comprar = false, ...elem }) => {
       }}>
       <View style={{ marginRight: 15 }}>
         <ItemMoney {...elem} />
-        {/**
-                PONER STOCK ACTUAL Y ACTUALIZADO DEL BILLETE
-
-
-                OPCIONAL SI ES DE COMPRAR
-
-                comprar?
-                <Text>Soy un stock de prueba</Text> :
-                null
-            */}
+        {comprar ? <Text>{`TENES ${restante} EN LA BILLETERA`}</Text> : null}
       </View>
       <View>
         <View>
@@ -87,6 +85,9 @@ export const MoneyObjectAddRemove = ({ comprar = false, ...elem }) => {
            * disabled={comprar? logicaComprar : false}
            */}
           <TouchableOpacity
+            disabled={
+              comprar ? restante === 0 || elem.totalMoneyWallet <= 0 : false
+            }
             onPress={() => {
               add();
               elem.handleAdd();
@@ -94,7 +95,13 @@ export const MoneyObjectAddRemove = ({ comprar = false, ...elem }) => {
             <AntDesign
               name="pluscircle"
               size={BUTTON_FONT_SIZE}
-              color="green"
+              color={
+                comprar
+                  ? restante === 0 || elem.totalMoneyWallet <= 0
+                    ? 'grey'
+                    : 'green'
+                  : 'green'
+              }
             />
           </TouchableOpacity>
         </View>

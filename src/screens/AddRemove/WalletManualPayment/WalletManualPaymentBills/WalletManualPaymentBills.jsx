@@ -39,15 +39,16 @@ const WalletManualPaymentBills = ({
           paddingHorizontal: 10,
         }}>
         {actualMoney.map((elem, index) => {
-          return (
+          return elem.quantity > 0 ? (
             <MoneyObjectAddRemove
               key={`ManualPayment ${index} - amount: ${elem.amount}`}
               handleAdd={() => handleAdd(elem, index)}
               handleSub={() => handleSub(elem, index)}
+              totalMoneyWallet={totalMoneyWallet}
               comprar={true}
               {...elem}
             />
-          );
+          ) : null;
         })}
       </ScrollView>
     </View>
