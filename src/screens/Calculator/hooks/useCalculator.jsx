@@ -50,7 +50,7 @@ export const useCalculator = () => {
   const handleInput = (buttonPressed) => {
     let lastChar = currentNumber.toString().charAt(currentNumber.length - 1);
     switch (buttonPressed) {
-      case 0:
+      case '0':
         Vibration.vibrate(35);
         if (buttonPressed === '0' && currentNumber === '0') return;
         break;
