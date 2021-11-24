@@ -3,13 +3,13 @@ import { Text, View, useWindowDimensions, StyleSheet } from 'react-native';
 import { TabView } from 'react-native-tab-view';
 
 import SingleButton from '../../../components/SingleButton';
-import { SCREEN_NAME } from '../../../constants';
+import { colors, SCREEN_NAME } from '../../../constants';
 import { formatNum } from '../../../utils/functions/formatNum';
 import getMoney from '../../../utils/functions/loadMoneyToContext';
 import { toastNotification } from '../../../utils/functions/toastNotifcation';
 import { AddRemoveContext } from '../AddRemoveContext';
 import { ManualPaymentContext } from '../ManualPaymentContext';
-import { innerSaveAddRemove } from '../utils';
+import { innerSaveManualPayment } from '../utils';
 import WalletManualPaymentBills from './WalletManualPaymentBills/WalletManualPaymentBills';
 
 export default function WalletManualPayment({ navigation }) {
@@ -25,6 +25,8 @@ export default function WalletManualPayment({ navigation }) {
 
   const { totalPaymentWallet, setTotalPaymentWallet } =
     useContext(ManualPaymentContext);
+
+  const [totalFreeze] = useState(() => totalPaymentWallet);
 
   const renderScene = ({ route }) => {
     switch (route.key) {
@@ -69,18 +71,29 @@ export default function WalletManualPayment({ navigation }) {
   const handleSave = async () => {
     setIsLoading(true);
 
-    await innerSaveAddRemove(
+    await innerSaveManualPayment(
       initialCoinsMoneyWallet,
       actualCoins,
       initialBillsMoneyWallet,
       actualBills,
     );
     await getMoney(context);
-    toastNotification(
-      'SE ACTUALIZO EL DINERO CORRECTAMENTE!',
-      'success',
-      'success',
-    );
+
+    if (totalPaymentWallet === 0) {
+      toastNotification(
+        'SE REALIZO EL PAGO CORRECTAMENTE!',
+        'success',
+        'success',
+      );
+    } else {
+      toastNotification(
+        `ACORDATE DE CARGAR TU VUELTO DE ${formatNum(
+          Math.abs(totalPaymentWallet),
+        )} EN LA BILLETERA !`,
+        'info',
+        'info',
+      );
+    }
     navigation.navigate(SCREEN_NAME.HOME);
   };
 
@@ -88,7 +101,16 @@ export default function WalletManualPayment({ navigation }) {
     <View style={{ flex: 1 }}>
       <View style={{ backgroundColor: '#BBB' }}>
         <Text style={{ fontSize: 30, textAlign: 'center' }}>
-          Total {formatNum(totalPaymentWallet)}
+          TOTAL {formatNum(totalFreeze)}
+        </Text>
+      </View>
+      <View style={{ backgroundColor: '#BBB' }}>
+        <Text style={{ fontSize: 30, textAlign: 'center' }}>
+          {totalPaymentWallet > 0
+            ? `TE FALTA PAGAR ${formatNum(totalPaymentWallet)}`
+            : totalPaymentWallet === 0
+            ? `PAGASTE JUSTO`
+            : `TU VUELTO ES ${formatNum(Math.abs(totalPaymentWallet))}`}
         </Text>
       </View>
       <TabView
@@ -103,17 +125,19 @@ export default function WalletManualPayment({ navigation }) {
           sizeIcon={22}
           label="CONFIRMAR"
           isLoading={isLoading}
-          disabled={isLoading}
+          disabled={
+            isLoading || (totalPaymentWallet !== 0 && totalPaymentWallet > 0)
+          }
           onPress={handleSave}
-          style={styles.container}
+          style={{
+            marginTop: 0,
+            backgroundColor:
+              totalPaymentWallet !== 0 && totalPaymentWallet > 0
+                ? colors.disable
+                : colors.secondary,
+          }}
         />
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 0,
-  },
-});
