@@ -33,7 +33,7 @@ export const useCalculator = () => {
         setCurrentNumber(result);
         setLastNumber(result);
       } else {
-        let aux = currentNumber.replaceAll("x","*");
+        let aux = currentNumber.replace(/x/g,"*");
         let result = eval(aux);
         result = +result.toString();
         setCurrentNumber(result);
