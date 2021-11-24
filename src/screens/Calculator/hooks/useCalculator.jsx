@@ -36,7 +36,7 @@ export const useCalculator = () => {
         let aux = currentNumber.replace(/x/g, '*');
         let result = eval(aux);
         result = +result.toString();
-        setCurrentNumber(result);
+        setCurrentNumber(''+result);
         return;
       }
     } catch (error) {
