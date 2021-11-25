@@ -108,6 +108,7 @@ const WalletBuy = () => {
     setValueBuy(data.amount);
     reset();
   };
+
   const handleContinue = async () => {
     setValueBuy('');
     setOptionBill('');
@@ -141,11 +142,19 @@ const WalletBuy = () => {
         }
       }
       navigation.navigate(SCREEN_NAME.HOME);
-      toastNotification(
-        'LA COMPRA SE REALIZÓ CORRECTAMENTE!',
-        'success',
-        'success',
-      );
+
+      vuelto
+        ? toastNotification(
+            `ACORDATE DE CARGAR TU VUELTO DE ${vuelto} EN LA BILLETERA !`,
+            'info',
+            'info',
+          )
+        : toastNotification(
+            'LA COMPRA SE REALIZÓ CORRECTAMENTE!',
+            'success',
+            'success',
+          );
+
       setIsLoading(false);
     } catch (error) {
       console.log(error);
