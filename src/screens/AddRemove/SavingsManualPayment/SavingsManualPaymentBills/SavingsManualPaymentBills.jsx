@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, View } from 'react-native';
-import MoneyObjectAddRemove from '../MoneyObjectAddRemove/MoneyObjectAddRemove';
 
-const AddRemoveWalletBills = ({
+import MoneyObjectAddRemoveSavings from '../../components/MoneyObjectAddRemoveSavings/MoneyObjectAddRemoveSavings';
+
+const SavingsManualPaymentBills = ({
   initialMoney,
   actualMoney,
   setActualMoney,
@@ -10,20 +11,31 @@ const AddRemoveWalletBills = ({
   setActualMoneySavings,
   totalMoneySavings,
 }) => {
+  const [money, setMoney] = useState([]);
+
   useEffect(() => {
     if (totalMoneySavings !== actualMoneySavings) {
       setActualMoneySavings(totalMoneySavings);
     }
-    setActualMoney(JSON.parse(JSON.stringify(initialMoney)));
+    setActualMoney(
+      JSON.parse(
+        JSON.stringify(initialMoney.filter((elem) => elem.quantity > 0)),
+      ),
+    );
+    setMoney(
+      JSON.parse(
+        JSON.stringify(initialMoney.filter((elem) => elem.quantity > 0)),
+      ),
+    );
   }, []);
 
-  const handleAdd = (elem, index) => {
+  const handleSub = (elem, index) => {
     actualMoney[index].quantity = actualMoney[index].quantity + 1;
     setActualMoneySavings(actualMoneySavings + actualMoney[index].amount);
     setActualMoney(actualMoney);
   };
 
-  const handleSub = (elem, index) => {
+  const handleAdd = (elem, index) => {
     actualMoney[index].quantity = actualMoney[index].quantity - 1;
     setActualMoneySavings(actualMoneySavings - actualMoney[index].amount);
     setActualMoney(actualMoney);
@@ -36,12 +48,14 @@ const AddRemoveWalletBills = ({
           paddingVertical: 10,
           paddingHorizontal: 10,
         }}>
-        {actualMoney.map((elem, index) => {
+        {money.map((elem, index) => {
           return (
-            <MoneyObjectAddRemove
-              key={`name: ${elem.image} - amount: ${elem.amount}`}
+            <MoneyObjectAddRemoveSavings
+              key={`ManualPayment ${index} - amount: ${elem.amount}`}
               handleAdd={() => handleAdd(elem, index)}
               handleSub={() => handleSub(elem, index)}
+              totalMoneySavings={totalMoneySavings}
+              comprar={true}
               {...elem}
             />
           );
@@ -51,4 +65,4 @@ const AddRemoveWalletBills = ({
   );
 };
 
-export default AddRemoveWalletBills;
+export default SavingsManualPaymentBills;

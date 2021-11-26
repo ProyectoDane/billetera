@@ -1,37 +1,50 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, ScrollView } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { ScrollView, Text, View } from 'react-native';
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
+import { ManualPaymentContext } from '../../AddRemove/ManualPaymentContext';
+import { AddRemoveContext } from '../../AddRemove/AddRemoveContext';
+import { BalanceSchema } from '../../../validations/FormSchemas';
+import {
+  getDineroSaving,
+  deleteMoneySaving,
+} from '../../../dataAccess/Savings';
 import InputText from '../../../components/InputText';
 import Layout from '../../../components/Layout';
-import { BalanceSchema } from '../../../validations/FormSchemas';
 import SingleButton from '../../../components/SingleButton';
-import {
-  deleteMoneyWallet,
-  getDineroWallet,
-  insertMoneyToWallet,
-} from '../../../dataAccess/Wallet';
-
 import { styles } from './styles';
-import { colors, SCREEN_NAME } from '../../../constants';
+import { SCREEN_NAME } from '../../../constants';
 import { formatNum } from '../../../utils/functions/formatNum';
+import { toastNotification } from '../../../utils/functions/toastNotifcation';
+import pagarCon from '../../../utils/functions/calculaComoPagar';
+import ItemMoney from '../../AddRemove/components/ItemMoney';
 
 const SavingsBuy = () => {
   const [valueBuy, setValueBuy] = useState();
-  const [totalAmount, setTotalAmount] = useState();
   const [optionBill, setOptionBill] = useState('');
-  const [optionCoin, setOptionCoin] = useState('');
   const [optPay, setOptPay] = useState();
+  const [vuelto, setVuelto] = useState();
+  const [cantidadPagar, setCantidadPagar] = useState();
   const [hasError, setHasError] = useState();
   const [moneyDB, setMoneyDB] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
   const navigation = useNavigation();
 
-  const schema = BalanceSchema(totalAmount);
+  const {
+    setTotalMoneySavings,
+    totalMoneySavings,
+    setInitialCoinsMoneySavings,
+    setInitialBillsMoneySavings,
+    initialCoinsMoneySavings,
+    initialBillsMoneySavings,
+  } = useContext(AddRemoveContext);
+
+  const { setTotalPaymentSavings } = useContext(ManualPaymentContext);
+
+  const schema = BalanceSchema(totalMoneySavings);
   const methods = useForm({
     defaultValues: { amount: '' },
     resolver: yupResolver(schema),
@@ -39,105 +52,109 @@ const SavingsBuy = () => {
 
   const { handleSubmit, reset } = methods;
 
-  // Total de money en la billetera
-  const calcTotalWallet = async () => {
-    const res = await getDineroWallet(1);
-    setTotalAmount(
-      res.map((item) => item.amount * item.quantity).reduce((a, b) => a + b, 0),
-    );
-  };
-
   const tomarDinero = async () => {
-    //TODO TOMAR DINER DE SAVINGS!!!!
-    const res = await getDineroWallet();
+    const res = await getDineroSaving();
+    if (res.length > 0) {
+      let dineroBillDB = res
+        .filter((item) => item.isCoins === 0)
+        .sort(function (a, b) {
+          return b.id - a.id;
+        });
+      let dineroCoinDB = res
+        .filter((item) => item.isCoins === 1)
+        .sort(function (a, b) {
+          return b.amount - a.amount;
+        });
 
-    let dineroBillDB = res.filter((item) => item.isCoins === 0).reverse();
-    let dineroCoinDB = res.filter((item) => item.isCoins === 1).reverse();
+      let dineroDB = [...dineroBillDB, ...dineroCoinDB];
 
-    let dineroDB = [...dineroBillDB, ...dineroCoinDB];
-    // console.log('dinero Coin DB', dineroCoinDB);
-    // console.log('dinero bill db', dineroBillDB);
-    setMoneyDB(dineroDB);
+      setMoneyDB(dineroDB);
+    }
+    return res;
   };
-
   useEffect(() => {
-    // Se creo dinero manualmente para realizar pruebas
-    // crearDinero();
-    // Obtiene y ordena el dinero de la billetera
+    // Obtiene y ordena el dinero de la ahorros
     tomarDinero();
-    calcTotalWallet();
   }, [isLoading]);
 
-  let optionPay = [];
   let optionsBills = [];
-  let optionsCoins = [];
-  let quantityMoney = 0;
 
   const onSubmit = (data) => {
-    // console.log('MONEY DB AL INCIO >>>', moneyDB);
+    // console.log('DINERO TOTAL AL INCIO >>>', moneyDB);
     setOptionBill('');
-    setOptionCoin('');
     // data trae los datos del formulario
     let money = data.amount;
 
-    for (let bill of moneyDB) {
-      if (money > 0) {
-        let div = Math.floor(money / bill.amount);
+    let resultados = pagarCon(money, moneyDB);
 
-        if (div > bill.quantity) {
-          quantityMoney = bill.quantity;
-        } else {
-          quantityMoney = div;
-        }
+    let resultado = resultados[0];
+    let primeraOpcion = resultado.billetes;
 
-        optionPay.push({
-          money_id: bill.id,
-          amount: bill.amount,
-          quantity: quantityMoney,
-          image: bill.image,
-          user_id: bill.userId,
-        });
+    setOptPay(primeraOpcion);
+    setVuelto(resultado.vuelto ? formatNum(resultado.vuelto) : null);
+    setCantidadPagar(resultado.totales.amount);
 
-        money = money - bill.amount * quantityMoney;
+    for (let e of primeraOpcion) {
+      if (e.quantity > 0 && e.amount >= 10 && e.isCoins === 0) {
+        optionsBills.push(e.quantity + ' BILLETE/S DE ' + formatNum(e.amount));
+        setHasError(false);
+      } else if (e.quantity > 0 && e.amount <= 10 && e.isCoins === 1) {
+        setHasError(false);
+        optionsBills.push(e.quantity + ' MONEDA/S DE ' + formatNum(e.amount));
       }
     }
+    setOptionBill(optionsBills);
+    // setOptionCoin(optionsCoins);
 
-    setOptPay(optionPay);
-    // console.log('OPCION DE PAGO >>>>', optionPay);
-
-    if (money > 0) {
-      setHasError(
-        `EL DINERO TE ALCANZA PERO NO TENES PARA PAGAR JUSTO, PEDI AYUDA PARA CALCULAR EL VUELTO`,
-      );
-    } else {
-      for (let e of optionPay) {
-        if (e.quantity > 0 && e.amount >= 10) {
-          optionsBills.push(e.quantity + ' BILLETE/S DE $' + e.amount);
-          setHasError(false);
-          setOptionBill(optionsBills);
-        } else if (e.quantity > 0 && e.amount < 10) {
-          setHasError(false);
-          optionsCoins.push(e.quantity + ' MONEDA/S DE $' + e.amount);
-          setOptionCoin(optionsCoins);
-        }
-      }
-    }
     setValueBuy(data.amount);
     reset();
   };
 
   const handleContinue = async () => {
-    //TODO CAMBIAR DELETE POR DELETE SAVINGS
     setValueBuy('');
     setOptionBill('');
-    setOptionCoin('');
     setIsLoading(true);
     try {
       for (let opt of optPay) {
-        if (opt.quantity > 0) {
-          await deleteMoneyWallet(opt.user_id, opt.money_id, opt.quantity);
+        if (opt.quantity > 0 && opt.isCoins) {
+          await deleteMoneySaving(opt.userId, opt.moneyId, opt.quantity);
+          setTotalMoneySavings(totalMoneySavings - opt.amount * opt.quantity);
+          const newCoins = initialCoinsMoneySavings.map((item) => {
+            if (item.id === opt.moneyId) {
+              item.quantity = item.quantity - opt.quantity;
+              return item;
+            }
+            return item;
+          });
+          setInitialCoinsMoneySavings(newCoins);
+        }
+        if (opt.quantity > 0 && !opt.isCoins) {
+          await deleteMoneySaving(opt.userId, opt.moneyId, opt.quantity);
+          setTotalMoneySavings(totalMoneySavings - opt.amount * opt.quantity);
+          const newBills = initialBillsMoneySavings.map((item) => {
+            if (item.id === opt.moneyId) {
+              item.quantity = item.quantity - opt.quantity;
+              return item;
+            }
+            return item;
+          });
+
+          setInitialBillsMoneySavings(newBills);
         }
       }
+      navigation.navigate(SCREEN_NAME.HOME);
+
+      vuelto
+        ? toastNotification(
+            `ACORDATE DE CARGAR TU VUELTO DE ${vuelto} EN TUS AHORROS !`,
+            'info',
+            'info',
+          )
+        : toastNotification(
+            'LA COMPRA SE REALIZÓ CORRECTAMENTE!',
+            'success',
+            'success',
+          );
 
       setIsLoading(false);
     } catch (error) {
@@ -147,72 +164,102 @@ const SavingsBuy = () => {
   };
 
   const handleManualPay = () => {
-    navigation.navigate(SCREEN_NAME.SAVINGS_MANUAL_PAYMENT, {
-      purchaseValue: valueBuy,
-    });
+    setTotalPaymentSavings(valueBuy);
+    navigation.navigate(SCREEN_NAME.SAVINGS_MANUAL_PAYMENT);
   };
 
   return (
     <Layout>
       <ScrollView>
         <FormProvider {...methods}>
-          <Text style={styles.amountAvaible}>
-            TU DINERO DISPONIBLE:{' '}
-            {totalAmount > 0 ? formatNum(totalAmount) : `$0`}
-          </Text>
-          <View style={styles.form}>
-            <InputText
-              name="amount"
-              label="IMPORTE DEL PRODUCTO A COMPRAR"
-              placeholder="INGRESE EL VALOR DE LA COMPRA"
-              keyboardType="numeric"
-              required
-            />
+          <View
+            style={{
+              backgroundColor: 'lightgreen',
+              flex: 1,
+              flexWrap: 'nowrap',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: 10,
+            }}>
+            <Text style={{ ...styles.amountAvaible, padding: 5, flex: 1 }}>
+              TENES{' '}
+              {totalMoneySavings > 0 ? formatNum(totalMoneySavings) : `$0`}
+            </Text>
           </View>
-          <SingleButton
-            icon="magic"
-            sizeIcon={22}
-            label="CALCULAR"
-            onPress={handleSubmit(onSubmit)}
-          />
+          <Text style={{ flex: 1, textAlign: 'center', ...styles.text }}>
+            IMPORTE DEL PRODUCTO A COMPRAR
+          </Text>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              ...styles.form,
+              marginBottom: 10,
+            }}>
+            <View style={{ flex: 5 }}>
+              <InputText
+                name="amount"
+                //label="IMPORTE DEL PRODUCTO A COMPRAR"
+                placeholder="INGRESE EL VALOR DE LA COMPRA"
+                keyboardType="numeric"
+                required
+              />
+            </View>
+            <View
+              style={{ flex: 2, flexDirection: 'row', alignItems: 'baseline' }}>
+              <SingleButton
+                icon="calculator"
+                sizeIcon={22}
+                style={{ flex: 1, height: '100%' }}
+                //label="CALCULAR"
+                onPress={handleSubmit(onSubmit)}
+              />
+            </View>
+          </View>
         </FormProvider>
         {valueBuy ? (
           <View>
-            <Text style={styles.valueBuy}>
-              VALOR DE LA COMPRA: {formatNum(valueBuy)}
-            </Text>
-            <Text style={styles.optBuy}>FORMA DE PAGO SUGERIDA </Text>
             {!hasError ? (
-              <>
-                <View style={styles.optBuyContainer}>
+              <View style={{ padding: 10 }}>
+                <View
+                  style={{
+                    padding: 10,
+                    ...styles.optBuyContainer,
+                    borderWidth: 1,
+                    borderColor: 'lightgray',
+                  }}>
+                  <Text style={styles.valueBuy}>
+                    VALOR DE LA COMPRA: {formatNum(valueBuy)}
+                  </Text>
+                  <Text style={styles.optBuy}>
+                    FORMA DE PAGO SUGERIDA {formatNum(cantidadPagar)}{' '}
+                  </Text>
                   {optionBill ? (
                     <View>
-                      <FontAwesome5
-                        name="money-bill-alt"
-                        size={40}
-                        color={colors.black}
-                        style={styles.icon}
-                      />
                       {optionBill.map((item, index) => (
-                        <Text key={index} style={styles.text}>
-                          {item}
-                        </Text>
+                        <View key={index} style={styles.itemOptBuy}>
+                          <Text style={{ flex: 1, ...styles.text }}>
+                            {item}
+                          </Text>
+                          <ItemMoney
+                            key={'money_' + index}
+                            {...optPay[index]}
+                            style={{
+                              flex: 1,
+                              width: null,
+                              height: 40,
+                              resizeMode: 'contain',
+                            }}
+                          />
+                        </View>
                       ))}
                     </View>
                   ) : null}
-                  {optionCoin ? (
+                  {vuelto ? (
                     <View>
-                      <FontAwesome5
-                        name="coins"
-                        size={40}
-                        color={colors.black}
-                        style={styles.icon}
-                      />
-                      {optionCoin.map((item, index) => (
-                        <Text key={index} style={styles.text}>
-                          {item}
-                        </Text>
-                      ))}
+                      <Text key={vuelto} style={styles.vuelto}>
+                        Tu vuelto es {vuelto}
+                      </Text>
                     </View>
                   ) : null}
                 </View>
@@ -220,19 +267,19 @@ const SavingsBuy = () => {
                   <SingleButton
                     icon="magic"
                     sizeIcon={22}
-                    label="CONTINUAR"
+                    label="USAR SUGERIDO"
                     isLoading={isLoading}
                     disabled={isLoading}
                     onPress={handleContinue}
                   />
                   <SingleButton
-                    icon="magic"
+                    icon="hand-pointer"
                     sizeIcon={22}
-                    label="PAGO MANUAL"
+                    label="ELEGIR YO"
                     onPress={handleManualPay}
                   />
                 </View>
-              </>
+              </View>
             ) : (
               <Text style={styles.error}>{hasError}</Text>
             )}

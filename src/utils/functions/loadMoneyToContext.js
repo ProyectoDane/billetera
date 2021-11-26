@@ -1,29 +1,55 @@
-import {getBills, getCoins} from "../../dataAccess/Money";
-import {getDineroWallet, getTotalWallet} from "../../dataAccess/Wallet";
+import { getBills, getCoins } from '../../dataAccess/Money';
+import { getDineroWallet, getTotalWallet } from '../../dataAccess/Wallet';
+import { getDineroSaving, getTotalSaving } from '../../dataAccess/Savings';
 
 async function getTotal() {
-    const wallet = await getTotalWallet();
-    let total = 0;
-    let money = [];
+  const wallet = await getTotalWallet();
+  let total = 0;
+  let money = [];
 
-    if (wallet) {
-        money = await getDineroWallet(wallet.moneyId);
+  if (wallet) {
+    money = await getDineroWallet(wallet.moneyId);
 
-        for (let property of money) {
-            const { amount, quantity } = property;
-            total = total + amount * quantity;
-        }
-
-        return {
-            money,
-            total,
-        };
+    for (let property of money) {
+      const { amount, quantity } = property;
+      total = total + amount * quantity;
     }
 
     return {
-        money,
-        total,
+      money,
+      total,
     };
+  }
+
+  return {
+    money,
+    total,
+  };
+}
+
+async function getTotalSavings() {
+  const savings = await getTotalSaving();
+  let totalSavings = 0;
+  let moneySavings = [];
+
+  if (savings) {
+    moneySavings = await getDineroSaving(savings.moneyId);
+
+    for (let property of moneySavings) {
+      const { amount, quantity } = property;
+      totalSavings = totalSavings + amount * quantity;
+    }
+
+    return {
+      moneySavings,
+      totalSavings,
+    };
+  }
+
+  return {
+    moneySavings,
+    totalSavings,
+  };
 }
 
 /**
@@ -32,41 +58,94 @@ async function getTotal() {
  * @returns {Promise<void>}
  */
 async function getMoney(context) {
-    let billetes = await getBills();
-    let monedas = await getCoins();
+  let billetes = await getBills();
+  let monedas = await getCoins();
 
-    const { money, total } = await getTotal();
+  let billetesSavings = [];
+  let monedasSavings = [];
 
-    const idMoney = money.map(({ moneyId }) => moneyId);
+  for (let element of billetes) {
+    let el = JSON.parse(JSON.stringify(element));
+    billetesSavings.push(el);
+  }
 
-    let totalBilletes = billetes.map((el) => {
-        let indexMoney = idMoney.indexOf(el.id);
+  for (let element of monedas) {
+    let el = JSON.parse(JSON.stringify(element));
+    monedasSavings.push(el);
+  }
 
-        if (indexMoney > -1) {
-            el.quantity = el.quantity + money[indexMoney].quantity;
-        }
-        return el;
-    });
+  const { money, total } = await getTotal();
 
-    let totalCoins = monedas.map((el) => {
-        let indexMoney = idMoney.indexOf(el.id);
+  const { moneySavings, totalSavings } = await getTotalSavings();
 
-        if (indexMoney > -1) {
-            el.quantity = el.quantity + money[indexMoney].quantity;
-        }
-        return el;
-    });
+  const idMoney = money.map(({ moneyId }) => moneyId);
+  const idMoneySavings = moneySavings.map(({ moneyId }) => moneyId);
 
-    context.setInitialBillsMoneyWallet(totalBilletes); //El ultimo estado recuperado de la BD
-    context.setActualBillsMoneyWallet(totalBilletes); //Sujeto a cambios por la UI
+  let totalBilletes = billetes.map((el) => {
+    let indexMoney = idMoney.indexOf(el.id);
 
-    context.setInitialCoinsMoneyWallet(totalCoins); //El ultimo estado recuperado de la BD
-    context.setActualCoinsMoneyWallet(totalCoins); //Sujeto a cambios por la UI
-    context.setTotalMoneyWallet(total);
-    context.setActualMoneyWallet(total);
+    if (indexMoney > -1) {
+      el.quantity = el.quantity + money[indexMoney].quantity;
+    }
+    return el;
+  });
 
-    context.setActualBills(JSON.parse(JSON.stringify(totalBilletes))); //copia para usar en la UI
-    context.setActualCoins(JSON.parse(JSON.stringify(totalCoins)));  //copia para usar en la UI
+  let totalCoins = monedas.map((el) => {
+    let indexMoney = idMoney.indexOf(el.id);
+
+    if (indexMoney > -1) {
+      el.quantity = el.quantity + money[indexMoney].quantity;
+    }
+    return el;
+  });
+
+  let totalBilletesSavings = billetesSavings.map((el) => {
+    let indexMoney = idMoneySavings.indexOf(el.id);
+
+    if (indexMoney > -1) {
+      el.quantity = el.quantity + moneySavings[indexMoney].quantity;
+    }
+
+    return el;
+  });
+
+  let totalCoinsSavings = monedasSavings.map((el) => {
+    let indexMoney = idMoneySavings.indexOf(el.id);
+
+    if (indexMoney > -1) {
+      el.quantity = el.quantity + moneySavings[indexMoney].quantity;
+    }
+
+    return el;
+  });
+
+  /////// WALLET
+
+  context.setInitialBillsMoneyWallet(totalBilletes); //El ultimo estado recuperado de la BD
+  context.setActualBillsMoneyWallet(totalBilletes); //Sujeto a cambios por la UI
+
+  context.setInitialCoinsMoneyWallet(totalCoins); //El ultimo estado recuperado de la BD
+  context.setActualCoinsMoneyWallet(totalCoins); //Sujeto a cambios por la UI
+  context.setTotalMoneyWallet(total);
+  context.setActualMoneyWallet(total);
+
+  context.setActualBills(JSON.parse(JSON.stringify(totalBilletes))); //copia para usar en la UI
+  context.setActualCoins(JSON.parse(JSON.stringify(totalCoins))); //copia para usar en la UI
+
+  /////// SAVINGS
+
+  context.setInitialBillsMoneySavings(totalBilletesSavings); //El ultimo estado recuperado de la BD
+  context.setActualBillsMoneySavings(totalBilletesSavings); //Sujeto a cambios por la UI
+
+  context.setInitialCoinsMoneySavings(totalCoinsSavings); //El ultimo estado recuperado de la BD
+  context.setActualCoinsMoneySavings(totalCoinsSavings); //Sujeto a cambios por la UI
+  context.setTotalMoneySavings(totalSavings);
+  context.setActualMoneySavings(totalSavings);
+
+  context.setActualBillsSavings(
+    JSON.parse(JSON.stringify(totalBilletesSavings)),
+  ); //copia para usar en la UI
+  context.setActualCoinsSavings(JSON.parse(JSON.stringify(totalCoinsSavings))); //copia para usar en la UI
 }
 
 export default getMoney;

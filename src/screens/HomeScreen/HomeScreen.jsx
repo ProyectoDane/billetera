@@ -11,7 +11,7 @@ import { savings } from '../../mockData/deseos';
 import getMoney from '../../utils/functions/loadMoneyToContext';
 
 const HomeScreen = ({ navigation }) => {
-  const { totalMoneyWallet } = useContext(AddRemoveContext);
+  const { totalMoneyWallet, totalMoneySavings } = useContext(AddRemoveContext);
   const context = useContext(AddRemoveContext);
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.button}>
           <CustomButton
             label="MIS AHORROS"
-            amount={savings}
+            amount={totalMoneySavings}
             icon="piggy-bank"
             sizeIcon={90}
             onPress={() => navigation.navigate(SCREEN_NAME.MY_SAVINGS)}

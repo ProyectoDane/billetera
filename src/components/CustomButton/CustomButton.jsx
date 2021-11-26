@@ -38,7 +38,12 @@ const CustomButton = ({
         <TouchableOpacity
           style={styles.modifyBtn}
           onPress={() =>
-            navigation.navigate(SCREEN_NAME.ADD_REMOVE, { from: from })
+            navigation.navigate(
+              from === 'wallet'
+                ? SCREEN_NAME.ADD_REMOVE
+                : SCREEN_NAME.ADD_REMOVE_SAVINGS,
+              { from: from },
+            )
           }>
           <Text style={styles.btnText}>AGREGAR / QUITAR</Text>
         </TouchableOpacity>

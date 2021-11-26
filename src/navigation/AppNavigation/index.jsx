@@ -34,6 +34,7 @@ import {
   TABS_NAME,
 } from '../../constants';
 import AddRemoveWallet from '../../screens/AddRemove/components/AddRemoveWallet/AddRemoveWallet';
+import AddRemoveSavings from '../../screens/AddRemove/components/AddRemoveSavings/AddRemoveSavings';
 import WalletManualPayment from '../../screens/AddRemove/WalletManualPayment/WalletManualPayment';
 
 const Tab = createBottomTabNavigator();
@@ -99,10 +100,10 @@ const HomeNavigation = () => {
         }}
       />
       <HomeStack.Screen
-        name={SCREEN_NAME.ADD_REMOVE_WALLET}
-        component={MoneyTab}
+        name={SCREEN_NAME.ADD_REMOVE_SAVINGS}
+        component={MoneyTabSavings}
         options={{
-          title: NAVIGATION_TITLE.ADD_REMOVE_WALLET,
+          title: NAVIGATION_TITLE.ADD_REMOVE_SAVINGS,
           headerTitle: () => <NavTitle />,
         }}
       />
@@ -116,7 +117,7 @@ const HomeNavigation = () => {
       />
       <HomeStack.Screen
         name={SCREEN_NAME.SAVINGS_MANUAL_PAYMENT}
-        component={SavingsManualPayment}
+        component={ManualMoneyTabSavings}
         options={{
           title: NAVIGATION_TITLE.SAVINGS_MANUAL_PAYMENT,
         }}
@@ -174,9 +175,16 @@ const MyWishesNavigation = () => (
 const ManualMoneyTab = ({ navigation }) => (
   <WalletManualPayment navigation={navigation} />
 );
+const ManualMoneyTabSavings = ({ navigation }) => (
+  <SavingsManualPayment navigation={navigation} />
+);
 
 const MoneyTab = ({ navigation }) => (
   <AddRemoveWallet navigation={navigation} />
+);
+
+const MoneyTabSavings = ({ navigation }) => (
+  <AddRemoveSavings navigation={navigation} />
 );
 
 // const ManualPaymentWalletTab = () => (
