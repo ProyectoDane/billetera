@@ -2,9 +2,7 @@ import React from 'react';
 import { View, FlatList, Text, ActivityIndicator } from 'react-native';
 
 import ItemWish from '../ItemWish/';
-
 import { styles } from './styles';
-import { savings } from '../../../../mockData/deseos';
 import { useGetWishes } from '../../hooks/useGetWishes';
 import { colors } from '../../../../constants';
 
@@ -24,7 +22,6 @@ const WishList = () => {
               done={item.done}
               userId={item.userId}
               wishId={item.id}
-              savings={savings}
               testID={`testId-itemWish-${item.id}`}
             />
           )}

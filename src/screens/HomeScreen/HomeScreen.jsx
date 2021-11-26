@@ -7,7 +7,6 @@ import Layout from '../../components/Layout';
 
 import { SCREEN_NAME } from '../../constants';
 import { styles } from './styles';
-import { savings } from '../../mockData/deseos';
 import getMoney from '../../utils/functions/loadMoneyToContext';
 
 const HomeScreen = ({ navigation }) => {
