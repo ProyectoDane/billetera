@@ -1,4 +1,4 @@
-import { executeSelect, executeQuery } from '../db/queries';
+import { executeSelect, executeQuery, executeQuery2 } from '../db/queries';
 import { User } from '../models/User';
 
 export const getUser = async () => {
@@ -14,6 +14,25 @@ export const getUser = async () => {
   }
 
   return user;
+};
+
+export const surveyDone = async (id = 1) => {
+  try {
+    const result = await executeSelect(`SELECT * FROM User WHERE id = ${id}`);
+    return !!result._array[0].surveyDone;
+  } catch (err) {
+    console.log('Error: ', err);
+  }
+};
+
+export const updateSurveyDone = async (id = 1, change = true) => {
+  try {
+    await executeQuery2(
+      `UPDATE User SET surveyDone = ${change ? 1 : 0} WHERE id = ${id}`,
+    );
+  } catch (err) {
+    console.log('Error: ', err);
+  }
 };
 
 export const updatePhoto = async (user) => {

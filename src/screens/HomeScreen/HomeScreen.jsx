@@ -8,10 +8,23 @@ import Layout from '../../components/Layout';
 import { SCREEN_NAME } from '../../constants';
 import { styles } from './styles';
 import getMoney from '../../utils/functions/loadMoneyToContext';
+import { surveyDone } from '../../dataAccess/User';
 
 const HomeScreen = ({ navigation }) => {
   const { totalMoneyWallet, totalMoneySavings } = useContext(AddRemoveContext);
   const context = useContext(AddRemoveContext);
+
+  useEffect(() => {
+    const init = async () => {
+      const isDone = await surveyDone();
+      if (!isDone) {
+        // navigation.navigate(SCREEN_NAME.SURVEY, { firstTime: true });
+        // navigation.navigate(SCREEN_NAME.INFORMATION);
+        // navigation.navigate(SCREEN_NAME.SURVEY, { firstTime: true });
+      }
+    };
+    init();
+  }, []);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {

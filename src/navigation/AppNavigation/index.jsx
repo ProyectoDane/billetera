@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
@@ -24,8 +24,9 @@ import NavTitle from '../../components/NavTitle';
 import WalletBuy from '../../screens/Buy/WalletBuy';
 import SavingsBuy from '../../screens/Buy/SavingsBuy';
 import SavingsManualPayment from '../../screens/AddRemove/SavingsManualPayment';
-import WalletManualPaymentBills from '../../screens/AddRemove/WalletManualPayment/WalletManualPaymentBills';
-import WalletManualPaymentCoins from '../../screens/AddRemove/WalletManualPayment/WalletManualPaymentCoins';
+import AddRemoveWallet from '../../screens/AddRemove/components/AddRemoveWallet/AddRemoveWallet';
+import AddRemoveSavings from '../../screens/AddRemove/components/AddRemoveSavings/AddRemoveSavings';
+import WalletManualPayment from '../../screens/AddRemove/WalletManualPayment/WalletManualPayment';
 
 import {
   colors,
@@ -33,9 +34,6 @@ import {
   SCREEN_NAME,
   TABS_NAME,
 } from '../../constants';
-import AddRemoveWallet from '../../screens/AddRemove/components/AddRemoveWallet/AddRemoveWallet';
-import AddRemoveSavings from '../../screens/AddRemove/components/AddRemoveSavings/AddRemoveSavings';
-import WalletManualPayment from '../../screens/AddRemove/WalletManualPayment/WalletManualPayment';
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -43,8 +41,6 @@ const MyWishesStack = createStackNavigator();
 const InformationStack = createStackNavigator();
 const WishesTopTab = createMaterialTopTabNavigator();
 const CalculatorStack = createStackNavigator();
-// const MoneyTopTabSavings = createMaterialTopTabNavigator();
-const ManualPaymentTopTabWallet = createMaterialTopTabNavigator();
 
 const HomeNavigation = () => {
   return (
@@ -61,6 +57,13 @@ const HomeNavigation = () => {
         component={HomeScreen}
         options={{
           title: '',
+        }}
+      />
+      <HomeStack.Screen
+        name={SCREEN_NAME.SURVEY}
+        component={Survey}
+        options={{
+          title: NAVIGATION_TITLE.SURVEY,
         }}
       />
       <HomeStack.Screen
@@ -187,19 +190,6 @@ const MoneyTabSavings = ({ navigation }) => (
   <AddRemoveSavings navigation={navigation} />
 );
 
-// const ManualPaymentWalletTab = () => (
-//   <ManualPaymentTopTabWallet.Navigator>
-//     <ManualPaymentTopTabWallet.Screen
-//       name={NAVIGATION_TITLE.BILLETES}
-//       component={WalletManualPaymentBills}
-//     />
-//     <ManualPaymentTopTabWallet.Screen
-//       name={NAVIGATION_TITLE.MONEDAS}
-//       component={WalletManualPaymentCoins}
-//     />
-//   </ManualPaymentTopTabWallet.Navigator>
-// );
-
 const InformationNavigation = () => (
   <InformationStack.Navigator
     screenOptions={{
@@ -292,55 +282,58 @@ const WishesTab = () => (
   </WishesTopTab.Navigator>
 );
 
-const AppNavigation = () => (
-  <NavigationContainer>
-    <Tab.Navigator
-      screenOptions={{
-        tabBarHideOnKeyboard: true,
-        headerShown: false,
-      }}>
-      <Tab.Screen
-        name={TABS_NAME.HOME}
-        component={HomeNavigation}
-        options={{
-          title: NAVIGATION_TITLE.HOME,
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="home" size={24} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name={TABS_NAME.CALCULATOR}
-        component={CalculatorNavigation}
-        options={{
-          title: NAVIGATION_TITLE.CALCULATOR,
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="calculator" size={24} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name={TABS_NAME.MY_WISHES}
-        component={MyWishesNavigation}
-        options={{
-          title: NAVIGATION_TITLE.MY_WISHES,
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="heart" size={24} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name={TABS_NAME.INFORMATION}
-        component={InformationNavigation}
-        options={{
-          title: NAVIGATION_TITLE.INFO,
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="information-circle" size={24} color={color} />
-          ),
-        }}
-      />
-    </Tab.Navigator>
-  </NavigationContainer>
-);
+const AppNavigation = () => {
+  return (
+    <NavigationContainer>
+      <Tab.Navigator
+        initialRouteName={SCREEN_NAME.INFORMATION}
+        screenOptions={{
+          tabBarHideOnKeyboard: true,
+          headerShown: false,
+        }}>
+        <Tab.Screen
+          name={TABS_NAME.HOME}
+          component={HomeNavigation}
+          options={{
+            title: NAVIGATION_TITLE.HOME,
+            tabBarIcon: ({ color }) => (
+              <Ionicons name="home" size={24} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name={TABS_NAME.CALCULATOR}
+          component={CalculatorNavigation}
+          options={{
+            title: NAVIGATION_TITLE.CALCULATOR,
+            tabBarIcon: ({ color }) => (
+              <Ionicons name="calculator" size={24} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name={TABS_NAME.MY_WISHES}
+          component={MyWishesNavigation}
+          options={{
+            title: NAVIGATION_TITLE.MY_WISHES,
+            tabBarIcon: ({ color }) => (
+              <Ionicons name="heart" size={24} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name={TABS_NAME.INFORMATION}
+          component={InformationNavigation}
+          options={{
+            title: NAVIGATION_TITLE.INFO,
+            tabBarIcon: ({ color }) => (
+              <Ionicons name="information-circle" size={24} color={color} />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+};
 
 export default AppNavigation;

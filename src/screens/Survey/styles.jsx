@@ -6,6 +6,10 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
   },
+  containerFistTime: {
+    flex: 1,
+    backgroundColor: colors.white,
+  },
   completeContainer: {
     alignContent: 'center',
     alignSelf: 'center',
