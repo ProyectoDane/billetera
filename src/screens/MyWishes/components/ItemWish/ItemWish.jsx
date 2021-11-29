@@ -21,10 +21,10 @@ const ItemWish = ({ name, value, wishId, testID, icon, done }) => {
   const remainingMoney = totalMoneySavings - Number(value);
 
   const textColor = {
-    color: missingMoney === 0 && done === 0 ? colors.primary : colors.disable,
+    color: done === 0 ? colors.primary : colors.disable,
   };
   const editTextColor = {
-    color: missingMoney === 0 && done === 1 ? colors.disable : colors.primary,
+    color: done === 1 ? colors.disable : colors.primary,
   };
 
   const navigation = useNavigation();
@@ -44,7 +44,7 @@ const ItemWish = ({ name, value, wishId, testID, icon, done }) => {
   const handleAchieve = () => {
     Alert.alert(
       'ESTAS POR CUMPLIR TU DESEO',
-      ` TUS AHORROS RESTANTES SERAN ${formatNum(remainingMoney)}`,
+      ` ACORDATE DE SACAR ${formatNum(value)} DE TUS AHORROS`,
       [
         {
           text: 'CONTINUAR',
@@ -121,20 +121,24 @@ const ItemWish = ({ name, value, wishId, testID, icon, done }) => {
       </View>
       {collapse && (
         <View style={styles.collapse}>
-          <Text style={styles.itemDetails}>
-            TENES AHORRADO: {formatNum(totalMoneySavings)}
-          </Text>
-          <Text style={styles.itemDetails}>
-            TE FALTAN: {formatNum(missingMoney)}
-          </Text>
+          {!done ? (
+            <>
+              <Text style={styles.itemDetails}>
+                TENES AHORRADO: {formatNum(totalMoneySavings)}
+              </Text>
+              <Text style={styles.itemDetails}>
+                TE FALTAN: {formatNum(missingMoney)}
+              </Text>
+            </>
+          ) : null}
           <View style={styles.actionsContainer}>
             <TouchableOpacity
-              disabled={missingMoney === 0 && done === 0 ? false : true}
+              disabled={done === 0 ? false : true}
               onPress={handleAchieve}>
               <Text style={[styles.actionBtn, textColor]}>CUMPLIR</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              disabled={missingMoney === 0 && done === 1 ? true : false}
+              disabled={done === 1 ? true : false}
               onPress={handleEdit}>
               <Text style={[styles.actionBtn, editTextColor]}>EDITAR</Text>
             </TouchableOpacity>
