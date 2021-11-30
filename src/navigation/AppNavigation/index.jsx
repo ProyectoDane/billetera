@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
@@ -57,13 +57,6 @@ const HomeNavigation = () => {
         component={HomeScreen}
         options={{
           title: '',
-        }}
-      />
-      <HomeStack.Screen
-        name={SCREEN_NAME.SURVEY}
-        component={Survey}
-        options={{
-          title: NAVIGATION_TITLE.SURVEY,
         }}
       />
       <HomeStack.Screen
@@ -138,6 +131,7 @@ const HomeNavigation = () => {
 
 const MyWishesNavigation = () => (
   <MyWishesStack.Navigator
+    initialRouteName={SCREEN_NAME.MY_WISHES}
     screenOptions={{
       headerStyle: { backgroundColor: colors.menu, elevation: 0 },
       headerTintColor: colors.white,
@@ -178,6 +172,7 @@ const MyWishesNavigation = () => (
 const ManualMoneyTab = ({ navigation }) => (
   <WalletManualPayment navigation={navigation} />
 );
+
 const ManualMoneyTabSavings = ({ navigation }) => (
   <SavingsManualPayment navigation={navigation} />
 );
@@ -192,6 +187,7 @@ const MoneyTabSavings = ({ navigation }) => (
 
 const InformationNavigation = () => (
   <InformationStack.Navigator
+    initialRouteName={SCREEN_NAME.INFORMATION}
     screenOptions={{
       headerStyle: { backgroundColor: colors.menu, elevation: 0 },
       headerTintColor: colors.white,
@@ -252,6 +248,7 @@ const InformationNavigation = () => (
 
 const CalculatorNavigation = () => (
   <CalculatorStack.Navigator
+    initialRouteName={SCREEN_NAME.CALCULATOR}
     screenOptions={{
       headerStyle: { backgroundColor: colors.menu, elevation: 0 },
       headerTintColor: colors.white,
@@ -286,7 +283,7 @@ const AppNavigation = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName={SCREEN_NAME.INFORMATION}
+        initialRouteName={SCREEN_NAME.HOME}
         screenOptions={{
           tabBarHideOnKeyboard: true,
           headerShown: false,

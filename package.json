@@ -42,8 +42,7 @@
     "react-native-tab-view": "^3.1.1",
     "react-native-web": "~0.13.12",
     "react-native-webview": "11.6.2",
-    "yup": "^0.32.9",
-    "@react-native-async-storage/async-storage": "~1.15.0"
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -57,14 +56,14 @@
     "eslint-plugin-jest": "^24.4.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.25.1",
+    "expo-cli": "^4.13.0",
     "husky": "^7.0.2",
     "jest": "^27.1.0",
     "jest-expo": "^42.1.0",
     "jest-watch-typeahead": "^0.6.4",
     "lint-staged": "^11.1.2",
     "prettier": "^2.3.2",
-    "react-test-renderer": "^17.0.2",
-    "expo-cli": "^4.13.0"
+    "react-test-renderer": "^17.0.2"
   },
   "private": true,
   "lint-staged": {

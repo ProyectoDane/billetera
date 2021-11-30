@@ -5,7 +5,7 @@ import { AddRemoveContext } from '../AddRemove/AddRemoveContext';
 import CustomButton from '../../components/CustomButton';
 import Layout from '../../components/Layout';
 
-import { SCREEN_NAME } from '../../constants';
+import { SCREEN_NAME, TABS_NAME } from '../../constants';
 import { styles } from './styles';
 import getMoney from '../../utils/functions/loadMoneyToContext';
 import { surveyDone } from '../../dataAccess/User';
@@ -15,15 +15,17 @@ const HomeScreen = ({ navigation }) => {
   const context = useContext(AddRemoveContext);
 
   useEffect(() => {
-    const init = async () => {
-      const isDone = await surveyDone();
-      if (!isDone) {
-        // navigation.navigate(SCREEN_NAME.SURVEY, { firstTime: true });
-        // navigation.navigate(SCREEN_NAME.INFORMATION);
-        // navigation.navigate(SCREEN_NAME.SURVEY, { firstTime: true });
+    const isDone = async () => {
+      const done = await surveyDone();
+      if (!done) {
+        navigation.navigate(TABS_NAME.INFORMATION);
+        setTimeout(() => {
+          navigation.navigate(SCREEN_NAME.SURVEY, { firstTime: true });
+        }, 50);
       }
     };
-    init();
+
+    isDone();
   }, []);
 
   useEffect(() => {
