@@ -1,9 +1,11 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
-import { Ionicons } from '@expo/vector-icons';
-import { NavigationContainer } from '@react-navigation/native';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
+import {FontAwesome5, Ionicons} from '@expo/vector-icons';
+import {NavigationContainer} from '@react-navigation/native';
+import {
+    createMaterialTopTabNavigator
+} from '@react-navigation/material-top-tabs';
 
 import HomeScreen from '../../screens/HomeScreen';
 import Calculator from '../../screens/Calculator';
@@ -23,17 +25,23 @@ import WishesFulfilled from '../../screens/WishesFulfilled';
 import NavTitle from '../../components/NavTitle';
 import WalletBuy from '../../screens/Buy/WalletBuy';
 import SavingsBuy from '../../screens/Buy/SavingsBuy';
-import SavingsManualPayment from '../../screens/AddRemove/SavingsManualPayment';
-import AddRemoveWallet from '../../screens/AddRemove/components/AddRemoveWallet/AddRemoveWallet';
-import AddRemoveSavings from '../../screens/AddRemove/components/AddRemoveSavings/AddRemoveSavings';
-import WalletManualPayment from '../../screens/AddRemove/WalletManualPayment/WalletManualPayment';
+import SavingsManualPayment
+    from '../../screens/AddRemove/SavingsManualPayment';
+import AddRemoveWallet
+    from '../../screens/AddRemove/components/AddRemoveWallet/AddRemoveWallet';
+import AddRemoveSavings
+    from '../../screens/AddRemove/components/AddRemoveSavings/AddRemoveSavings';
+import WalletManualPayment
+    from '../../screens/AddRemove/WalletManualPayment/WalletManualPayment';
 
 import {
-  colors,
-  NAVIGATION_TITLE,
-  SCREEN_NAME,
-  TABS_NAME,
+    colors,
+    NAVIGATION_TITLE,
+    SCREEN_NAME,
+    TABS_NAME,
 } from '../../constants';
+import {View} from "react-native";
+import LoadingScreen from "../../screens/HomeScreen/LoadingScreen";
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -43,21 +51,49 @@ const WishesTopTab = createMaterialTopTabNavigator();
 const CalculatorStack = createStackNavigator();
 
 const HomeNavigation = () => {
+    const forFade = ({ current }) => ({
+        cardStyle: {
+            opacity: current.progress,
+        },
+    });
   return (
     <HomeStack.Navigator
-      initialRouteName={SCREEN_NAME.HOME}
+      initialRouteName={SCREEN_NAME.LOADING}
       screenOptions={{
         headerStyle: { backgroundColor: colors.menu, elevation: 0 },
         headerTintColor: colors.white,
         headerRight: () => <ProfileButton sizeIcon={18} />,
         headerTitleAlign: 'center',
+          headerLeft: ({canGoBack, onPress}) =>
+              canGoBack && (
+                  <View style={{marginLeft: 15}}>
+                      <FontAwesome5
+                          name="chevron-left"
+                          onPress={onPress}
+                          color="white"
+                          size={25}
+                      />
+                  </View>
+              )
+
       }}>
       <HomeStack.Screen
-        name={SCREEN_NAME.HOME}
-        component={HomeScreen}
+        name={SCREEN_NAME.LOADING}
+        component={LoadingScreen}
         options={{
+            headerShown: false,
           title: '',
+            headerRight: () => null,
+            headerLeft: () => null,
         }}
+      />
+        <HomeStack.Screen
+            name={SCREEN_NAME.HOME}
+            component={HomeScreen}
+            options={{
+                title: '',
+                cardStyleInterpolator: forFade
+            }}
       />
       <HomeStack.Screen
         name={SCREEN_NAME.MY_WALLET}
@@ -283,7 +319,7 @@ const AppNavigation = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName={SCREEN_NAME.HOME}
+        initialRouteName={SCREEN_NAME.LOADING}
         screenOptions={{
           tabBarHideOnKeyboard: true,
           headerShown: false,

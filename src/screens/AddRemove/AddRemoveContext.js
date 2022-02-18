@@ -3,23 +3,25 @@ import React, {useState, createContext} from "react";
 export const AddRemoveContext = createContext();
 
 export const AddRemoveProvider = ({children}) => {
-    const [actualBills, setActualBills] = useState([])
-    const [actualCoins, setActualCoins] = useState([])
+    const [actualBills, setActualBills] = useState([]);
+    const [actualCoins, setActualCoins] = useState([]);
     const [totalMoneyWallet, setTotalMoneyWallet] = useState(0);
     const [actualMoneyWallet, setActualMoneyWallet] = useState(0);
-    const [initialBillsMoneyWallet, setInitialBillsMoneyWallet] = useState([])
-    const [actualBillsMoneyWallet, setActualBillsMoneyWallet] = useState([])
-    const [initialCoinsMoneyWallet, setInitialCoinsMoneyWallet] = useState([])
-    const [actualCoinsMoneyWallet, setActualCoinsMoneyWallet] = useState([])
+    const [initialBillsMoneyWallet, setInitialBillsMoneyWallet] = useState([]);
+    const [actualBillsMoneyWallet, setActualBillsMoneyWallet] = useState([]);
+    const [initialCoinsMoneyWallet, setInitialCoinsMoneyWallet] = useState([]);
+    const [actualCoinsMoneyWallet, setActualCoinsMoneyWallet] = useState([]);
 
-    const [actualBillsSavings, setActualBillsSavings] = useState([])
-    const [actualCoinsSavings, setActualCoinsSavings] = useState([])
+    const [actualBillsSavings, setActualBillsSavings] = useState([]);
+    const [actualCoinsSavings, setActualCoinsSavings] = useState([]);
     const [totalMoneySavings, setTotalMoneySavings] = useState(0);
     const [actualMoneySavings, setActualMoneySavings] = useState(0);
-    const [initialBillsMoneySavings, setInitialBillsMoneySavings] = useState([])
-    const [actualBillsMoneySavings, setActualBillsMoneySavings] = useState([])
-    const [initialCoinsMoneySavings, setInitialCoinsMoneySavings] = useState([])
-    const [actualCoinsMoneySavings, setActualCoinsMoneySavings] = useState([])
+    const [initialBillsMoneySavings, setInitialBillsMoneySavings] = useState([]);
+    const [actualBillsMoneySavings, setActualBillsMoneySavings] = useState([]);
+    const [initialCoinsMoneySavings, setInitialCoinsMoneySavings] = useState([]);
+    const [actualCoinsMoneySavings, setActualCoinsMoneySavings] = useState([]);
+
+    const [currentUser, setCurrentUser] = useState({});
 
     return(
         <AddRemoveContext.Provider value={{
@@ -56,7 +58,11 @@ export const AddRemoveProvider = ({children}) => {
                 initialCoinsMoneyWallet,
                 setInitialCoinsMoneyWallet,
                 actualCoinsMoneyWallet,
-                setActualCoinsMoneyWallet
+                setActualCoinsMoneyWallet,
+
+            //CurrentUser
+                currentUser,
+                setCurrentUser
             }}
         >
             {children}

@@ -1,6 +1,7 @@
 import { getBills, getCoins } from '../../dataAccess/Money';
 import { getDineroWallet, getTotalWallet } from '../../dataAccess/Wallet';
 import { getDineroSaving, getTotalSaving } from '../../dataAccess/Savings';
+import {getUser} from "../../dataAccess/User";
 
 async function getTotal() {
   const wallet = await getTotalWallet();
@@ -60,6 +61,7 @@ async function getTotalSavings() {
 async function getMoney(context) {
   let billetes = await getBills();
   let monedas = await getCoins();
+  let user =  await getUser();
 
   let billetesSavings = [];
   let monedasSavings = [];
@@ -118,6 +120,9 @@ async function getMoney(context) {
 
     return el;
   });
+
+  //// USER
+  context.setCurrentUser(user);
 
   /////// WALLET
 

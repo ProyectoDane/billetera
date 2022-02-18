@@ -9,10 +9,24 @@ import { SCREEN_NAME, TABS_NAME } from '../../constants';
 import { styles } from './styles';
 import getMoney from '../../utils/functions/loadMoneyToContext';
 import { surveyDone } from '../../dataAccess/User';
+import {CommonActions} from "@react-navigation/native";
 
 const HomeScreen = ({ navigation }) => {
-  const { totalMoneyWallet, totalMoneySavings } = useContext(AddRemoveContext);
+  const { totalMoneyWallet, totalMoneySavings, currentUser } = useContext(AddRemoveContext);
   const context = useContext(AddRemoveContext);
+
+  useEffect( ()=> {
+    navigation.dispatch(state => {
+      // Remove the home route from the stack
+      const routes = state.routes.filter(r => r.name !== 'LoadingScreen');
+
+      return CommonActions.reset({
+        ...state,
+        routes,
+        index: routes.length - 1,
+      });
+    });
+  })
 
   useEffect(() => {
     const isDone = async () => {
@@ -29,11 +43,15 @@ const HomeScreen = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      getMoney(context);
+    const unsubscribe = navigation.addListener('focus', async () => {
+      await getMoney(context);
     });
     return unsubscribe;
-  }, [navigation]);
+  }, [navigation, currentUser]);
+
+  useEffect(() => {
+      navigation.setOptions({ headerTitle: currentUser.name });
+  }, [currentUser]);
 
   return (
     <Layout hideTextFooter>

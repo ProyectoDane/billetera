@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   Keyboard,
   TouchableWithoutFeedback,
@@ -18,15 +18,23 @@ import { getUser, updateName, updatePhoto } from '../../dataAccess/User';
 import { User } from '../../models/User';
 
 import { styles } from './styles';
+import {AddRemoveContext} from "../AddRemove/AddRemoveContext";
 
 const Profile = () => {
   const [user, setUser] = useState(new User());
+
+  const {
+    currentUser,
+    setCurrentUser
+  } = useContext(AddRemoveContext);
+
 
   useEffect(() => {
     const findUser = async () => {
       try {
         const user = await getUser();
         setUser(user);
+        setCurrentUser(user);
       } catch (error) {
         console.log(error);
       }
@@ -38,12 +46,14 @@ const Profile = () => {
     const userUpdated = { ...user, name };
     setUser(userUpdated);
     void updateName(userUpdated);
+    setCurrentUser(userUpdated);
   };
 
   const changePhoto = (photo) => {
     const userUpdated = { ...user, photo };
     setUser(userUpdated);
     void updatePhoto(userUpdated);
+    setCurrentUser(userUpdated);
   };
 
   const width = useWindowDimensions().width - 150;

@@ -1,5 +1,6 @@
 // Screens
 export const SCREEN_NAME = {
+  LOADING: 'LoadingScreen',
   HOME: 'HomeScreen',
   CALCULATOR: 'Calculator',
   MY_WALLET: 'MyWallet',

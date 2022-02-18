@@ -11,13 +11,9 @@ import getMoney from './src/utils/functions/loadMoneyToContext';
 const Root = () => {
   const context = useContext(AddRemoveContext);
 
-  useEffect(() => {
-    async function init() {
-      await initialization();
-      await getMoney(context);
-    }
-
-    init();
+  useEffect(async () => {
+    await initialization();
+    await getMoney(context);
   }, []);
 
   return (
