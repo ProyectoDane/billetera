@@ -173,7 +173,6 @@ const WalletBuy = () => {
         <FormProvider {...methods}>
           <View
             style={{
-              backgroundColor: 'lightgreen',
               flex: 1,
               flexWrap: 'nowrap',
               alignItems: 'center',
@@ -184,9 +183,6 @@ const WalletBuy = () => {
               TENES {totalMoneyWallet > 0 ? formatNum(totalMoneyWallet) : `$0`}
             </Text>
           </View>
-          <Text style={{ flex: 1, textAlign: 'center', ...styles.text }}>
-            IMPORTE DEL PRODUCTO A COMPRAR
-          </Text>
           <View
             style={{
               flex: 1,
@@ -201,6 +197,7 @@ const WalletBuy = () => {
                 placeholder="INGRESE EL VALOR DE LA COMPRA"
                 keyboardType="numeric"
                 required
+                inputStyle={styles.buyInputText}
               />
             </View>
             <View
@@ -208,8 +205,11 @@ const WalletBuy = () => {
               <SingleButton
                 icon="calculator"
                 sizeIcon={22}
-                style={{ flex: 1, height: '100%' }}
-                //label="CALCULAR"
+                style={{ flex: 1,
+                  height: 50,
+                  borderTopLeftRadius: 0,
+                  borderBottomLeftRadius: 0
+                 }}
                 onPress={handleSubmit(onSubmit)}
               />
             </View>

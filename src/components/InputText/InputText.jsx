@@ -10,7 +10,7 @@ const InputText = ({
   label,
   required,
   editable,
-  keyboardType,
+  keyboardType, inputStyle,
 }) => {
   return (
     <Controller
@@ -23,7 +23,7 @@ const InputText = ({
             <TextInput
               {...rest}
               placeholder={placeholder}
-              style={styles.input}
+              style={{...styles.input, ...inputStyle}}
               onChangeText={(e) => onChange(e)}
               editable={editable}
               keyboardType={keyboardType}

@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import {colors} from "../../../constants";
 
 export const styles = StyleSheet.create({
   form: {
@@ -17,7 +18,7 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: 'green',
+    color: 'black',
     // paddingTop: 25,
   },
   valueBuy: {
@@ -73,5 +74,10 @@ export const styles = StyleSheet.create({
     paddingTop: 20,
     flexDirection: 'row',
     justifyContent: 'space-around',
+  },
+  buyInputText: {
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
+    borderColor: colors.primary
   },
 });

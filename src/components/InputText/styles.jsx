@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
   mainView: {},
   input: {
     height: 50,
-    borderRadius: 15,
+    borderRadius: 3,
     borderWidth: 1,
     paddingLeft: 10,
   },
