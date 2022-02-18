@@ -52,10 +52,11 @@ export const styles = StyleSheet.create({
   vuelto: {
     marginTop: 5,
     fontSize: 17,
+    fontWeight: "bold",
     paddingTop: 10,
     paddingBottom: 10,
     borderRadius: 3,
-    backgroundColor: '#70c585',
+    // backgroundColor: '#70c585',
     textAlign: 'center',
   },
   error: {

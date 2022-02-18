@@ -12,7 +12,7 @@ import { deleteMoneyWallet, getDineroWallet } from '../../../dataAccess/Wallet';
 import { AddRemoveContext } from '../../AddRemove/AddRemoveContext';
 
 import { styles } from './styles';
-import { SCREEN_NAME } from '../../../constants';
+import {colors, SCREEN_NAME} from '../../../constants';
 import { formatNum } from '../../../utils/functions/formatNum';
 import { toastNotification } from '../../../utils/functions/toastNotifcation';
 import { ManualPaymentContext } from '../../AddRemove/ManualPaymentContext';
@@ -94,13 +94,13 @@ const WalletBuy = () => {
     setCantidadPagar(resultado.totales.amount);
 
     for (let e of primeraOpcion) {
-      if (e.quantity > 0 && e.amount >= 10 && e.isCoins === 0) {
-        optionsBills.push(e.quantity + ' BILLETE/S DE ' + formatNum(e.amount));
-        setHasError(false);
-      } else if (e.quantity > 0 && e.amount <= 10 && e.isCoins === 1) {
-        setHasError(false);
-        optionsBills.push(e.quantity + ' MONEDA/S DE ' + formatNum(e.amount));
+      let especie = e.quantity == 1 ? 'BILLETE' : 'BILLETES';
+      if (e.quantity > 0 && e.amount <= 10 && e.isCoins === 1) {
+        especie = e.quantity == 1 ? 'MONEDA' : 'MONEDAS';
       }
+      optionsBills.push(e.quantity + ' ' + especie +' DE ' + formatNum(e.amount));
+      setHasError(false);
+
     }
     setOptionBill(optionsBills);
     // setOptionCoin(optionsCoins);
@@ -187,6 +187,7 @@ const WalletBuy = () => {
             style={{
               flex: 1,
               flexDirection: 'row',
+              alignItems: 'start',
               ...styles.form,
               marginBottom: 10,
             }}>
@@ -201,12 +202,12 @@ const WalletBuy = () => {
               />
             </View>
             <View
-              style={{ flex: 2, flexDirection: 'row', alignItems: 'baseline' }}>
+              style={{ flex: 2, flexDirection: 'row' }}>
               <SingleButton
                 icon="calculator"
                 sizeIcon={22}
                 style={{ flex: 1,
-                  height: "100%",
+                  height: 50,
                   borderTopLeftRadius: 0,
                   borderBottomLeftRadius: 0
                  }}
@@ -256,7 +257,7 @@ const WalletBuy = () => {
                   {vuelto ? (
                     <View>
                       <Text key={vuelto} style={styles.vuelto}>
-                        Tu vuelto es {vuelto}
+                        TU VUELTO: {vuelto}
                       </Text>
                     </View>
                   ) : null}
@@ -275,6 +276,7 @@ const WalletBuy = () => {
                     sizeIcon={22}
                     label="ELEGIR YO"
                     onPress={handleManualPay}
+                    style={{backgroundColor: colors.secondary}}
                   />
                 </View>
               </View>

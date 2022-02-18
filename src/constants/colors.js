@@ -1,6 +1,6 @@
 export const colors = {
   primary: '#0093FF',
-  secondary: '#66d0e8',
+  secondary: '#ffa600',
   alternative: 'royalblue',
   disable: '#808080',
   menu: '#12264a',
