@@ -206,7 +206,7 @@ const WalletBuy = () => {
                 icon="calculator"
                 sizeIcon={22}
                 style={{ flex: 1,
-                  height: 50,
+                  height: "100%",
                   borderTopLeftRadius: 0,
                   borderBottomLeftRadius: 0
                  }}

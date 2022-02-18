@@ -210,7 +210,11 @@ const SavingsBuy = () => {
               <SingleButton
                 icon="calculator"
                 sizeIcon={22}
-                style={{ flex: 1, height: '100%' }}
+                style={{ flex: 1,
+                  height: 50,
+                  borderTopLeftRadius: 0,
+                  borderBottomLeftRadius: 0
+                }}
                 //label="CALCULAR"
                 onPress={handleSubmit(onSubmit)}
               />
