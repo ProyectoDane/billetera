@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Text, View, useWindowDimensions, StyleSheet } from 'react-native';
-import { TabView } from 'react-native-tab-view';
+import {TabBar, TabView} from 'react-native-tab-view';
 
 import SingleButton from '../../../components/SingleButton';
 import { colors, SCREEN_NAME } from '../../../constants';
@@ -11,6 +11,7 @@ import { AddRemoveContext } from '../AddRemoveContext';
 import { ManualPaymentContext } from '../ManualPaymentContext';
 import { innerSaveManualPayment } from '../utils';
 import WalletManualPaymentBills from './WalletManualPaymentBills/WalletManualPaymentBills';
+import {FontAwesome5} from "@expo/vector-icons";
 
 export default function WalletManualPayment({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -97,6 +98,18 @@ export default function WalletManualPayment({ navigation }) {
     navigation.navigate(SCREEN_NAME.HOME);
   };
 
+  const getTabBarIcon = (props) => {
+    const {route} = props
+    if (route.key === 'first') {
+      return <FontAwesome5 name='fa-money-bill-wave' size={30} color={'red'}/>
+    } else {
+      return <FontAwesome5 name='coins' size={30} color={'red'}/>
+
+    }
+  }
+
+
+
   return (
     <View style={{ flex: 1 }}>
       <View style={{ backgroundColor: '#BBB' }}>
@@ -118,6 +131,20 @@ export default function WalletManualPayment({ navigation }) {
         renderScene={renderScene}
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}
+        renderTabBar={props =>
+            <TabBar
+                {...props}
+                indicatorStyle={{backgroundColor: 'red'}}
+                renderLabel={({ route, focused }) => (
+                    <View style={{}}>
+                      {getTabBarIcon(route)}
+                    </View>
+                )}
+                tabStyle={styles.bubble}
+                labelStyle={styles.noLabel}
+                tabBarPosition={'bottom'}
+            />
+        }
       />
       <View style={{ paddingVertical: 5 }}>
         <SingleButton

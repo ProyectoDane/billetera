@@ -27,14 +27,15 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.secondary,
   },
   icon: {
-    flex: 0.2,
-    alignSelf: 'center',
-    textAlign: 'center',
+    marginLeft: 4,
+    marginRight: 4,
   },
   textContainer: {
-    flex: 0.65,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    flexDirection: 'row'
+
   },
   text: {
     fontWeight: 'bold',

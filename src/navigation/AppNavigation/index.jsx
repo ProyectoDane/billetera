@@ -59,10 +59,14 @@ const HomeNavigation = () => {
   return (
     <HomeStack.Navigator
       initialRouteName={SCREEN_NAME.LOADING}
-      screenOptions={{
-        headerStyle: { backgroundColor: colors.menu, elevation: 0 },
-        headerTintColor: colors.white,
-        headerRight: () => <ProfileButton sizeIcon={18} />,
+      screenOptions={({route, navigation}) => ({
+        headerStyle: { backgroundColor: colors.white, elevation: 0 },
+        headerTintColor: colors.black,
+        headerRight: () => {
+            if (route.name === 'HomeScreen')
+                return <ProfileButton sizeIcon={18} />
+
+        },
         headerTitleAlign: 'center',
           headerLeft: ({canGoBack, onPress}) =>
               canGoBack && (
@@ -70,13 +74,13 @@ const HomeNavigation = () => {
                       <FontAwesome5
                           name="chevron-left"
                           onPress={onPress}
-                          color="white"
+                          color="black"
                           size={25}
                       />
                   </View>
               )
 
-      }}>
+      })}>
       <HomeStack.Screen
         name={SCREEN_NAME.LOADING}
         component={LoadingScreen}
@@ -100,6 +104,7 @@ const HomeNavigation = () => {
         component={MyWallet}
         options={{
           title: NAVIGATION_TITLE.MY_WALLET,
+
         }}
       />
       <HomeStack.Screen
@@ -128,7 +133,7 @@ const HomeNavigation = () => {
         component={MoneyTab}
         options={{
           title: NAVIGATION_TITLE.ADD_REMOVE,
-          headerTitle: () => <NavTitle />,
+            headerTitle: () => <NavTitle title={NAVIGATION_TITLE.ADD_REMOVE} iconName={"wallet"}  />,
         }}
       />
       <HomeStack.Screen
@@ -136,7 +141,7 @@ const HomeNavigation = () => {
         component={MoneyTabSavings}
         options={{
           title: NAVIGATION_TITLE.ADD_REMOVE_SAVINGS,
-          headerTitle: () => <NavTitle />,
+            headerTitle: () => <NavTitle title={NAVIGATION_TITLE.ADD_REMOVE} iconName={"piggy-bank"}  />,
         }}
       />
       <HomeStack.Screen
@@ -171,7 +176,6 @@ const MyWishesNavigation = () => (
     screenOptions={{
       headerStyle: { backgroundColor: colors.menu, elevation: 0 },
       headerTintColor: colors.white,
-      headerRight: () => <ProfileButton sizeIcon={18} />,
       headerTitleAlign: 'center',
     }}>
     <MyWishesStack.Screen
@@ -227,7 +231,6 @@ const InformationNavigation = () => (
     screenOptions={{
       headerStyle: { backgroundColor: colors.menu, elevation: 0 },
       headerTintColor: colors.white,
-      headerRight: () => <ProfileButton sizeIcon={18} />,
       headerTitleAlign: 'center',
     }}>
     <InformationStack.Screen
@@ -288,7 +291,6 @@ const CalculatorNavigation = () => (
     screenOptions={{
       headerStyle: { backgroundColor: colors.menu, elevation: 0 },
       headerTintColor: colors.white,
-      headerRight: () => <ProfileButton sizeIcon={18} />,
       headerTitleAlign: 'center',
     }}>
     <CalculatorStack.Screen

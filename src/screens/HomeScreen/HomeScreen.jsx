@@ -50,7 +50,11 @@ const HomeScreen = ({ navigation }) => {
   }, [navigation, currentUser]);
 
   useEffect(() => {
-      navigation.setOptions({ headerTitle: currentUser.name });
+    let name = currentUser.name;
+    if (name)
+      navigation.setOptions({ headerTitle: "HOLA '" + name +"'" });
+    else
+      navigation.setOptions({ headerTitle: "INICIO" });
   }, [currentUser]);
 
   return (

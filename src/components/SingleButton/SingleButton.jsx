@@ -24,7 +24,11 @@ const SingleButton = ({
       {isLoading ? (
         <Spinner color={colors.white} size={26} />
       ) : (
-        <>
+        <View style={{flex: 1,
+          flexDirection: "row",
+          alignContent: "center"}}
+        >
+            <View style={styles.textContainer}>
           <FontAwesome5
             style={styles.icon}
             name={icon}
@@ -32,11 +36,10 @@ const SingleButton = ({
             color={colors.white}
           />
           {label? (
-            <View style={styles.textContainer}>
               <Text style={styles.text}>{label}</Text>
-            </View>
           ):null}
-        </>
+            </View>
+        </View>
       )}
     </TouchableOpacity>
   );

@@ -4,6 +4,7 @@ export const colors = {
   alternative: 'royalblue',
   disable: '#808080',
   menu: '#12264a',
+  menu2: '#1f4183',
   footer: '#e68a00',
   miBilletera: '#1f93d1',
   misAhorros: '#04b8c2',
