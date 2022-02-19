@@ -24,12 +24,27 @@ const CustomButton = ({
   };
 
   return (
-    <TouchableOpacity onPress={onPress} style={[buttonColor, styles.button]}>
+      <View style={[buttonColor, styles.button]}>
       <View style={styles.iconTextGroup}>
-        <View style={styles.text}>
+        <TouchableOpacity onPress={onPress}
+                          >
+        <View style={{...styles.text,
+          borderWidth: 0,
+          borderRadius: 5,
+          paddingLeft: 5,
+          marginLeft: 20,
+          padding: 5,
+          borderColor: "white",
+          shadowColor: 'rgba(0, 0, 0, 0.5)',
+          shadowOpacity: 0.5,
+          elevation: 1,
+          shadowRadius: 1 ,
+          shadowOffset : { width: 4, height: 4},
+        }}>
           <Text style={styles.label}>{label}</Text>
           <Text style={styles.amount}>{formatNum(amount)}</Text>
         </View>
+        </TouchableOpacity>
         <View style={styles.icon}>
           <FontAwesome5 name={icon} size={sizeIcon} color={colors[colorIcon]} />
         </View>
@@ -59,7 +74,7 @@ const CustomButton = ({
           <Text style={styles.btnText}>COMPRAR</Text>
         </TouchableOpacity>
       </View>
-    </TouchableOpacity>
+      </View>
   );
 };
 

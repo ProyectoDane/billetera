@@ -131,20 +131,7 @@ export default function WalletManualPayment({ navigation }) {
         renderScene={renderScene}
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}
-        renderTabBar={props =>
-            <TabBar
-                {...props}
-                indicatorStyle={{backgroundColor: 'red'}}
-                renderLabel={({ route, focused }) => (
-                    <View style={{}}>
-                      {getTabBarIcon(route)}
-                    </View>
-                )}
-                tabStyle={styles.bubble}
-                labelStyle={styles.noLabel}
-                tabBarPosition={'bottom'}
-            />
-        }
+
       />
       <View style={{ paddingVertical: 5 }}>
         <SingleButton

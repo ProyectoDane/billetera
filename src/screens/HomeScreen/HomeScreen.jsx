@@ -50,6 +50,7 @@ const HomeScreen = ({ navigation }) => {
   }, [navigation, currentUser]);
 
   useEffect(() => {
+    navigation.setOptions({tabBarVisible: false});
     let name = currentUser.name;
     if (name)
       navigation.setOptions({ headerTitle: "HOLA '" + name +"'" });

@@ -52,7 +52,7 @@ const ItemWish = ({ name, value, wishId, testID, icon, done }) => {
             await fulfillWish(wishId);
             navigation.dispatch(jumpToWishesFullfilled);
             toastNotification(
-              'EL DESEO SE CUMPLIÓ CORRECTAMENTE!',
+              'DESEO CUMPLIDO!',
               'success',
               'success',
             );
@@ -73,8 +73,8 @@ const ItemWish = ({ name, value, wishId, testID, icon, done }) => {
         onPress: async () => {
           await deleteWish(wishId);
           toastNotification(
-            'EL DESEO SE ELIMINÓ CORRECTAMENTE!',
-            'danger',
+            'BORRASTE EL DESEO',
+            'success',
             'success',
           );
         },

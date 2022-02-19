@@ -24,9 +24,8 @@ export const styles = StyleSheet.create({
   valueBuy: {
     fontSize: 17,
     color: 'darkblue',
-    fontWeight: 'bold',
     paddingTop: 15,
-    textAlign: 'center',
+    textAlign: 'right',
   },
   optBuyContainer: {
     flexDirection: 'column',
@@ -34,8 +33,8 @@ export const styles = StyleSheet.create({
   },
   optBuy: {
     fontSize: 17,
-    textAlign: 'center',
-    padding: 20,
+    textAlign: 'right',
+    paddingBottom: 20,
   },
   itemOptBuy: {
     flex: 1,
@@ -57,7 +56,7 @@ export const styles = StyleSheet.create({
     paddingBottom: 10,
     borderRadius: 3,
     // backgroundColor: '#70c585',
-    textAlign: 'center',
+    textAlign: 'right',
   },
   error: {
     fontSize: 17,

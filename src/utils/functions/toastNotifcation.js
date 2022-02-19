@@ -1,4 +1,19 @@
-import { showMessage } from 'react-native-flash-message';
+import {showMessage} from 'react-native-flash-message';
+import {Alert} from "react-native";
+
+const createTwoButtonAlert = (title, message) =>
+    Alert.alert(
+        title,
+        message,
+        [
+            // {
+            //   text: "Cancel",
+            //   onPress: () => console.log("Cancel Pressed"),
+            //   style: "cancel"
+            // },
+            {text: "OK", onPress: () => console.log("OK Pressed")}
+        ]
+    );
 
 // Options toast notificacion
 // Message: Description for notification.
@@ -6,13 +21,33 @@ import { showMessage } from 'react-native-flash-message';
 // Icon: "none" (default), "auto" (guided by type), "success", "info", "warning", "danger"
 
 export const toastNotification = (message, type, icon) => {
-  showMessage({
-    message: message,
-    position: { bottom: 70 },
-    floating: true,
-    duration: 3500,
-    type: type,
-    icon: icon,
-    titleStyle: { textAlign: 'center', fontWeight: 'bold' },
-  });
+    function dameTitulo() {
+        switch (type) {
+            case "success":
+                return "EXITO";
+            case "warning":
+                return "ADVERTENCIA";
+            case "danger":
+                return "PELIGRO";
+            case "info":
+            default:
+                return "INFORMACION";
+        }
+    }
+
+    const titulo = dameTitulo();
+    createTwoButtonAlert(titulo, message);
+    if (true)
+        return;
+    showMessage({
+        message: message,
+        position: "center",
+        floating: false,
+//    duration: 3500,
+        autoHide: false,
+        type: type,
+        icon: icon,
+        hideStatusBar: true,
+        titleStyle: {textAlign: 'center', fontWeight: 'bold'},
+    });
 };

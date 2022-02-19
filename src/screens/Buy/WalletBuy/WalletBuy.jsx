@@ -189,6 +189,7 @@ const WalletBuy = () => {
               flexDirection: 'row',
               alignItems: 'start',
               ...styles.form,
+              paddingHorizontal: 10,
               marginBottom: 10,
             }}>
             <View style={{ flex: 5 }}>
@@ -226,18 +227,19 @@ const WalletBuy = () => {
                     ...styles.optBuyContainer,
                     borderWidth: 1,
                     borderColor: 'lightgray',
+                    backgroundColor: '#e9e9e9'
                   }}>
                   <Text style={styles.valueBuy}>
                     VALOR DE LA COMPRA: {formatNum(valueBuy)}
                   </Text>
                   <Text style={styles.optBuy}>
-                    FORMA DE PAGO SUGERIDA {formatNum(cantidadPagar)}{' '}
+                    FORMA DE PAGO SUGERIDA {formatNum(cantidadPagar)}
                   </Text>
                   {optionBill ? (
                     <View>
                       {optionBill.map((item, index) => (
                         <View key={index} style={styles.itemOptBuy}>
-                          <Text style={{ flex: 1, ...styles.text }}>
+                          <Text style={{ flex: 3, ...styles.text }}>
                             {item}
                           </Text>
                           <ItemMoney

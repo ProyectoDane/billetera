@@ -38,9 +38,8 @@ const LoadingScreen = ({ navigation }) => {
 
   return (
     <Layout hideTextFooter>
-      <View style={styles.titleContainer}>
-        <Text style={styles.titleText}>Cargando</Text>
-        <Text style={styles.titleText1}>Tu billetera virtual</Text>
+      <View style={{...styles.titleContainer, height: "100%", padding: 30}}>
+        <Text style={styles.titleText}>Cargando Tu billetera virtual</Text>
       </View>
 
     </Layout>

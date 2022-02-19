@@ -81,16 +81,16 @@ const HomeNavigation = () => {
               )
 
       })}>
-      <HomeStack.Screen
-        name={SCREEN_NAME.LOADING}
-        component={LoadingScreen}
-        options={{
-            headerShown: false,
-          title: '',
-            headerRight: () => null,
-            headerLeft: () => null,
-        }}
-      />
+        <HomeStack.Screen
+            name={SCREEN_NAME.LOADING}
+            component={LoadingScreen}
+            options={{
+                headerShown: false,
+                title: '',
+                headerRight: () => null,
+                headerLeft: () => null,
+            }}
+        />
         <HomeStack.Screen
             name={SCREEN_NAME.HOME}
             component={HomeScreen}
