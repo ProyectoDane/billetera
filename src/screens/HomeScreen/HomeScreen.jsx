@@ -65,7 +65,7 @@ const HomeScreen = ({ navigation }) => {
         <Text style={styles.titleText1}>Tu billetera virtual</Text>
       </View>
       <View style={styles.buttonGroup}>
-        <View style={styles.buttonGroupBg}>
+        <View style={{}}>
           <View style={styles.button}>
             <CustomButton
               label="MI BILLETERA"

@@ -4,14 +4,14 @@ import { colors } from '../../constants';
 
 export const styles = StyleSheet.create({
   titleContainer: {
-    backgroundColor: colors.menu,
+    backgroundColor: colors.menu2,
     color: colors.white,
     alignItems: 'center',
     fontSize: 40,
     justifyContent: 'center',
   },
   titleText: {
-    marginTop: '5%',
+    marginTop: 5,
     color: colors.white,
     fontSize: 32,
     textAlign: "center"
@@ -19,8 +19,8 @@ export const styles = StyleSheet.create({
   titleText1: {
     color: colors.white,
     fontSize: 20,
-    marginTop: 15,
-    marginBottom: 40,
+    marginTop: 5,
+    marginBottom: 10,
   },
   buttonGroup: {
     flexDirection: 'row',

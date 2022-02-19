@@ -3,7 +3,7 @@ import {Image, TouchableOpacity} from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {FontAwesome5} from '@expo/vector-icons';
 
-import {SCREEN_NAME} from '../../constants';
+import {colors, SCREEN_NAME} from '../../constants';
 import {AddRemoveContext} from "../../screens/AddRemove/AddRemoveContext";
 
 const ProfileButton = ({ sizeIcon = 24, colorIcon = 'white' }) => {
@@ -30,7 +30,7 @@ const ProfileButton = ({ sizeIcon = 24, colorIcon = 'white' }) => {
                   marginRight: 15,
                   marginTop: 15,
                   borderWidth: 5,
-                  borderColor: 'white'
+                  borderColor: colors.menu2
                 }}
             />
         ) : (
