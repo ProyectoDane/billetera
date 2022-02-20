@@ -89,7 +89,7 @@ export default function SavingsManualPayment({ navigation }) {
       toastNotification(
         `ACORDATE DE CARGAR TU VUELTO DE ${formatNum(
           Math.abs(totalPaymentSavings),
-        )} EN LA BILLETERA !`,
+        )} EN TUS AHORROS !`,
         'info',
         'info',
       );

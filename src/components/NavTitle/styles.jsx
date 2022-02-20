@@ -10,8 +10,8 @@ export const styles = StyleSheet.create({
   },
   text: {
     margin: 8,
-    fontSize: 20,
+    fontSize: 16,
     color: colors.white,
-    fontWeight: 'bold',
+    fontWeight: 'normal',
   },
 });

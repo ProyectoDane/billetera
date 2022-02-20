@@ -7,8 +7,8 @@ const AddRemoveWalletBills = ({
                                   initialMoney,
                                   actualMoney,
                                   setActualMoney,
-                                  actualMoneyWallet,
-                                  setActualMoneyWallet,
+                                  actualMoneyWallet, //number: total dinero en la instancia
+                                  setActualMoneyWallet, //number: total dinero en la BD
                                   totalMoneyWallet }) => {
     useEffect(() => {
         if (totalMoneyWallet !== actualMoneyWallet) {

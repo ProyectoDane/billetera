@@ -118,21 +118,20 @@ const HomeNavigation = () => {
         name={SCREEN_NAME.WALLET_BUY}
         component={WalletBuy}
         options={{
-          title: NAVIGATION_TITLE.WALLET_BUY,
+            headerTitle: () => <NavTitle title={NAVIGATION_TITLE.WALLET_BUY} iconName={"wallet"}  />,
         }}
       />
       <HomeStack.Screen
         name={SCREEN_NAME.SAVINGS_BUY}
         component={SavingsBuy}
         options={{
-          title: NAVIGATION_TITLE.SAVINGS_BUY,
+            headerTitle: () => <NavTitle title={NAVIGATION_TITLE.SAVINGS_BUY} iconName={"piggy-bank"}  />,
         }}
       />
       <HomeStack.Screen
         name={SCREEN_NAME.ADD_REMOVE}
         component={MoneyTab}
         options={{
-          title: NAVIGATION_TITLE.ADD_REMOVE,
             headerTitle: () => <NavTitle title={NAVIGATION_TITLE.ADD_REMOVE} iconName={"wallet"}  />,
         }}
       />
@@ -140,7 +139,6 @@ const HomeNavigation = () => {
         name={SCREEN_NAME.ADD_REMOVE_SAVINGS}
         component={MoneyTabSavings}
         options={{
-          title: NAVIGATION_TITLE.ADD_REMOVE_SAVINGS,
             headerTitle: () => <NavTitle title={NAVIGATION_TITLE.ADD_REMOVE} iconName={"piggy-bank"}  />,
         }}
       />
@@ -148,15 +146,14 @@ const HomeNavigation = () => {
         name={SCREEN_NAME.WALLET_MANUAL_PAYMENT}
         component={ManualMoneyTab}
         options={{
-          title: NAVIGATION_TITLE.WALLET_MANUAL_PAYMENT,
-          headerTitle: () => <NavTitle />,
+            headerTitle: () => <NavTitle title={NAVIGATION_TITLE.WALLET_MANUAL_PAYMENT} iconName={"wallet"}  />,
         }}
       />
       <HomeStack.Screen
         name={SCREEN_NAME.SAVINGS_MANUAL_PAYMENT}
         component={ManualMoneyTabSavings}
         options={{
-          title: NAVIGATION_TITLE.SAVINGS_MANUAL_PAYMENT,
+            headerTitle: () => <NavTitle title={NAVIGATION_TITLE.SAVINGS_MANUAL_PAYMENT} iconName={"piggy-bank"}  />,
         }}
       />
       <HomeStack.Screen
