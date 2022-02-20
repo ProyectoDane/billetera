@@ -1,14 +1,14 @@
-import React, { useContext, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import React, {useContext, useEffect} from 'react';
+import {Text, View} from 'react-native';
 
-import { AddRemoveContext } from '../AddRemove/AddRemoveContext';
+import {AddRemoveContext} from '../AddRemove/AddRemoveContext';
 import CustomButton from '../../components/CustomButton';
 import Layout from '../../components/Layout';
 
-import { SCREEN_NAME, TABS_NAME } from '../../constants';
-import { styles } from './styles';
+import {SCREEN_NAME, TABS_NAME} from '../../constants';
+import {styles} from './styles';
 import getMoney from '../../utils/functions/loadMoneyToContext';
-import { surveyDone } from '../../dataAccess/User';
+import {surveyDone} from '../../dataAccess/User';
 import {CommonActions} from "@react-navigation/native";
 
 const HomeScreen = ({ navigation }) => {
@@ -65,9 +65,8 @@ const HomeScreen = ({ navigation }) => {
         <Text style={styles.titleText1}>Tu billetera virtual</Text>
       </View>
       <View style={styles.buttonGroup}>
-        <View style={{}}>
-          <View style={styles.button}>
-            <CustomButton
+        <View style={styles.button}>
+          <CustomButton
               label="MI BILLETERA"
               amount={totalMoneyWallet}
               icon="wallet"
@@ -76,18 +75,17 @@ const HomeScreen = ({ navigation }) => {
               from="wallet"
               color="miBilletera"
               isWallet
-            />
-          </View>
+          />
         </View>
         <View style={styles.button}>
           <CustomButton
-            label="MIS AHORROS"
-            amount={totalMoneySavings}
-            icon="piggy-bank"
-            sizeIcon={90}
-            onPress={() => navigation.navigate(SCREEN_NAME.MY_SAVINGS)}
-            from="savings"
-            color="misAhorros"
+              label="MIS AHORROS"
+              amount={totalMoneySavings}
+              icon="piggy-bank"
+              sizeIcon={90}
+              onPress={() => navigation.navigate(SCREEN_NAME.MY_SAVINGS)}
+              from="savings"
+              color="misAhorros"
           />
         </View>
       </View>

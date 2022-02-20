@@ -23,9 +23,10 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
   },
   buttonGroup: {
-    flexDirection: 'row',
+    flex: 1,
+    flexDirection: 'column',
     flexWrap: 'wrap',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
   buttonGroupBg: {
     flexDirection: 'row',
@@ -35,6 +36,9 @@ export const styles = StyleSheet.create({
     width: '100%',
   },
   button: {
+    flex: 1,
     padding: 10,
+    width: "100%",
+    maxHeight: 180
   },
 });
