@@ -43,6 +43,7 @@ export default function AddRemoveWallet({ navigation }) {
 
   return (
     <AddRemoveBaseScreen
+        navigation={navigation}
       actualBills={actualBills}
       setActualBills={setActualBills}
       actualCoins={actualCoins}

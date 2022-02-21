@@ -1,6 +1,12 @@
 import * as React from 'react';
 import {useState} from 'react';
-import {StyleSheet, Text, useWindowDimensions, View} from 'react-native';
+import {
+    Alert,
+    StyleSheet,
+    Text,
+    useWindowDimensions,
+    View
+} from 'react-native';
 import {TabBar, TabView} from 'react-native-tab-view';
 import AddRemoveWalletBills from '../AddRemoveWalletBills';
 import {formatNum} from '../../../../utils/functions/formatNum';
@@ -9,6 +15,7 @@ import {colors} from '../../../../constants';
 import {FontAwesome5} from "@expo/vector-icons";
 
 export default function AddRemoveBaseScreen({
+                                                navigation,
                                                 actualBills, //array: billetes en la instancia
                                                 setActualBills,
                                                 actualCoins, //array: coins en la instancia
@@ -60,6 +67,51 @@ export default function AddRemoveBaseScreen({
         { key: 'second', title: 'MONEDAS' },
     ]);
 
+    const [hasUnsavedChanges, setHasUnsavedChanges] = React.useState(false);
+
+
+    React.useEffect(()=>{
+        setHasUnsavedChanges(Boolean(totalMoneyWallet - actualMoneyWallet != 0));
+        // console.log(`${actualMoneyWallet}, ${totalMoneyWallet}, ${hasUnsavedChanges}`);
+    },[actualMoneyWallet]);
+
+    const innerHandleSave = async () => {
+        setHasUnsavedChanges(false); //Prevent "Dirty check" on navigation leave after saving
+        return handleSave();
+    }
+
+    //Check for dirty changes before exiting
+    React.useEffect(
+        () =>
+            navigation.addListener('beforeRemove', (e) => {
+                if (!hasUnsavedChanges) {
+                    // If we don't have unsaved changes, then we don't need to do anything
+                    return;
+                }
+
+                // Prevent default behavior of leaving the screen
+                e.preventDefault();
+
+                // Prompt the user before leaving the screen
+                Alert.alert(
+                    'Discard changes?',
+                    'You have unsaved changes. Are you sure to discard them and leave the screen? '
+                    + (totalMoneyWallet-actualMoneyWallet) + " //" +totalMoneyWallet + " // " +actualMoneyWallet + " //" + hasUnsavedChanges,
+                    [
+                        { text: "Don't leave", style: 'cancel', onPress: () => {} },
+                        {
+                            text: 'Discard',
+                            style: 'destructive',
+                            // If the user confirmed, then we dispatch the action we blocked earlier
+                            // This will continue the action that had triggered the removal of the screen
+                            onPress: () => navigation.dispatch(e.data.action),
+                        },
+                    ]
+                );
+            }),
+        [navigation, hasUnsavedChanges]
+    );
+
     const getTabBarIcon = (props) => {
         const {route} = props
         if (route.key === 'first') {
@@ -75,9 +127,7 @@ export default function AddRemoveBaseScreen({
             flex: 1,
         },
         tabLabel: {
-            //fontSize: 5,
-            //display: 'none',
-            //height: 0
+
         },
         tabStyle: {
             flex: 1,
@@ -131,7 +181,7 @@ export default function AddRemoveBaseScreen({
                     label="GUARDAR"
                     isLoading={isLoading}
                     disabled={isLoading}
-                    onPress={handleSave}
+                    onPress={innerHandleSave}
                     style={{...styles.container, width: "100%", height: 50}}
                 />
             </View>

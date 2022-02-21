@@ -44,6 +44,7 @@ export default function AddRemoveSavings({ navigation }) {
 
   return (
       <AddRemoveBaseScreen
+          navigation={navigation}
                            actualBills={actualBillsSavings}
                            setActualBills={setActualBillsSavings}
                            actualCoins={actualCoinsSavings}
