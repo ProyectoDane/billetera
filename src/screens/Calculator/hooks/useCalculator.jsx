@@ -28,17 +28,19 @@ export const useCalculator = () => {
 
   const calculator = () => {
     try {
-      if (currentNumber.startsWith('0') && !currentNumber.includes('.')) {
-        let result = eval(currentNumber.substr(1)).toString();
-        setCurrentNumber(result);
-        setLastNumber(result);
-      } else {
-        let aux = currentNumber.replace(/x/g, '*');
-        let result = eval(aux);
-        result = +result.toString();
-        setCurrentNumber(''+result);
-        return;
+      //currentNumber will have the shape of: <number><operation><number>
+      //as many as the user wants, finishing in a <number>
+
+      let aux = "" + currentNumber.replace(/x/g, '*'); //change "x" for "*"
+      aux = aux.split(/([@*/+-])/) //split by operations, maintaining the operation in the result
+      for (let i = 0; i < aux.length; i=i+2) { //parse each <number> as a float to prevent octa number such as "012"
+        aux[i] = parseFloat(aux[i]);
       }
+
+      aux = aux.join("");
+      let result = eval(aux);
+      result = +result.toFixed(2); //fix to 2 decimals since this is money
+      setCurrentNumber(''+result);
     } catch (error) {
       console.error(error);
       setCurrentNumber('ERROR');
