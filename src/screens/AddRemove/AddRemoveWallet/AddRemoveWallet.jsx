@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {useContext, useState} from 'react';
-import {AddRemoveContext} from '../../AddRemoveContext';
-import {innerSaveAddRemove} from '../../utils';
-import getMoney from '../../../../utils/functions/loadMoneyToContext';
-import {toastNotification} from '../../../../utils/functions/toastNotifcation';
-import {SCREEN_NAME} from '../../../../constants';
-import AddRemoveBaseScreen from "../AddRemoveBaseScreen/AddRemoveBaseScreen";
+import {AddRemoveContext} from '../AddRemoveContext';
+import {innerSaveAddRemove} from '../utils';
+import getMoney from '../../../utils/functions/loadMoneyToContext';
+import {toastNotification} from '../../../utils/functions/toastNotifcation';
+import {SCREEN_NAME} from '../../../constants';
+import AddRemoveBaseScreen from '../components/AddRemoveBaseScreen/AddRemoveBaseScreen';
 
 export default function AddRemoveWallet({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);

@@ -1,12 +1,11 @@
 import * as React from 'react';
 import {useContext, useState} from 'react';
-import {StyleSheet} from 'react-native';
-import {AddRemoveContext} from '../../AddRemoveContext';
-import {innerSaveAddRemoveSavings} from '../../utils';
-import getMoney from '../../../../utils/functions/loadMoneyToContext';
-import {toastNotification} from '../../../../utils/functions/toastNotifcation';
-import {SCREEN_NAME} from '../../../../constants';
-import AddRemoveBaseScreen from "../AddRemoveBaseScreen/AddRemoveBaseScreen";
+import {AddRemoveContext} from '../AddRemoveContext';
+import {innerSaveAddRemoveSavings} from '../utils';
+import getMoney from '../../../utils/functions/loadMoneyToContext';
+import {toastNotification} from '../../../utils/functions/toastNotifcation';
+import {SCREEN_NAME} from '../../../constants';
+import AddRemoveBaseScreen from '../components/AddRemoveBaseScreen/AddRemoveBaseScreen';
 
 export default function AddRemoveSavings({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);

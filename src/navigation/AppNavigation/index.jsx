@@ -27,10 +27,8 @@ import WalletBuy from '../../screens/Buy/WalletBuy';
 import SavingsBuy from '../../screens/Buy/SavingsBuy';
 import SavingsManualPayment
     from '../../screens/AddRemove/SavingsManualPayment';
-import AddRemoveWallet
-    from '../../screens/AddRemove/components/AddRemoveWallet/AddRemoveWallet';
-import AddRemoveSavings
-    from '../../screens/AddRemove/components/AddRemoveSavings/AddRemoveSavings';
+import AddRemoveWallet from '../../screens/AddRemove/AddRemoveWallet';
+import AddRemoveSavings from '../../screens/AddRemove/AddRemoveSavings';
 import WalletManualPayment
     from '../../screens/AddRemove/WalletManualPayment/WalletManualPayment';
 

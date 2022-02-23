@@ -3,7 +3,7 @@ import {ScrollView, View} from 'react-native';
 import MoneyObjectAddRemove
     from '../MoneyObjectAddRemove/MoneyObjectAddRemove';
 
-const AddRemoveWalletBills = ({
+const AddRemoveMoney = ({
                                   initialMoney,
                                   actualMoney,
                                   setActualMoney,
@@ -53,4 +53,4 @@ const AddRemoveWalletBills = ({
     );
 };
 
-export default AddRemoveWalletBills;
+export default AddRemoveMoney;

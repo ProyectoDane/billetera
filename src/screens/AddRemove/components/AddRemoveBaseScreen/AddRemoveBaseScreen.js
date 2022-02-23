@@ -8,7 +8,7 @@ import {
     View
 } from 'react-native';
 import {TabBar, TabView} from 'react-native-tab-view';
-import AddRemoveWalletBills from '../AddRemoveWalletBills';
+import AddRemoveMoney from '../AddRemoveMoney';
 import {formatNum} from '../../../../utils/functions/formatNum';
 import SingleButton from '../../../../components/SingleButton';
 import {colors} from '../../../../constants';
@@ -33,7 +33,7 @@ export default function AddRemoveBaseScreen({
         switch (route.key) {
             case 'first':
                 return (
-                    <AddRemoveWalletBills
+                    <AddRemoveMoney
                         initialMoney={initialBillsMoneyWallet}
                         actualMoney={actualBills}
                         setActualMoney={setActualBills}
@@ -44,7 +44,7 @@ export default function AddRemoveBaseScreen({
                 );
             case 'second':
                 return (
-                    <AddRemoveWalletBills
+                    <AddRemoveMoney
                         initialMoney={initialCoinsMoneyWallet}
                         actualMoney={actualCoins}
                         setActualMoney={setActualCoins}

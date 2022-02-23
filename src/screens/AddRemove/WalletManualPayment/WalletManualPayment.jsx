@@ -1,17 +1,17 @@
-import React, { useContext, useState } from 'react';
-import { Text, View, useWindowDimensions, StyleSheet } from 'react-native';
-import {TabBar, TabView} from 'react-native-tab-view';
+import React, {useContext, useState} from 'react';
+import {Text, useWindowDimensions, View} from 'react-native';
+import {TabView} from 'react-native-tab-view';
 
 import SingleButton from '../../../components/SingleButton';
-import { colors, SCREEN_NAME } from '../../../constants';
-import { formatNum } from '../../../utils/functions/formatNum';
+import {colors, SCREEN_NAME} from '../../../constants';
+import {formatNum} from '../../../utils/functions/formatNum';
 import getMoney from '../../../utils/functions/loadMoneyToContext';
-import { toastNotification } from '../../../utils/functions/toastNotifcation';
-import { AddRemoveContext } from '../AddRemoveContext';
-import { ManualPaymentContext } from '../ManualPaymentContext';
-import { innerSaveManualPayment } from '../utils';
-import WalletManualPaymentBills from './WalletManualPaymentBills/WalletManualPaymentBills';
-import {FontAwesome5} from "@expo/vector-icons";
+import {toastNotification} from '../../../utils/functions/toastNotifcation';
+import {AddRemoveContext} from '../AddRemoveContext';
+import {ManualPaymentContext} from '../ManualPaymentContext';
+import {innerSaveManualPayment} from '../utils';
+import WalletManualPaymentBills
+  from './WalletManualPaymentBills/WalletManualPaymentBills';
 
 export default function WalletManualPayment({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -98,32 +98,23 @@ export default function WalletManualPayment({ navigation }) {
     navigation.navigate(SCREEN_NAME.HOME);
   };
 
-  const getTabBarIcon = (props) => {
-    const {route} = props
-    if (route.key === 'first') {
-      return <FontAwesome5 name='fa-money-bill-wave' size={30} color={'red'}/>
-    } else {
-      return <FontAwesome5 name='coins' size={30} color={'red'}/>
-
-    }
-  }
-
-
-
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ backgroundColor: '#BBB' }}>
-        <Text style={{ fontSize: 30, textAlign: 'center' }}>
-          TOTAL {formatNum(totalFreeze)}
-        </Text>
-      </View>
-      <View style={{ backgroundColor: '#BBB' }}>
-        <Text style={{ fontSize: 30, textAlign: 'center' }}>
+      <View style={{backgroundColor: "white", marginHorizontal: 5}}>
+
+        <View>
+          <Text style={{fontSize: 30, textAlign: 'right'}}>
+            TOTAL {formatNum(totalFreeze)}
+          </Text>
+        </View>
+        <View>
+        </View>
+        <Text style={{fontSize: 30, textAlign: 'right'}}>
           {totalPaymentWallet > 0
-            ? `TE FALTA PAGAR ${formatNum(totalPaymentWallet)}`
-            : totalPaymentWallet === 0
-            ? `PAGASTE JUSTO`
-            : `TU VUELTO ES ${formatNum(Math.abs(totalPaymentWallet))}`}
+              ? `TE FALTA PAGAR ${formatNum(totalPaymentWallet)}`
+              : totalPaymentWallet === 0
+                  ? `PAGASTE JUSTO`
+                  : `TU VUELTO ES ${formatNum(Math.abs(totalPaymentWallet))}`}
         </Text>
       </View>
       <TabView
@@ -133,7 +124,7 @@ export default function WalletManualPayment({ navigation }) {
         initialLayout={{ width: layout.width }}
 
       />
-      <View style={{ paddingVertical: 5 }}>
+      <View style={{ paddingVertical: 0 }}>
         <SingleButton
           icon="money-bill-wave"
           sizeIcon={22}
@@ -144,6 +135,8 @@ export default function WalletManualPayment({ navigation }) {
           }
           onPress={handleSave}
           style={{
+            width: "100%",
+            height: 50,
             marginTop: 0,
             backgroundColor:
               totalPaymentWallet !== 0 && totalPaymentWallet > 0
