@@ -1,14 +1,14 @@
-import { colors } from '../../constants';
-import { StyleSheet, Dimensions } from 'react-native';
+import {colors} from '../../constants';
+import {Dimensions, StyleSheet} from 'react-native';
 
 const windowWidth = Dimensions.get('window').width;
 
-const   shadow = {
+const shadow2 = {
   shadowColor: 'rgba(0, 0, 0, 0.5)',
   shadowOpacity: 0.5,
   elevation: 3,
-  shadowRadius: 3 ,
-  shadowOffset : { width: 4, height: 4},
+  shadowRadius: 3,
+  shadowOffset: {width: 4, height: 4},
 }
 
 const styles = StyleSheet.create({
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around',
   },
-  buyBtn: {...shadow,
+  buyBtn: {...shadow2,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 5,
@@ -69,12 +69,14 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 35,
     backgroundColor: colors.white,
-    ...shadow
+    ...shadow2
   },
   btnText: {
     fontWeight: 'bold',
     color: colors.menu,
   },
+
+  shadow2: {...shadow2}
 });
 
 export default styles;

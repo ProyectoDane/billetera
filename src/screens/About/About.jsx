@@ -1,40 +1,76 @@
 import React from 'react';
-import { View, Image, useWindowDimensions } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-
-import Text from '../../components/TextUppercase';
+import {
+  Image,
+  Linking,
+  Text,
+  TouchableOpacity,
+  useWindowDimensions,
+  View
+} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 
 import daneLogo from '../../../assets/dane_logo.png';
 import tincLogo from '../../../assets/tinc_logo.png';
+import intiveLogo from '../../../assets/intive_logo_blue.png';
 
-import { labels } from '../../constants';
-import { styles } from './styles';
+import {labels} from '../../constants';
+import {styles} from './styles';
+import {MarkedList} from "@jsamr/react-native-li";
+import {disc} from "@jsamr/counter-style/presets";
+import {FontAwesome5} from "@expo/vector-icons";
+import TextUppercase from "../../components/TextUppercase";
 
 const About = () => {
   const width = useWindowDimensions().width - 20;
+  const dummy = () => {};
+  const imageGenerator = (img, height, url) => {
+    const openLink = () => (url?Linking.openURL(url):dummy);
+    return (
+        <TouchableOpacity onPress={openLink}>
+          <View style={styles.imageContainer}>
+            <Image source={img} style={{width, height}} resizeMode="contain"/>
+          </View>
+        </TouchableOpacity>
+    );
+  }
 
-  const imageGenerator = (img, height) => (
-    <View style={styles.imageContainer}>
-      <Image source={img} style={{ width, height }} resizeMode="contain" />
-    </View>
-  );
+  const members = [
+    {"name": "Angles Peña", "url":"https://www.linkedin.com/in/angeles-pe%C3%B1a/"},
+    {"name": "Federico Rodriguez", "url":"https://www.linkedin.com/in/rodriguezfederico/"},
+    {"name": "Gonzalo Sansone", "url":"https://www.linkedin.com/in/gonzalo-sansone-b440a3196/"},
+    {"name": "Lucia Sauer", "url":"https://www.linkedin.com/in/lucia-julieta-sauer/"},
+    {"name": "Juan Manuel Alvarez (dj)", "url":"https://www.linkedin.com/in/jmalvarez/"},
+    {"name": "Alexis Sukierman", "url":"https://www.linkedin.com/in/zukierman/"},
+  ];
+
+
 
   return (
     <ScrollView style={styles.whiteContainer}>
       <View style={styles.container}>
-        {imageGenerator(daneLogo, width / 6)}
-        <Text bold>{labels.aboutScreen.dane}</Text>
+        {imageGenerator(daneLogo, width / 6, "http://www.proyectodane.org/")}
+
+        <TextUppercase bold style={styles.title}>{labels.aboutScreen.dane}</TextUppercase>
         <Text paragraph>{labels.aboutScreen.descripton}</Text>
-        <Text bold>{labels.aboutScreen.coordination}</Text>
-        {imageGenerator(tincLogo, width / 3)}
-        <Text bold>{labels.aboutScreen.idea}</Text>
+        <TextUppercase bold style={styles.title}>{labels.aboutScreen.coordination}</TextUppercase>
+        {imageGenerator(tincLogo, width / 3, "https://tinc.org.ar/")}
+        <TextUppercase bold style={styles.title}>{labels.aboutScreen.idea}</TextUppercase>
         <Text paragraph>{labels.aboutScreen.ideaText}</Text>
-        <Text bold>{labels.aboutScreen.development}</Text>
-        <Text paragraph>{labels.aboutScreen.developmentText}</Text>
-        <Text bold>{labels.aboutScreen.acknowledgment}</Text>
+        <TextUppercase bold style={styles.title}>{labels.aboutScreen.development}</TextUppercase>
+        <View>
+          {imageGenerator(intiveLogo, width / 6, "https://intive.com/")}
+          <MarkedList counterRenderer={disc}>
+            {members.map((elem, index)=>(
+                <Text key={index} style={{ flexShrink: 2, marginVertical: 3 }}  onPress={() => Linking.openURL(elem.url)}>
+                  {elem.name} <FontAwesome5  name='linkedin' />
+                </Text>
+            ))}
+          </MarkedList>
+        </View>
+        <TextUppercase bold style={styles.title}>{labels.aboutScreen.acknowledgment}</TextUppercase>
         <Text paragraph>{labels.aboutScreen.acknowledgmentText}</Text>
-        <Text bold>{labels.aboutScreen.license}</Text>
-        <Text style={{ textTransform: 'lowercase' }}>
+        <TextUppercase bold style={styles.title}>{labels.aboutScreen.license}</TextUppercase>
+        <Text style={{ textTransform: 'lowercase' }}  onPress={() => Linking.openURL(labels.aboutScreen.licenseLink)}>
           {labels.aboutScreen.licenseLink}
         </Text>
       </View>

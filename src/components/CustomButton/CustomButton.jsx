@@ -37,17 +37,13 @@ const CustomButton = ({
               borderRadius: 5,
               padding: 5,
               borderColor: "white",
-              shadowColor: 'rgba(0, 0, 0, 0.5)',
-              shadowOpacity: 0.5,
-              elevation: 1,
-              shadowRadius: 1,
-              shadowOffset: {width: 4, height: 4},
+
             }}>
               <View
                   style={{
                     flex: 1,
                     flexDirection: "row",
-                    alignItems: "center"
+                    alignItems: "center", ...styles.shadow2
                   }}>
                 <FontAwesome5 name={icon} size={styles.label.fontSize}
                               color={colors[colorIcon]}/><Text
@@ -58,7 +54,7 @@ const CustomButton = ({
                 flexDirection: "column",
                 alignItems: "center"
               }}>
-                <Text style={{...styles.amount,}}>{formatNum(amount)}</Text>
+                <Text style={{...styles.amount, ...styles.shadow2}}>{formatNum(amount)}</Text>
               </View>
             </View>
           </TouchableOpacity>

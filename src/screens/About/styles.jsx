@@ -15,4 +15,8 @@ export const styles = StyleSheet.create({
     alignContent: 'center',
     justifyContent: 'center',
   },
+  title: {
+    marginTop: 15,
+    marginBottom: 5
+  }
 });

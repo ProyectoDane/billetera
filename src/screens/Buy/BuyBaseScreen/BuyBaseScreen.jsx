@@ -178,7 +178,7 @@ const BuyBaseScreen = ({
             style={{
               flex: 1,
               flexDirection: 'row',
-              alignItems: 'start',
+              alignItems: 'flex-start',
               ...styles.form,
               paddingHorizontal: 10,
               marginBottom: 10,

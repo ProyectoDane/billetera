@@ -27,31 +27,27 @@ const Information = ({ navigation }) => {
     <Layout>
       {imageGenerator(daneLogo, width / 4)}
       <View style={styles.container}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate(SCREEN_NAME.SIGN_LANGUAGE)}
-          style={styles.button}>
-          <Text>VIDEO DE BIENVENIDA EN LENGUAJE DE SEÑAS</Text>
-        </TouchableOpacity>
+        {/*<TouchableOpacity*/}
+        {/*  onPress={() => navigation.navigate(SCREEN_NAME.SIGN_LANGUAGE)}*/}
+        {/*  style={styles.button}>*/}
+        {/*  <Text>VIDEO DE BIENVENIDA EN LENGUAJE DE SEÑAS</Text>*/}
+        {/*</TouchableOpacity>*/}
         <TouchableOpacity
           onPress={() => navigation.navigate(SCREEN_NAME.ABOUT)}
           style={styles.button}>
           <Text>SOBRE NOSOTROS</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate(SCREEN_NAME.HOW_TO_USE_APP)}
-          style={styles.button}>
-          <Text>¿COMO USAR LA APLICACION?</Text>
-        </TouchableOpacity>
+        {/*<TouchableOpacity*/}
+        {/*  onPress={() => navigation.navigate(SCREEN_NAME.HOW_TO_USE_APP)}*/}
+        {/*  style={styles.button}>*/}
+        {/*  <Text>¿COMO USAR LA APLICACION?</Text>*/}
+        {/*</TouchableOpacity>*/}
         <TouchableOpacity
           onPress={() => navigation.navigate(SCREEN_NAME.SURVEY)}
           style={styles.button}>
           <Text>ENCUESTA</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate(SCREEN_NAME.LOGOS)}
-          style={styles.button}>
-          <Text>LOGOS</Text>
-        </TouchableOpacity>
+
       </View>
     </Layout>
   );

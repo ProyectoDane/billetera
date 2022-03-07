@@ -20,7 +20,6 @@ import About from '../../screens/About/About';
 import Information from '../../screens/Information';
 import HowToUseApp from '../../screens/HowToUseApp';
 import SignLanguage from '../../screens/SignLanguage';
-import Logos from '../../screens/Logos/Logos';
 import WishesFulfilled from '../../screens/WishesFulfilled';
 import NavTitle from '../../components/NavTitle';
 import WalletBuy from '../../screens/Buy/WalletBuy';
@@ -268,13 +267,6 @@ const InformationNavigation = () => (
       component={Survey}
       options={{
         title: NAVIGATION_TITLE.SURVEY,
-      }}
-    />
-    <InformationStack.Screen
-      name={SCREEN_NAME.LOGOS}
-      component={Logos}
-      options={{
-        title: NAVIGATION_TITLE.LOGOS,
       }}
     />
   </InformationStack.Navigator>
