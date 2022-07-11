@@ -25,6 +25,9 @@ export const SCREEN_NAME = {
   WALLET_BUY: 'WalletBuy',
   WALLET_MANUAL_PAYMENT: 'WalletManualPayment',
   SAVINGS_MANUAL_PAYMENT: 'SavingsManualPayment',
+  CALCULATOR_NAV: 'CalculatorNav',
+  WISHES_NAV: 'WishesNav',
+  INFORMATION_NAV: 'InformationNav',
 };
 
 // Title navigation style

@@ -3,24 +3,28 @@ import { StyleSheet } from 'react-native';
 import { colors } from '../../constants';
 
 export const styles = StyleSheet.create({
-  titleContainer: {
-    backgroundColor: colors.menu2,
-    color: colors.white,
+  headerContainer: {
+    backgroundColor: colors.white,
     alignItems: 'center',
-    fontSize: 40,
     justifyContent: 'center',
-  },
-  titleText: {
-    marginTop: 5,
-    color: colors.white,
-    fontSize: 32,
-    textAlign: "center"
-  },
-  titleText1: {
-    color: colors.white,
-    fontSize: 20,
-    marginTop: 5,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    elevation: 8,
     marginBottom: 10,
+  },
+  cardTitle: {
+    paddingTop: 25,
+    paddingLeft: 20,
+    paddingBottom: 10,
+    color: colors.menu2,
+    fontSize: 23,
+    fontWeight: 'bold',
+  },
+  cardSubtitle: {
+    paddingTop: 20,
+    paddingLeft: 20,
+    color: colors.orange2,
+    fontSize: 13,
   },
   buttonGroup: {
     flex: 1,
@@ -38,7 +42,7 @@ export const styles = StyleSheet.create({
   button: {
     flex: 1,
     padding: 10,
-    width: "100%",
-    maxHeight: 180
+    width: '100%',
+    maxHeight: 180,
   },
 });
