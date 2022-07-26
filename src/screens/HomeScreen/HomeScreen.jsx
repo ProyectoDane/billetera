@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { Image, Text, View, TouchableWithoutFeedback as TouchableWithNativeFeedback } from 'react-native';
+import { Text, View, TouchableWithoutFeedback as TouchableWithNativeFeedback } from 'react-native';
 
 import { AddRemoveContext } from '../AddRemove/AddRemoveContext';
 import CustomButton from '../../components/CustomButton';
@@ -11,10 +11,11 @@ import getMoney from '../../utils/functions/loadMoneyToContext';
 import { surveyDone } from '../../dataAccess/User';
 import { CommonActions } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
-import Home from '../../../assets/home.png';
 import SvgCalculator from './SvgCalculator';
 import SvgWishes from './SvgWishes';
 import SvgInformation from './SvgInformation';
+import SvgHome from './SvgHome';
+import SvgHome2 from './SvgHome2';
 
 const HomeScreen = ({ navigation }) => {
   const { totalMoneyWallet, totalMoneySavings, currentUser } = useContext(AddRemoveContext);
@@ -38,7 +39,7 @@ const HomeScreen = ({ navigation }) => {
       const done = await surveyDone();
       if (!done) {
         setTimeout(() => {
-          navigation.navigate(SCREEN_NAME.SURVEY, { firstTime: true });
+          navigation.navigate(SCREEN_NAME.INFORMATION_NAV, { screen: SCREEN_NAME.SURVEY, firstTime: true });
         }, 50);
       }
     };
@@ -66,23 +67,24 @@ const HomeScreen = ({ navigation }) => {
     else navigation.setOptions({ headerTitle: 'INICIO', headerTitleStyle: { fontSize: 14, color: colors.newBlack } });
   }, [currentUser]);
 
+  const hasPurchase = true;
   return (
     <Layout hideTextFooter>
       <View style={{ overflow: 'hidden', flex: 1 }}>
         <View style={styles.headerContainer}>
           <LinearGradient
-            style={{ marginTop: 0, width: '95%', borderRadius: 10, height: 150 }}
+            style={{ marginTop: 0, width: '95%', borderRadius: 10, height: 160 }}
             colors={['rgba(0, 63, 186, 0.2)', 'rgba(0, 63, 186, 0.06)']}>
             <View style={{ flex: 1, flexDirection: 'row' }}>
-              <View style={{ width: '60%' }}>
-                <Text style={styles.cardTitle}>¿Cómopago?</Text>
-                <Text style={styles.cardSubtitle}>
-                  UNA MANERA SENCILLA DE <Text style={{ fontWeight: 'bold' }}>ORGANIZAR TUS GASTOS</Text>
-                </Text>
+              <View style={{ flex: 0.6, marginRight: 10 }}>
+                <View style={{ flex: 1, justifyContent: 'space-evenly' }}>
+                  <Text style={styles.cardTitle}>¿Cómopago?</Text>
+                  <Text style={styles.cardSubtitle}>
+                    UNA MANERA SENCILLA DE <Text style={{ fontWeight: 'bold' }}>ORGANIZAR TUS GASTOS</Text>
+                  </Text>
+                </View>
               </View>
-              <View style={{ marginLeft: '-5%', justifyContent: 'center', alignItems: 'flex-start' }}>
-                <Image source={Home} resizeMode="contain" style={{ height: 125 }} />
-              </View>
+              {hasPurchase ? <HomeHappyImg /> : <HomeInitImg />}
             </View>
           </LinearGradient>
           <View
@@ -155,3 +157,32 @@ const HomeScreen = ({ navigation }) => {
 };
 
 export default HomeScreen;
+
+export const HomeHappyImg = () => {
+  return (
+    <View
+      style={{
+        flex: 0.3,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+      <SvgHome2 height={125} width={125} />
+    </View>
+  );
+};
+
+export const HomeInitImg = () => {
+  return (
+    <View
+      style={{
+        flex: 0.3,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: 10,
+        paddingRight: 10,
+        marginTop: -20,
+      }}>
+      <SvgHome height={200} width={200} />
+    </View>
+  );
+};
