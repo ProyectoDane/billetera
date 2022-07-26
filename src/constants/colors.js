@@ -7,7 +7,7 @@ export const colors = {
   menu2: '#1f4183',
   footer: '#e68a00',
   miBilletera: '#1f93d1',
-  misAhorros: '#04b8c2',
+  misAhorros: '#00DE8E', //00E794
   misDeseos: '#33dead',
   calculadora: '#ed2f65',
   softCyan: '#66d0e8',
@@ -23,7 +23,7 @@ export const colors = {
   darkBlue: '#595b7a',
   softGray: '#ededed',
   gray: '#f5f5f5',
-  blueText: '#0070c0',
+  blueText: '#0699E8', //00A0F5
 
   // colors dane icon
   purple: '#8a4894',

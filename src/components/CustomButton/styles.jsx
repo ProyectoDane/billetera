@@ -1,65 +1,56 @@
-import {colors} from '../../constants';
-import {Dimensions, StyleSheet} from 'react-native';
-
-const windowWidth = Dimensions.get('window').width;
+import { colors } from '../../constants';
+import { StyleSheet } from 'react-native';
 
 const shadow2 = {
   shadowColor: 'rgba(0, 0, 0, 0.5)',
   shadowOpacity: 0.5,
   elevation: 3,
   shadowRadius: 3,
-  shadowOffset: {width: 4, height: 4},
-}
+  shadowOffset: { width: 4, height: 4 },
+};
 
 const styles = StyleSheet.create({
-  button: {
+  root: {
     flex: 1,
-    flexDirection: "column",
-    flexWrap: "nowrap",
+    flexDirection: 'column',
+    flexWrap: 'nowrap',
     borderRadius: 10,
-    ///width: windowWidth - 45,
-    //width: "100%",
-    height: 180,
-    // paddingBottom: 15,
-    padding: 10,
-    elevation: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 5,
+    elevation: 6,
+    backgroundColor: colors['white'],
   },
-  iconTextGroup: {
+  cardContent: {
+    flex: 2,
     flexDirection: 'column',
     alignItems: 'center',
+    marginBottom: -10,
     justifyContent: 'space-between',
   },
-  icon: {
-    margin: 15,
-    paddingRight: 10,
-  },
-  text: {
-    // paddingLeft: 20,
-  },
   label: {
-    fontWeight: 'bold',
-    color: colors.white,
-    fontSize: 20,
+    color: '#222',
+    fontSize: 15,
+    letterSpacing: 0.7,
   },
   amount: {
-    color: colors.white,
-    fontSize: 30,
+    fontSize: 16,
     fontWeight: 'bold',
-    textDecorationLine: "underline"
+    color: colors.orange2,
   },
-  btnGroup: {
+  cardButtons: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
   },
-  buyBtn: {...shadow2,
+  buyBtn: {
+    ...shadow2,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 5,
     flex: 1,
-    height: 35,
-    backgroundColor: colors.white,
-
+    height: 40,
+    backgroundColor: colors.misAhorros,
   },
   modifyBtn: {
     marginRight: 10,
@@ -67,16 +58,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 5,
     flex: 1,
-    height: 35,
-    backgroundColor: colors.white,
-    ...shadow2
+    height: 40,
+    backgroundColor: colors.blueText,
+    ...shadow2,
   },
   btnText: {
     fontWeight: 'bold',
-    color: colors.menu,
+    color: '#fffeee',
   },
 
-  shadow2: {...shadow2}
+  shadow2: { ...shadow2 },
 });
 
 export default styles;
