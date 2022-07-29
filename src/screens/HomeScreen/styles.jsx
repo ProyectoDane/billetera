@@ -2,6 +2,14 @@ import { StyleSheet } from 'react-native';
 
 import { colors } from '../../constants';
 
+const shadow2 = {
+  shadowColor: 'rgba(0, 0, 0, 0.5)',
+  shadowOpacity: 0.5,
+  elevation: 3,
+  shadowRadius: 3,
+  shadowOffset: { width: 4, height: 4 },
+};
+
 export const styles = StyleSheet.create({
   headerContainer: {
     backgroundColor: colors.white,
@@ -12,14 +20,14 @@ export const styles = StyleSheet.create({
     elevation: 8,
     marginBottom: 10,
   },
-  cardTitle: {
+  headerTitle: {
     paddingLeft: 20,
     color: colors.menu2,
     fontSize: 22,
     fontWeight: 'bold',
     marginTop: '13%',
   },
-  cardSubtitle: {
+  headerSubtitle: {
     paddingLeft: 20,
     paddingRight: 10,
     height: 80,
@@ -28,15 +36,39 @@ export const styles = StyleSheet.create({
     color: colors.orange2,
     fontSize: 13,
   },
-  buttonGroup: {
+  cardGroup: {
     flex: 1,
     flexDirection: 'column',
-    flexWrap: 'wrap',
+    // flexWrap: 'wrap',
     justifyContent: 'flex-start',
   },
-  button: {
-    flex: 0.43,
-    padding: 12,
-    width: '100%',
+  cardContainer: {
+    // flex: 0.42,
+    // padding: 12,
+    // width: '100%',
   },
+  buyBtn: {
+    ...shadow2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5,
+    flex: 1,
+    height: 40,
+    backgroundColor: colors.misAhorros,
+  },
+  modifyBtn: {
+    marginRight: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5,
+    flex: 1,
+    height: 40,
+    backgroundColor: colors.blueText,
+    ...shadow2,
+  },
+  btnText: {
+    fontWeight: 'bold',
+    color: '#fffeee',
+  },
+  shadow2: { ...shadow2 },
 });
