@@ -1,6 +1,5 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { FontAwesome5 } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
@@ -26,9 +25,9 @@ import AddRemoveWallet from '../../screens/AddRemove/AddRemoveWallet';
 import AddRemoveSavings from '../../screens/AddRemove/AddRemoveSavings';
 import WalletManualPayment from '../../screens/AddRemove/WalletManualPayment/WalletManualPayment';
 
+import SvgChevron from '../../components/CustomButton/SvgChevron';
 import { colors, NAVIGATION_TITLE, SCREEN_NAME } from '../../constants';
-import { View } from 'react-native';
-import LoadingScreen from '../../screens/HomeScreen/LoadingScreen';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const HomeStack = createStackNavigator();
 const MyWishesStack = createStackNavigator();
@@ -45,26 +44,21 @@ const HomeNavigation = () => {
   return (
     <HomeStack.Navigator
       initialRouteName={SCREEN_NAME.HOME}
+      detachInactiveScreens={false}
       screenOptions={({ route }) => ({
-        headerStyle: { backgroundColor: colors.white, elevation: 0 },
+        headerTitleStyle: { marginLeft: -15, fontSize: 18 },
+        headerStyle: { backgroundColor: colors.white, elevation: 10 },
         headerLeft: ({ canGoBack, onPress }) => {
-          if (route.name === 'HomeScreen') return <ProfileButton sizeIcon={18} colorIcon={colors.newBlack} />;
-          else if (canGoBack)
-            <View style={{ marginLeft: 15 }}>
-              <FontAwesome5 name="chevron-left" onPress={onPress} color={colors.newBlack} size={25} />
-            </View>;
+          if (route.name === SCREEN_NAME.HOME) return <ProfileButton sizeIcon={18} colorIcon={colors.newBlack} />;
+          else if (canGoBack) {
+            return (
+              <TouchableOpacity onPress={onPress} style={{ padding: 15 }}>
+                <SvgChevron style={{ width: 16, height: 16, transform: [{ rotate: '180deg' }] }} />
+              </TouchableOpacity>
+            );
+          }
         },
       })}>
-      <HomeStack.Screen
-        name={SCREEN_NAME.LOADING}
-        component={LoadingScreen}
-        options={{
-          headerShown: false,
-          title: '',
-          headerRight: () => null,
-          headerLeft: () => null,
-        }}
-      />
       <HomeStack.Screen
         name={SCREEN_NAME.HOME}
         component={HomeScreen}
@@ -77,7 +71,7 @@ const HomeNavigation = () => {
         name={SCREEN_NAME.MY_WALLET}
         component={MyWallet}
         options={{
-          title: NAVIGATION_TITLE.MY_WALLET,
+          headerTitle: NAVIGATION_TITLE.MY_WALLET,
         }}
       />
       <HomeStack.Screen
