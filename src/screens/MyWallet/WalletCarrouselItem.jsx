@@ -7,12 +7,7 @@ import { colors } from '../../constants';
 import ItemMoney from '../AddRemove/components/ItemMoney';
 import { formatNum } from '../../utils/functions/formatNum';
 
-export default function WalletCarrouselItem({
-  itemInfo,
-  nextStep,
-  prevStep,
-  oneStep,
-}) {
+export default function WalletCarrouselItem({ itemInfo, nextStep, prevStep, oneStep }) {
   const { image, quantity, amount } = itemInfo;
 
   return (
@@ -20,41 +15,29 @@ export default function WalletCarrouselItem({
       <View style={styles.wrapperMoney}>
         {oneStep ? null : (
           <TouchableOpacity onPress={prevStep}>
-            <Ionicons
-              name="arrow-back-circle"
-              size={48}
-              color={colors.miBilletera}
-            />
+            <Ionicons name="chevron-back-circle" size={34} color={colors.blueText} />
           </TouchableOpacity>
         )}
-        <ItemMoney image={image} />
+        <ItemMoney image={image} style={{ width: 200, aspectRatio: 2.4 / 1 }} />
         {oneStep ? null : (
           <TouchableOpacity onPress={nextStep}>
-            <Ionicons
-              style={styles.horizontalReverse}
-              name="arrow-back-circle"
-              size={48}
-              color={colors.miBilletera}
-            />
+            <Ionicons style={styles.horizontalReverse} name="chevron-back-circle" size={34} color={colors.blueText} />
           </TouchableOpacity>
         )}
       </View>
       <View style={styles.wrapperValues}>
-        <Text style={styles.value}>
-          VALOR:
-          <Text style={{ fontWeight: 'bold' }}> {formatNum(amount)}</Text>
-        </Text>
-        <Text style={styles.value}>
-          CANTIDAD:
-          <Text style={{ fontWeight: 'bold' }}> {quantity}</Text>
-        </Text>
-        <Text style={styles.value}>
-          TOTAL:
-          <Text style={{ fontWeight: 'bold' }}>
-            {' '}
-            {formatNum(quantity * amount)}
-          </Text>
-        </Text>
+        <View style={styles.columnText}>
+          <Text style={styles.value}>VALOR</Text>
+          <Text style={{ lineHeight: 24, fontWeight: 'bold' }}>{formatNum(amount)}</Text>
+        </View>
+        <View style={styles.columnText}>
+          <Text style={styles.value}>CANTIDAD</Text>
+          <Text style={{ lineHeight: 24, fontWeight: 'bold' }}>{quantity}</Text>
+        </View>
+        <View style={styles.columnText}>
+          <Text style={styles.value}>TOTAL</Text>
+          <Text style={{ lineHeight: 24, fontWeight: 'bold' }}>{formatNum(quantity * amount)}</Text>
+        </View>
       </View>
     </Fragment>
   );

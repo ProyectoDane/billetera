@@ -9,11 +9,7 @@ export default function WalletCarrousel({ moneyType, dataCarrousel }) {
   const [item, setItem] = useState(dataCarrousel ? dataCarrousel[step] : []);
 
   const lastStep =
-    dataCarrousel && dataCarrousel.length == 1
-      ? 1
-      : dataCarrousel.length > 0
-      ? dataCarrousel.length - 1
-      : 0;
+    dataCarrousel && dataCarrousel.length == 1 ? 1 : dataCarrousel.length > 0 ? dataCarrousel.length - 1 : 0;
 
   const firstStep = 0;
 
@@ -22,22 +18,15 @@ export default function WalletCarrousel({ moneyType, dataCarrousel }) {
   const nextStep = () =>
     step === lastStep
       ? (setItem(dataCarrousel[firstStep]), setStep(firstStep))
-      : (setItem(dataCarrousel[calculateStep('+')]),
-        setStep(calculateStep('+')));
+      : (setItem(dataCarrousel[calculateStep('+')]), setStep(calculateStep('+')));
 
   const prevStep = () =>
     step === firstStep
       ? (setItem(dataCarrousel[lastStep]), setStep(lastStep))
-      : (setItem(dataCarrousel[calculateStep('-')]),
-        setStep(calculateStep('-')));
+      : (setItem(dataCarrousel[calculateStep('-')]), setStep(calculateStep('-')));
 
   return (
     <View style={styles.carrouselItem}>
-      <View style={styles.wrapperQuestion}>
-        <Text style={styles.question}>
-          ¿QUÉ {moneyType.toUpperCase()} TENGO?
-        </Text>
-      </View>
       {lastStep ? (
         <WalletCarrouselItem
           itemInfo={item}
@@ -46,9 +35,7 @@ export default function WalletCarrousel({ moneyType, dataCarrousel }) {
           prevStep={prevStep}
         />
       ) : (
-        <Text style={styles.textWithoutMoney}>
-          AÚN NO TIENES {moneyType.toUpperCase()}
-        </Text>
+        <Text style={styles.textWithoutMoney}>AÚN NO TIENES {moneyType.toUpperCase()}</Text>
       )}
     </View>
     // <View style={styles.carrouselItem}>

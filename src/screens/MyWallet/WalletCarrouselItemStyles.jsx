@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
   wrapperMoney: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-around',
     alignItems: 'center',
     marginBottom: 10,
   },
@@ -13,11 +13,15 @@ export const styles = StyleSheet.create({
   wrapperValues: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 10,
+    justifyContent: 'space-between',
+    marginTop: 20,
+  },
+  columnText: {
+    flexDirection: 'column',
   },
   value: {
+    // flex: 1,
     fontSize: 14,
-    marginHorizontal: 10,
+    // marginHorizontal: 15,
   },
 });

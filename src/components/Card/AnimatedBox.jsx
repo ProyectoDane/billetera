@@ -18,6 +18,17 @@ class AnimatedBox extends PureComponent {
     }
   }
 
+  showContent() {
+    const { height } = this.state;
+
+    Animated.timing(height, {
+      toValue: this.props.open ? 1 : 0,
+      duration: 250,
+      easing: EasingNode.inOut(EasingNode.ease),
+      useNativeDriver: false,
+    }).start();
+  }
+
   adjustHeight(layout) {
     const height = Math.round(layout.height);
     this.setState({
@@ -28,17 +39,6 @@ class AnimatedBox extends PureComponent {
         outputRange: [0, height],
       },
     });
-  }
-
-  showContent() {
-    const { height } = this.state;
-
-    Animated.timing(height, {
-      toValue: this.props.open ? 1 : 0,
-      duration: 250,
-      easing: EasingNode.inOut(EasingNode.ease),
-      useNativeDriver: false,
-    }).start();
   }
 
   render() {
