@@ -15,9 +15,12 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginTop: 20,
+    flex: 1,
   },
   columnText: {
     flexDirection: 'column',
+    flex: 1,
+    textAlign: "center"
   },
   value: {
     // flex: 1,
