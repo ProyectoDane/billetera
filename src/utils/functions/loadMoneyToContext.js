@@ -59,6 +59,7 @@ async function getTotalSavings() {
  * @returns {Promise<void>}
  */
 async function getMoney(context) {
+  console.log("Start getting Money");
   let billetes = await getBills();
   let monedas = await getCoins();
   let user =  await getUser();
@@ -151,6 +152,7 @@ async function getMoney(context) {
     JSON.parse(JSON.stringify(totalBilletesSavings)),
   ); //copia para usar en la UI
   context.setActualCoinsSavings(JSON.parse(JSON.stringify(totalCoinsSavings))); //copia para usar en la UI
+  console.log("Done getting Money");
 }
 
 export default getMoney;
