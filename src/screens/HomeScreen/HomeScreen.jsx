@@ -24,7 +24,7 @@ import CardActions from '../../components/Card/CardActions';
 import CardContent from '../../components/Card/CardContent';
 
 const HomeScreen = ({ navigation }) => {
-  const { totalMoneyWallet, totalMoneySavings, currentUser } = useContext(AddRemoveContext);
+  const { totalMoneyWallet, totalMoneySavings, currentUser, hasPurchase } = useContext(AddRemoveContext);
 
   console.log(`totalMoneySavings = ${totalMoneySavings}`);
 
@@ -54,7 +54,6 @@ const HomeScreen = ({ navigation }) => {
     else navigation.setOptions({ headerTitle: 'INICIO', headerTitleStyle: { fontSize: 14, color: colors.newBlack } });
   }, [currentUser]);
 
-  const hasPurchase = true;
   const marginTop = { marginTop: hasPurchase ? '12%' : '6%' };
   const flexrow = { flex: 1, flexDirection: 'row', alignItems: 'center' };
 

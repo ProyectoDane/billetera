@@ -1,32 +1,34 @@
-import React, {useEffect, useState} from 'react';
-import {ScrollView, Text, View} from 'react-native';
-import {FormProvider, useForm} from 'react-hook-form';
-import {yupResolver} from '@hookform/resolvers/yup';
-import {useNavigation} from '@react-navigation/native';
+import React, { useContext, useEffect, useState } from 'react';
+import { ScrollView, Text, View } from 'react-native';
+import { FormProvider, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useNavigation } from '@react-navigation/native';
 
 import InputText from '../../../components/InputText';
 import Layout from '../../../components/Layout';
-import {BalanceSchema} from '../../../validations/FormSchemas';
+import { BalanceSchema } from '../../../validations/FormSchemas';
 import SingleButton from '../../../components/SingleButton';
 
-import {styles} from './styles';
-import {colors, SCREEN_NAME} from '../../../constants';
-import {formatNum} from '../../../utils/functions/formatNum';
-import {toastNotification} from '../../../utils/functions/toastNotifcation';
+import { styles } from './styles';
+import { colors, SCREEN_NAME } from '../../../constants';
+import { formatNum } from '../../../utils/functions/formatNum';
+import { toastNotification } from '../../../utils/functions/toastNotifcation';
 import pagarCon from '../../../utils/functions/calculaComoPagar';
 import ItemMoney from '../../AddRemove/components/ItemMoney';
+import { AddRemoveContext } from '../../AddRemove/AddRemoveContext';
 
 const BuyBaseScreen = ({
-                         setTotalMoneyWallet,
-                         totalMoneyWallet,
-                         setInitialCoinsMoneyWallet,
-                         setInitialBillsMoneyWallet,
-                         initialCoinsMoneyWallet,
-                         initialBillsMoneyWallet,
-                         getDineroWallet,
-                         deleteMoneyWallet,
-                         handleManualPay
-                       }) => {
+  setTotalMoneyWallet,
+  totalMoneyWallet,
+  setInitialCoinsMoneyWallet,
+  setInitialBillsMoneyWallet,
+  initialCoinsMoneyWallet,
+  initialBillsMoneyWallet,
+  getDineroWallet,
+  deleteMoneyWallet,
+  handleManualPay,
+}) => {
+  const { setPurchase } = useContext(AddRemoveContext);
   const [valueBuy, setValueBuy] = useState();
   const [optionBill, setOptionBill] = useState('');
   const [optPay, setOptPay] = useState();
@@ -137,6 +139,7 @@ const BuyBaseScreen = ({
           setInitialBillsMoneyWallet(newBills);
         }
       }
+      setPurchase(true);
       navigation.navigate(SCREEN_NAME.HOME);
 
       vuelto
