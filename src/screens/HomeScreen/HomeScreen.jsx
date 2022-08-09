@@ -26,6 +26,8 @@ import CardContent from '../../components/Card/CardContent';
 const HomeScreen = ({ navigation }) => {
   const { totalMoneyWallet, totalMoneySavings, currentUser } = useContext(AddRemoveContext);
 
+  console.log(`totalMoneySavings = ${totalMoneySavings}`);
+
   useEffect(() => {
     const isDone = async () => {
       const done = await surveyDone();
@@ -131,7 +133,7 @@ const HomeScreen = ({ navigation }) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.buyBtn}
-              onPress={() => navigation.navigate(SCREEN_NAME.SAVINGS_BUY, { isWallet: true })}>
+              onPress={() => navigation.navigate(SCREEN_NAME.WALLET_BUY, { isWallet: true })}>
               <Text style={styles.btnText}>COMPRAR</Text>
             </TouchableOpacity>
           </CardActions>
