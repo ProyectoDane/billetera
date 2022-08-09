@@ -150,7 +150,7 @@ const HomeScreen = ({ navigation }) => {
             <CardActions>
               <TouchableOpacity
                 style={styles.modifyBtn}
-                onPress={() => navigation.navigate(SCREEN_NAME.ADD_REMOVE, { from: 'savings' })}>
+                onPress={() => navigation.navigate(SCREEN_NAME.ADD_REMOVE_SAVINGS, { from: 'savings' })}>
                 <Text style={styles.btnText}>AGREGAR/QUITAR</Text>
               </TouchableOpacity>
               <TouchableOpacity
