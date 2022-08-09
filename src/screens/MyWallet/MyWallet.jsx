@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-undef */
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, { useContext } from 'react';
 import { View } from 'react-native';
 // import { useNavigation } from '@react-navigation/native';
 
@@ -16,59 +16,21 @@ import CardText from '../../components/Card/CardText';
 import CardCollapse from '../../components/Card/CardCollapse';
 import WalletCarrousel from './WalletCarrousel';
 
+const totalize = (list) =>
+  list.reduce((prevTotal, item) => {
+    return prevTotal + item.amount * item.quantity;
+  }, 0);
+
+const withQuantity = (list) => list.filter((item) => item.quantity > 0);
+
 export default function MyWallet() {
-  const {
-    totalMoneyWallet,
-    actualMoneySavings,
-    actualCoinsMoneyWallet,
-    initialBillsMoneyWallet,
-    initialCoinsMoneyWallet,
-  } = useContext(AddRemoveContext);
-  // const navigation = useNavigation();
-
-  // eslint-disable-next-line no-unused-vars
-  const [totales, setTotales] = useState({
-    bills: 0,
-    coins: 0
-  });
-
-  useEffect(()=> {
-    const totalize = (money) => {
-      const aux = {
-        bills: 0,
-        coins: 0
-      }
-      for (let currentEntry of money) {
-        if (currentEntry.quantity > 0) {
-          if (currentEntry.isCoins) {
-            aux.coins = aux.coins + (currentEntry.amount * currentEntry.quantity)
-          } else {
-            aux.bills = aux.bills + (currentEntry.amount * currentEntry.quantity)
-          }
-        }
-      }
-      return aux;
-    }
-    setTotales(totalize(initialBillsMoneyWallet.concat(initialCoinsMoneyWallet)));
-
-  }, [initialCoinsMoneyWallet, initialBillsMoneyWallet])
-
-  const handleMoney = (money) => {
-    let finalArray = [];
-
-    for (let currentEntry of money) {
-      if (currentEntry.quantity > 0) {
-        finalArray.push(currentEntry);
-      }
-    }
-    return finalArray;
-  };
-
-
-
+  const { totalMoneyWallet, initialBillsMoneyWallet, initialCoinsMoneyWallet } = useContext(AddRemoveContext);
+  const bills = withQuantity(initialBillsMoneyWallet);
+  const coins = withQuantity(initialCoinsMoneyWallet);
+  const totalBills = totalize(bills);
+  const totalCoins = totalize(coins);
   const flexrow = { flex: 1, flexDirection: 'row', alignItems: 'center' };
   const svgicon = { width: 58, aspectRatio: 1 / 1, marginRight: 12 };
-
   return (
     <Layout>
       <View style={styles.cardGroup}>
@@ -90,11 +52,11 @@ export default function MyWallet() {
                 <SvgPiggyBank style={svgicon} />
                 <CardText>Billetes</CardText>
               </View>
-              <Amount>{totales.bills}</Amount>
+              <Amount>{totalBills}</Amount>
             </CardSection>
             <CardCollapse>
               <View style={{ backgroundColor: '#fff' }}>
-                <WalletCarrousel moneyType="billetes" dataCarrousel={handleMoney(initialBillsMoneyWallet)} />
+                <WalletCarrousel moneyType="billetes" dataCarrousel={bills} />
               </View>
             </CardCollapse>
           </Card>
@@ -106,11 +68,11 @@ export default function MyWallet() {
                 <SvgBills style={svgicon} />
                 <CardText>Monedas</CardText>
               </View>
-              <Amount>{totales.coins}</Amount>
+              <Amount>{totalCoins}</Amount>
             </CardSection>
             <CardCollapse>
               <View style={{ backgroundColor: '#fff' }}>
-                <WalletCarrousel moneyType="monedas" dataCarrousel={handleMoney(initialCoinsMoneyWallet)} />
+                <WalletCarrousel moneyType="monedas" dataCarrousel={coins} />
               </View>
             </CardCollapse>
           </Card>

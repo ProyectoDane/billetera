@@ -6,7 +6,6 @@ import Layout from '../../components/Layout';
 
 import { colors, SCREEN_NAME } from '../../constants';
 import { styles } from './styles';
-import getMoney from '../../utils/functions/loadMoneyToContext';
 import { surveyDone } from '../../dataAccess/User';
 import { LinearGradient } from 'expo-linear-gradient';
 import SvgCalculator from './SvgCalculator';
@@ -26,7 +25,6 @@ import CardContent from '../../components/Card/CardContent';
 
 const HomeScreen = ({ navigation }) => {
   const { totalMoneyWallet, totalMoneySavings, currentUser } = useContext(AddRemoveContext);
-  const context = useContext(AddRemoveContext);
 
   useEffect(() => {
     const isDone = async () => {
@@ -40,15 +38,7 @@ const HomeScreen = ({ navigation }) => {
 
     isDone();
   }, []);
- /* //FIXME Asegurarnos que no hace falta. Todas las llamadas a la BD deberian
- // actualizar el contexto
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      getMoney(context); //FIXME revisar si hay que awaitear o no
-    });
-    return unsubscribe;
-  }, [navigation, currentUser]);
-*/
+
   useEffect(() => {
     let name = currentUser.name;
     if (name)

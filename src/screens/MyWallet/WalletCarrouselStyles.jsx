@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { colors } from '../../constants';
 
 export const styles = StyleSheet.create({
   wrapperQuestion: {
@@ -13,9 +14,15 @@ export const styles = StyleSheet.create({
   carrouselItem: {
     paddingVertical: 20,
   },
-  textWithoutMoney: {
+  viewWithoutMoney: {
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    textAlign: 'center',
+    color: colors.blueText,
+  },
+  textWithoutMoney: {
+    marginLeft: 10,
+    color: colors.blueText,
+    fontWeight: 'bold',
   },
 });

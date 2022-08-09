@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Text, View } from 'react-native';
+import { colors } from '../../constants';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 import WalletCarrouselItem from './WalletCarrouselItem';
 import { styles } from './WalletCarrouselStyles';
@@ -35,27 +37,11 @@ export default function WalletCarrousel({ moneyType, dataCarrousel }) {
           prevStep={prevStep}
         />
       ) : (
-        <Text style={styles.textWithoutMoney}>AÚN NO TIENES {moneyType.toUpperCase()}</Text>
+        <View style={styles.viewWithoutMoney}>
+          <FontAwesome5 accessibilityLabel="Info icon" name="info-circle" size={22} color={colors.blueText} />
+          <Text style={styles.textWithoutMoney}>AÚN NO SE HAN AGREGADO {moneyType.toUpperCase()}</Text>
+        </View>
       )}
     </View>
-    // <View style={styles.carrouselItem}>
-    //   <View style={styles.wrapperQuestion}>
-    //     <Text style={styles.question}>
-    //       ¿QUÉ {moneyType.toUpperCase()} TENGO?
-    //     </Text>
-    //   </View>
-    //   {lastStep ? (
-    //     <WalletCarrouselItem
-    //       itemInfo={item}
-    //       oneStep={dataCarrousel.length === 1 ? true : false}
-    //       nextStep={nextStep}
-    //       prevStep={prevStep}
-    //     />
-    //   ) : (
-    //     <Text style={styles.textWithoutMoney}>
-    //       AÚN NO TIENES {moneyType.toUpperCase()}
-    //     </Text>
-    //   )}
-    // </View>
   );
 }
