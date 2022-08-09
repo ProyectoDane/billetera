@@ -116,7 +116,6 @@ const HomeScreen = ({ navigation }) => {
       </View>
       <View style={styles.cardGroup}>
         <Card style={{ flex: 1 }}>
-          {/* <CardContent> */}
           <CardSection onPress={() => navigation.navigate(SCREEN_NAME.MY_WALLET)}>
             <View style={flexrow}>
               <SvgWallet style={{ height: 58, aspectRatio: 1 / 1, marginRight: 12 }} />
@@ -136,7 +135,6 @@ const HomeScreen = ({ navigation }) => {
               <Text style={styles.btnText}>COMPRAR</Text>
             </TouchableOpacity>
           </CardActions>
-          {/* </CardContent> */}
         </Card>
         <Card>
           <CardContent>
