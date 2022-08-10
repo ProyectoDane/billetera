@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-undef */
 import React, { useContext } from 'react';
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 // import { useNavigation } from '@react-navigation/native';
 
 import Layout from '../../components/Layout';
@@ -33,7 +33,7 @@ export default function MyWallet() {
   const svgicon = { width: 58, aspectRatio: 1 / 1, marginRight: 12 };
   return (
     <Layout>
-      <View style={styles.cardGroup}>
+      <ScrollView contentContainerStyle={styles.cardGroup}>
         <View style={styles.container}>
           <Card containerStyle={{ flex: 1 }}>
             <CardSection>
@@ -77,7 +77,7 @@ export default function MyWallet() {
             </CardCollapse>
           </Card>
         </View>
-      </View>
+      </ScrollView>
     </Layout>
   );
 }

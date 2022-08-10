@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 import Layout from '../../components/Layout';
 import { AddRemoveContext } from '../AddRemove/AddRemoveContext';
@@ -31,7 +31,7 @@ export default function MySavings() {
   const svgicon = { width: 58, aspectRatio: 1 / 1, marginRight: 12 };
   return (
     <Layout>
-      <View style={styles.cardGroup}>
+      <ScrollView contentContainerStyle={styles.cardGroup}>
         <View style={styles.container}>
           <Card containerStyle={{ flex: 1 }}>
             <CardSection>
@@ -75,7 +75,7 @@ export default function MySavings() {
             </CardCollapse>
           </Card>
         </View>
-      </View>
+      </ScrollView>
     </Layout>
   );
 }
