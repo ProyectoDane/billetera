@@ -5,6 +5,7 @@ import { getAllWish } from '../../../dataAccess/Wish';
 
 export const useGetWishes = () => {
   const isFocused = useIsFocused();
+  const [refresh, setRefresh] = useState(true);
   const [wishes, setWishes] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -20,7 +21,7 @@ export const useGetWishes = () => {
       }
     };
     getWishes();
-  }, [isFocused, wishes]);
+  }, [isFocused, refresh]);
 
-  return { wishes, loading };
+  return { wishes, loading, setRefresh };
 };

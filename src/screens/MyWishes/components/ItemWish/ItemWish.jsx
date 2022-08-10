@@ -11,14 +11,14 @@ import { formatNum } from '../../../../utils/functions/formatNum';
 import { toastNotification } from '../../../../utils/functions/toastNotifcation';
 import { AddRemoveContext } from '../../../AddRemove/AddRemoveContext';
 
-const ItemWish = ({ name, value, wishId, testID, icon, done }) => {
+const ItemWish = ({ name, value, wishId, testID, icon, done, onDelete }) => {
   const [collapse, setCollapse] = useState(false);
   const { totalMoneySavings } = useContext(AddRemoveContext);
 
   const progress = totalMoneySavings ? totalMoneySavings / value : 0;
   const missingMoney =
     value - totalMoneySavings < 0 ? 0 : value - totalMoneySavings;
-  const remainingMoney = totalMoneySavings - Number(value);
+  // const remainingMoney = totalMoneySavings - Number(value);
 
   const textColor = {
     color: done === 0 ? colors.primary : colors.disable,
@@ -72,6 +72,7 @@ const ItemWish = ({ name, value, wishId, testID, icon, done }) => {
         text: 'CONTINUAR',
         onPress: async () => {
           await deleteWish(wishId);
+          onDelete();
           toastNotification(
             'BORRASTE EL DESEO',
             'success',
