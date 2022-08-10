@@ -26,8 +26,6 @@ import CardContent from '../../components/Card/CardContent';
 const HomeScreen = ({ navigation }) => {
   const { totalMoneyWallet, totalMoneySavings, currentUser, hasPurchase } = useContext(AddRemoveContext);
 
-  console.log(`totalMoneySavings = ${totalMoneySavings}`);
-
   useEffect(() => {
     const isDone = async () => {
       const done = await surveyDone();

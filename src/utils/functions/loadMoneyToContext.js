@@ -3,48 +3,31 @@ import { getDineroWallet, getTotalWallet } from '../../dataAccess/Wallet';
 import { getDineroSaving, getTotalSaving } from '../../dataAccess/Savings';
 import {getUser} from "../../dataAccess/User";
 
-async function getTotal() {
-  const wallet = await getTotalWallet();
-  let total = 0;
-  let money = [];
+async function getTotal(userId) {
+  // const wallet = await getTotalWallet();
+  let totalWallet = 0;
+  let moneyWallet = await getDineroWallet(userId);
 
-  if (wallet) {
-    money = await getDineroWallet(wallet.moneyId);
-
-    for (let property of money) {
-      const { amount, quantity } = property;
-      total = total + amount * quantity;
-    }
-
-    return {
-      money,
-      total,
-    };
+  for (let property of moneyWallet) {
+    const { amount, quantity } = property;
+    totalWallet = totalWallet + amount * quantity;
   }
 
   return {
-    money,
-    total,
+    moneyWallet,
+    totalWallet
   };
+
 }
 
-async function getTotalSavings() {
-  const savings = await getTotalSaving();
+async function getTotalSavings(userId) {
+  // const savings = await getTotalSaving();
   let totalSavings = 0;
-  let moneySavings = [];
+  let moneySavings = await getDineroSaving(userId);
 
-  if (savings) {
-    moneySavings = await getDineroSaving(savings.moneyId);
-
-    for (let property of moneySavings) {
-      const { amount, quantity } = property;
-      totalSavings = totalSavings + amount * quantity;
-    }
-
-    return {
-      moneySavings,
-      totalSavings,
-    };
+  for (let property of moneySavings) {
+    const { amount, quantity } = property;
+    totalSavings = totalSavings + amount * quantity;
   }
 
   return {
@@ -59,45 +42,38 @@ async function getTotalSavings() {
  * @returns {Promise<void>}
  */
 async function getMoney(context) {
-  console.log("Start getting Money");
-  let billetes = await getBills();
-  let monedas = await getCoins();
+  const start = new Date();
+
   let user =  await getUser();
+  let billetes = await getBills(); //Maestro de billetes
+  let monedas = await getCoins(); //Maestro de monedas
 
-  let billetesSavings = [];
-  let monedasSavings = [];
+  let billetesSavings = JSON.parse(JSON.stringify(billetes));
+  let monedasSavings = JSON.parse(JSON.stringify(monedas));
 
-  for (let element of billetes) {
-    let el = JSON.parse(JSON.stringify(element));
-    billetesSavings.push(el);
-  }
+  const { moneyWallet, totalWallet } = await getTotal(user.id);
+  const { moneySavings, totalSavings } = await getTotalSavings(user.id);
 
-  for (let element of monedas) {
-    let el = JSON.parse(JSON.stringify(element));
-    monedasSavings.push(el);
-  }
-
-  const { money, total } = await getTotal();
-
-  const { moneySavings, totalSavings } = await getTotalSavings();
-
-  const idMoney = money.map(({ moneyId }) => moneyId);
+  const idMoney = moneyWallet.map(({ moneyId }) => moneyId);
   const idMoneySavings = moneySavings.map(({ moneyId }) => moneyId);
 
-  let totalBilletes = billetes.map((el) => {
+  let totalBilletesWallet = billetes.map((el) => {
     let indexMoney = idMoney.indexOf(el.id);
 
     if (indexMoney > -1) {
-      el.quantity = el.quantity + money[indexMoney].quantity;
+      el.quantity = el.quantity + moneyWallet[indexMoney].quantity;
     }
     return el;
   });
 
-  let totalCoins = monedas.map((el) => {
+  // console.log(`moneyWallet ${JSON.stringify(moneyWallet, "", 2)}`)
+  // console.log(`totalBilletesWallet ${JSON.stringify(totalBilletesWallet, "", 2)}`)
+
+  let totalCoinsWallet = monedas.map((el) => {
     let indexMoney = idMoney.indexOf(el.id);
 
     if (indexMoney > -1) {
-      el.quantity = el.quantity + money[indexMoney].quantity;
+      el.quantity = el.quantity + moneyWallet[indexMoney].quantity;
     }
     return el;
   });
@@ -127,16 +103,16 @@ async function getMoney(context) {
 
   /////// WALLET
 
-  context.setInitialBillsMoneyWallet(totalBilletes); //El ultimo estado recuperado de la BD
-  context.setActualBillsMoneyWallet(totalBilletes); //Sujeto a cambios por la UI
+  context.setInitialBillsMoneyWallet(totalBilletesWallet); //El ultimo estado recuperado de la BD
+  context.setActualBillsMoneyWallet(totalBilletesWallet); //Sujeto a cambios por la UI
 
-  context.setInitialCoinsMoneyWallet(totalCoins); //El ultimo estado recuperado de la BD
-  context.setActualCoinsMoneyWallet(totalCoins); //Sujeto a cambios por la UI
-  context.setTotalMoneyWallet(total);
-  context.setActualMoneyWallet(total);
+  context.setInitialCoinsMoneyWallet(totalCoinsWallet); //El ultimo estado recuperado de la BD
+  context.setActualCoinsMoneyWallet(totalCoinsWallet); //Sujeto a cambios por la UI
+  context.setTotalMoneyWallet(totalWallet);
+  context.setActualMoneyWallet(totalWallet);
 
-  context.setActualBills(JSON.parse(JSON.stringify(totalBilletes))); //copia para usar en la UI
-  context.setActualCoins(JSON.parse(JSON.stringify(totalCoins))); //copia para usar en la UI
+  context.setActualBills(JSON.parse(JSON.stringify(totalBilletesWallet))); //copia para usar en la UI
+  context.setActualCoins(JSON.parse(JSON.stringify(totalCoinsWallet))); //copia para usar en la UI
 
   /////// SAVINGS
 
@@ -152,7 +128,10 @@ async function getMoney(context) {
     JSON.parse(JSON.stringify(totalBilletesSavings)),
   ); //copia para usar en la UI
   context.setActualCoinsSavings(JSON.parse(JSON.stringify(totalCoinsSavings))); //copia para usar en la UI
-  console.log("Done getting Money");
+
+  const end = new Date();
+  let time = end - start;
+  console.log(`getMoney took ${time} ms`);
 }
 
 export default getMoney;

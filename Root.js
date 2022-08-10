@@ -15,18 +15,15 @@ const Root = () => {
   const context = useContext(AddRemoveContext);
   const [appIsReady, setAppIsReady] = useState(false);
 
-  useEffect(() => {
-    async function prepare() {
-      try {
-        await initialization();
-        await getMoney(context);
-      } catch (e) {
-        console.warn(e);
-      } finally {
-        setAppIsReady(true);
-      }
+  useEffect(async () => {
+    try {
+      await initialization();
+      await getMoney(context);
+    } catch (e) {
+      console.warn(e);
+    } finally {
+      setAppIsReady(true);
     }
-    prepare();
   }, []);
 
   const onLayoutRootView = useCallback(async () => {

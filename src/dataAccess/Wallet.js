@@ -8,7 +8,7 @@ export const getTotalWallet = async (userId = 1) => {
     );
 
     if (result.length === 0) {
-      return 0;
+      return [];
     }
 
     for (let i = 0; i < result.length; i++) {
@@ -21,15 +21,15 @@ export const getTotalWallet = async (userId = 1) => {
   }
 };
 
-export const getDineroWallet = async (money_id = 1) => {
+export const getDineroWallet = async (userId = 1) => {
   let money = [];
   let query = `SELECT * FROM Wallet AS w , Money AS m WHERE w.moneyId = m.id AND w.userId =?`;
 
   try {
-    let result = await executeQuery2(query, [money_id]);
+    let result = await executeQuery2(query, [userId]);
 
     if (result.rows.length === 0) {
-      return 0;
+      return [];
     }
 
     for (let i = 0; i < result.rows.length; i++) {

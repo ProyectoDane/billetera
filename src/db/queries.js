@@ -82,7 +82,15 @@ export const executeSelect = async (querys)=>
 export const initialization = async () => {
   try {
     await executeQuery(queryCreateTables);
+  } catch (err) {
+    console.log('Error: ', err);
+  }
+  try {
     await executeQuery(queryInsertMoney);
+  } catch (err) {
+    console.log('Error: ', err);
+  }
+  try {
     await executeQuery(queryInsertUser);
   } catch (err) {
     console.log('Error: ', err);

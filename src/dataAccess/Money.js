@@ -1,49 +1,57 @@
-import { executeSelect } from '../db/queries';
+import {executeSelect} from '../db/queries';
+
+let billsCache = [];
+let coinsCache = [];
+
+
+async function innerGetMoney(isCoin = 0) {
+    // console.log(`innerGetMoney -> isCoin = ${isCoin}`)
+    let money = [];
+    try {
+        const result = await executeSelect(
+            `SELECT *
+             FROM Money
+             WHERE isCoins = ${isCoin}
+             ORDER BY amount DESC, id DESC`,
+        );
+
+        for (let i = 0; i < result.length; i++) {
+            let item = result.item(i);
+            const {id, amount, image, isCoins: isCoin} = item;
+
+            money.push({
+                id,
+                amount,
+                image,
+                isCoins: !!isCoin,
+                quantity: 0,
+            });
+        }
+    } catch (err) {
+        console.log('Error: ', err);
+    }
+    return money;
+}
+
 export const getBills = async () => {
-  let bills = [];
-  try {
-    const result = await executeSelect(
-      `SELECT * FROM Money WHERE isCoins = 0 ORDER BY amount DESC, id DESC`,
-    );
+    if (billsCache.length > 0)
+        return [].concat(billsCache);
 
-    for (let i = 0; i < result.length; i++) {
-      let item = result.item(i);
-      const { id, amount, image, isCoins: isCoin } = item;
+    // console.log("full getBills");
 
-      bills.push({
-        id,
-        amount,
-        image,
-        isCoins: !!isCoin,
-        quantity: 0,
-      });
-    }
-  } catch (err) {
-    console.log('Error: ', err);
-  }
-  return bills;
+    let money = await innerGetMoney(0);
+    billsCache = billsCache.concat(money);
+    return money;
 };
+
+
 export const getCoins = async () => {
-  let coins = [];
-  try {
-    const result = await executeSelect(
-      `SELECT * FROM Money WHERE isCoins = 1 ORDER BY amount DESC, id DESC`,
-    );
+    if (coinsCache.length > 0)
+        return [].concat(coinsCache);
 
-    for (let i = 0; i < result.length; i++) {
-      let item = result.item(i);
-      const { id, amount, image, isCoins: isCoin } = item;
-
-      coins.push({
-        id,
-        amount,
-        image,
-        isCoins: !!isCoin,
-        quantity: 0,
-      });
-    }
-  } catch (err) {
-    console.log('Error: ', err);
-  }
-  return coins;
+    let money = await innerGetMoney(1);
+    coinsCache = coinsCache.concat(money);
+    return money;
 };
+
+
