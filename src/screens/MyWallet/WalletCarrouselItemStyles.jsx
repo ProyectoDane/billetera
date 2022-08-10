@@ -13,18 +13,15 @@ export const styles = StyleSheet.create({
   wrapperValues: {
     flexDirection: 'row',
     alignItems: 'center',
+    width: '100%',
     justifyContent: 'space-between',
     marginTop: 20,
-    flex: 1,
+    marginLeft: '5%',
   },
   columnText: {
     flexDirection: 'column',
-    flex: 1,
-    textAlign: "center"
   },
   value: {
-    // flex: 1,
     fontSize: 14,
-    // marginHorizontal: 15,
   },
 });

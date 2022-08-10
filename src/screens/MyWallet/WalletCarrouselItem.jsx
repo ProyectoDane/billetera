@@ -5,11 +5,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { styles } from './WalletCarrouselItemStyles';
 import { colors } from '../../constants';
 import ItemMoney from '../AddRemove/components/ItemMoney';
-import { formatNum } from '../../utils/functions/formatNum';
+import { formatAmount } from '../../utils/functions/formatNum';
 
 export default function WalletCarrouselItem({ itemInfo, nextStep, prevStep, oneStep }) {
   const { image, quantity, amount } = itemInfo;
-
+  const total = amount * quantity;
   return (
     <Fragment>
       <View style={styles.wrapperMoney}>
@@ -26,17 +26,17 @@ export default function WalletCarrouselItem({ itemInfo, nextStep, prevStep, oneS
         )}
       </View>
       <View style={styles.wrapperValues}>
-        <View style={styles.columnText}>
+        <View style={[styles.columnText, { width: 50 }]}>
           <Text style={styles.value}>VALOR</Text>
-          <Text style={{ lineHeight: 24, fontWeight: 'bold' }}>{formatNum(amount)}</Text>
+          <Text style={{ lineHeight: 24, fontWeight: 'bold' }}>{formatAmount(amount, false)}</Text>
         </View>
-        <View style={styles.columnText}>
+        <View style={[styles.columnText, { width: 70 }]}>
           <Text style={styles.value}>CANTIDAD</Text>
           <Text style={{ lineHeight: 24, fontWeight: 'bold' }}>{quantity}</Text>
         </View>
-        <View style={styles.columnText}>
+        <View style={(styles.columnText, { width: 76 })}>
           <Text style={styles.value}>TOTAL</Text>
-          <Text style={{ lineHeight: 24, fontWeight: 'bold' }}>{formatNum(quantity * amount)}</Text>
+          <Text style={{ lineHeight: 24, fontWeight: 'bold' }}>{formatAmount(total, total < 1000)}</Text>
         </View>
       </View>
     </Fragment>
