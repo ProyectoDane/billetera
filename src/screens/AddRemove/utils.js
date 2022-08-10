@@ -36,6 +36,7 @@ export async function innerSaveAddRemove(
   initialBillsMoneyWallet,
   bills,
 ) {
+  let start = new Date();
   let addMoney = [];
   let subMoney = [];
 
@@ -55,6 +56,9 @@ export async function innerSaveAddRemove(
       await deleteMoneyWallet(1, money_id, quantity);
     }
   }
+  let end = new Date();
+  const diff = end - start;
+  console.log(`innerSaveAddRemove took ${diff} ms`);
 }
 export async function innerSaveAddRemoveSavings(
   initialCoinsMoneyWallet,

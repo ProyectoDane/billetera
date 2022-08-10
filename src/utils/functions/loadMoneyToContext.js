@@ -4,7 +4,6 @@ import { getDineroSaving, getTotalSaving } from '../../dataAccess/Savings';
 import {getUser} from "../../dataAccess/User";
 
 async function getTotal(userId) {
-  // const wallet = await getTotalWallet();
   let totalWallet = 0;
   let moneyWallet = await getDineroWallet(userId);
 
@@ -21,7 +20,6 @@ async function getTotal(userId) {
 }
 
 async function getTotalSavings(userId) {
-  // const savings = await getTotalSaving();
   let totalSavings = 0;
   let moneySavings = await getDineroSaving(userId);
 
@@ -48,8 +46,8 @@ async function getMoney(context) {
   let billetes = await getBills(); //Maestro de billetes
   let monedas = await getCoins(); //Maestro de monedas
 
-  let billetesSavings = JSON.parse(JSON.stringify(billetes));
-  let monedasSavings = JSON.parse(JSON.stringify(monedas));
+  let billetesSavings = billetes.map(({...el}) => el); // JSON.parse(JSON.stringify(billetes));
+  let monedasSavings = monedas.map(({...el}) => el); // JSON.parse(JSON.stringify(monedas));
 
   const { moneyWallet, totalWallet } = await getTotal(user.id);
   const { moneySavings, totalSavings } = await getTotalSavings(user.id);
@@ -59,43 +57,41 @@ async function getMoney(context) {
 
   let totalBilletesWallet = billetes.map((el) => {
     let indexMoney = idMoney.indexOf(el.id);
+    let auxEl = {...el};
 
     if (indexMoney > -1) {
-      el.quantity = el.quantity + moneyWallet[indexMoney].quantity;
+      auxEl.quantity = auxEl.quantity + moneyWallet[indexMoney].quantity;
     }
-    return el;
+    return  auxEl;
   });
-
-  // console.log(`moneyWallet ${JSON.stringify(moneyWallet, "", 2)}`)
-  // console.log(`totalBilletesWallet ${JSON.stringify(totalBilletesWallet, "", 2)}`)
 
   let totalCoinsWallet = monedas.map((el) => {
     let indexMoney = idMoney.indexOf(el.id);
-
+    let auxEl = {...el};
     if (indexMoney > -1) {
-      el.quantity = el.quantity + moneyWallet[indexMoney].quantity;
+      auxEl.quantity = auxEl.quantity + moneyWallet[indexMoney].quantity;
     }
-    return el;
+    return auxEl;
   });
 
   let totalBilletesSavings = billetesSavings.map((el) => {
     let indexMoney = idMoneySavings.indexOf(el.id);
-
+    let auxEl = {...el};
     if (indexMoney > -1) {
-      el.quantity = el.quantity + moneySavings[indexMoney].quantity;
+      auxEl.quantity = auxEl.quantity + moneySavings[indexMoney].quantity;
     }
 
-    return el;
+    return auxEl;
   });
 
   let totalCoinsSavings = monedasSavings.map((el) => {
     let indexMoney = idMoneySavings.indexOf(el.id);
-
+    let auxEl = {...el};
     if (indexMoney > -1) {
-      el.quantity = el.quantity + moneySavings[indexMoney].quantity;
+      auxEl.quantity = auxEl.quantity + moneySavings[indexMoney].quantity;
     }
 
-    return el;
+    return auxEl;
   });
 
   //// USER
@@ -111,8 +107,11 @@ async function getMoney(context) {
   context.setTotalMoneyWallet(totalWallet);
   context.setActualMoneyWallet(totalWallet);
 
-  context.setActualBills(JSON.parse(JSON.stringify(totalBilletesWallet))); //copia para usar en la UI
-  context.setActualCoins(JSON.parse(JSON.stringify(totalCoinsWallet))); //copia para usar en la UI
+  context.setActualBills(cloneFlatArray(totalBilletesWallet)); //copia para usar en la UI
+  context.setActualCoins(cloneFlatArray(totalCoinsWallet)); //copia para usar en la UI
+  //
+  // context.setActualBills(JSON.parse(JSON.stringify(totalBilletesWallet))); //copia para usar en la UI
+  // context.setActualCoins(JSON.parse(JSON.stringify(totalCoinsWallet))); //copia para usar en la UI
 
   /////// SAVINGS
 
@@ -124,14 +123,16 @@ async function getMoney(context) {
   context.setTotalMoneySavings(totalSavings);
   context.setActualMoneySavings(totalSavings);
 
-  context.setActualBillsSavings(
-    JSON.parse(JSON.stringify(totalBilletesSavings)),
-  ); //copia para usar en la UI
-  context.setActualCoinsSavings(JSON.parse(JSON.stringify(totalCoinsSavings))); //copia para usar en la UI
+  context.setActualBillsSavings(cloneFlatArray(totalBilletesSavings)); //copia para usar en la UI
+  context.setActualCoinsSavings(cloneFlatArray(totalCoinsSavings)); //copia para usar en la UI
 
   const end = new Date();
-  let time = end - start;
+  const time = end - start;
   console.log(`getMoney took ${time} ms`);
+}
+
+function cloneFlatArray(array) {
+  return array.map(({...el}) => el);
 }
 
 export default getMoney;
