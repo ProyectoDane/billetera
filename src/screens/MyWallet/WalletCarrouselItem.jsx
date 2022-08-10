@@ -26,9 +26,9 @@ export default function WalletCarrouselItem({ itemInfo, nextStep, prevStep, oneS
         )}
       </View>
       <View style={styles.wrapperValues}>
-        <View style={[styles.columnText, { width: 50 }]}>
+        <View style={[styles.columnText, { width: 52 }]}>
           <Text style={styles.value}>VALOR</Text>
-          <Text style={{ lineHeight: 24, fontWeight: 'bold' }}>{formatAmount(amount, false)}</Text>
+          <Text style={{ lineHeight: 24, fontWeight: 'bold' }}>{formatAmount(amount, amount !== 1000)}</Text>
         </View>
         <View style={[styles.columnText, { width: 70 }]}>
           <Text style={styles.value}>CANTIDAD</Text>
