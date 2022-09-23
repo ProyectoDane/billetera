@@ -15,13 +15,7 @@ import Amount from '../../components/Amount/Amount';
 import CardText from '../../components/Card/CardText';
 import CardCollapse from '../../components/Card/CardCollapse';
 import WalletCarrousel from './WalletCarrousel';
-
-const totalize = (list) =>
-  list.reduce((prevTotal, item) => {
-    return prevTotal + item.amount * item.quantity;
-  }, 0);
-
-const withQuantity = (list) => list.filter((item) => item.quantity > 0);
+import { totalize, withQuantity } from '../../utils/functions/common';
 
 export default function MyWallet() {
   const { totalMoneyWallet, initialBillsMoneyWallet, initialCoinsMoneyWallet } = useContext(AddRemoveContext);

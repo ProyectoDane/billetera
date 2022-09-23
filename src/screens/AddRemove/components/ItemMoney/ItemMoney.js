@@ -60,5 +60,5 @@ const imageMap = {
 export default function ItemMoney(props) {
   const { image, style } = props;
 
-  return <Image source={imageMap[image]} style={{ ...style }} />;
+  return <Image source={imageMap[image]} style={{ ...style, height: 78, aspectRatio: 2.4 / 1 }} />;
 }

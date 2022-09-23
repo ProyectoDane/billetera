@@ -33,8 +33,7 @@ const AddRemoveMoney = ({
     <View>
       <ScrollView
         contentContainerStyle={{
-          paddingVertical: 10,
-          paddingHorizontal: 10,
+          paddingVertical: 5,
         }}>
         {actualMoney.map((elem, index) => {
           return (
