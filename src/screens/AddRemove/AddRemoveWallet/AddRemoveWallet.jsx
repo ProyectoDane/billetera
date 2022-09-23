@@ -1,14 +1,13 @@
 import * as React from 'react';
-import {useContext, useState} from 'react';
-import {AddRemoveContext} from '../AddRemoveContext';
-import {innerSaveAddRemove} from '../utils';
+import { useContext } from 'react';
+import { AddRemoveContext } from '../AddRemoveContext';
+import { innerSaveAddRemove } from '../utils';
 import getMoney from '../../../utils/functions/loadMoneyToContext';
-import {toastNotification} from '../../../utils/functions/toastNotifcation';
-import {SCREEN_NAME} from '../../../constants';
+import { toastNotification } from '../../../utils/functions/toastNotifcation';
+import { SCREEN_NAME } from '../../../constants';
 import AddRemoveBaseScreen from '../components/AddRemoveBaseScreen/AddRemoveBaseScreen';
 
 export default function AddRemoveWallet({ navigation }) {
-  const [isLoading, setIsLoading] = useState(false);
   const {
     actualBills, //array: billetes en la instancia
     setActualBills,
@@ -24,26 +23,15 @@ export default function AddRemoveWallet({ navigation }) {
   const context = useContext(AddRemoveContext);
 
   const handleSave = async () => {
-    setIsLoading(true);
-
-    await innerSaveAddRemove(
-      initialCoinsMoneyWallet,
-      actualCoins,
-      initialBillsMoneyWallet,
-      actualBills,
-    );
+    await innerSaveAddRemove(initialCoinsMoneyWallet, actualCoins, initialBillsMoneyWallet, actualBills);
     await getMoney(context);
-    toastNotification(
-      'SE ACTUALIZO EL DINERO CORRECTAMENTE!',
-      'success',
-      'success',
-    );
+    toastNotification('SE ACTUALIZO EL DINERO CORRECTAMENTE!', 'success', 'success');
     navigation.navigate(SCREEN_NAME.HOME);
   };
 
   return (
     <AddRemoveBaseScreen
-        navigation={navigation}
+      navigation={navigation}
       actualBills={actualBills}
       setActualBills={setActualBills}
       actualCoins={actualCoins}
@@ -53,7 +41,7 @@ export default function AddRemoveWallet({ navigation }) {
       setActualMoneyWallet={setActualMoneyWallet}
       initialBillsMoneyWallet={initialBillsMoneyWallet} //array: billetes iniciales (guardados en la BD)
       initialCoinsMoneyWallet={initialCoinsMoneyWallet} //array: coins  iniciales (guardados en la BD)
-      handleSave={handleSave} />
+      handleSave={handleSave}
+    />
   );
 }
-
