@@ -7,10 +7,9 @@ import { useGetWishes } from '../../hooks/useGetWishes';
 import { colors } from '../../../../constants';
 
 const WishList = () => {
-  const { wishes, loading, setRefresh } = useGetWishes();
-  const flushChanges = () => {
-    setRefresh(Date.now());
-  };
+  const { wishes, loading, doRefresh } = useGetWishes();
+  const handleChange = () => doRefresh(Date.now());
+
   return !loading ? (
     <View style={styles.list}>
       {wishes.length > 0 ? (
@@ -25,7 +24,7 @@ const WishList = () => {
               userId={item.userId}
               wishId={item.id}
               testID={`testId-itemWish-${item.id}`}
-              onDelete={flushChanges}
+              onChange={handleChange}
             />
           )}
           keyExtractor={(item) => item.id.toString()}
@@ -37,11 +36,7 @@ const WishList = () => {
       )}
     </View>
   ) : (
-    <ActivityIndicator
-      style={styles.spinner}
-      size="large"
-      color={colors.miBilletera}
-    />
+    <ActivityIndicator style={styles.spinner} size="large" color={colors.miBilletera} />
   );
 };
 

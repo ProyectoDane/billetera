@@ -3,13 +3,14 @@ import { FlatList, Text, View, ActivityIndicator } from 'react-native';
 
 import ItemWish from '../MyWishes/components/ItemWish';
 
-import { useGetWishesFulfilled } from '../MyWishes/hooks/useGetWishesFulfilled';
+import { useGetWishes } from '../MyWishes/hooks/useGetWishes';
 import { styles } from './styles';
 import { savings } from '../../mockData/deseos';
 import { colors } from '../../constants';
 
 const WishesFulfilled = () => {
-  const { wishesFulfilled, loading } = useGetWishesFulfilled();
+  const { wishes: wishesFulfilled, loading, doRefresh } = useGetWishes(true);
+  const handleChange = () => doRefresh(Date.now());
 
   return !loading ? (
     <View style={styles.list}>
@@ -35,6 +36,7 @@ const WishesFulfilled = () => {
               userId={item.userId}
               savings={savings}
               testID={`testId-itemWish-${item.id}`}
+              onChange={handleChange}
             />
           )}
           keyExtractor={(item) => item.id.toString()}
@@ -46,11 +48,7 @@ const WishesFulfilled = () => {
       )}
     </View>
   ) : (
-    <ActivityIndicator
-      style={styles.spinner}
-      size="large"
-      color={colors.miBilletera}
-    />
+    <ActivityIndicator style={styles.spinner} size="large" color={colors.miBilletera} />
   );
 };
 

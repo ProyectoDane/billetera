@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -14,30 +14,34 @@ import { getWishById, insertWish, updateWish } from '../../dataAccess/Wish';
 import { Wish } from '../../models/Wish';
 import { SCREEN_NAME } from '../../constants';
 import { toastNotification } from '../../utils/functions/toastNotifcation';
+import { useCarousel } from '../../components/IconCarousel/hooks/useCarousel';
+import { whishesList } from '../../mockData/deseos';
+
+const icons = whishesList.map(({ icon, name }) => ({ icon, name }));
 
 const NuevoDeseo = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const { item, nextStep, prevStep } = useCarousel(icons);
 
   const methods = useForm({
     defaultValues: { ...route.params },
     resolver: yupResolver(WishSchema),
   });
+  const { handleSubmit, reset, setValue } = methods;
 
-  const { handleSubmit, reset } = methods;
+  useEffect(() => {
+    setValue('name', item.name);
+  }, [item.name]);
 
   // Insert wish
   const onSubmitNew = async (data) => {
     setIsLoading(true);
-    const { icon, name, value } = data;
+    const { name, value } = data;
     try {
-      await insertWish(new Wish(name, value, icon));
+      await insertWish(new Wish(name, value, item.icon));
       reset();
       setIsLoading(false);
-      toastNotification(
-        'EL DESEO SE CREÓ CORRECTAMENTE!',
-        'success',
-        'success',
-      );
+      toastNotification('EL DESEO SE CREÓ CORRECTAMENTE!', 'success', 'success');
       navigation.navigate(SCREEN_NAME.MY_WISHES);
     } catch (error) {
       console.log(error);
@@ -50,18 +54,12 @@ const NuevoDeseo = ({ navigation, route }) => {
     setIsLoading(true);
     const { icon, name, value } = data;
     try {
-      const wishViejo = await getWishById(route.params.wishId);
-      wishViejo.icon = icon;
-      wishViejo.name = name;
-      wishViejo.value = value;
-      void (await updateWish(wishViejo));
+      const id = route.params.wishId;
+      await getWishById(id);
+      void (await updateWish({ id, icon, name, value }));
       reset();
       setIsLoading(false);
-      toastNotification(
-        'EL DESEO SE EDITÓ CORRECTAMENTE!',
-        'success',
-        'success',
-      );
+      toastNotification('EL DESEO SE EDITÓ CORRECTAMENTE!', 'success', 'success');
       navigation.navigate(SCREEN_NAME.MY_WISHES);
     } catch (error) {
       console.log(error);
@@ -75,13 +73,8 @@ const NuevoDeseo = ({ navigation, route }) => {
         <Text style={styles.title}>AGREGAR ICONO</Text>
         <FormProvider {...methods}>
           <View style={styles.form}>
-            <IconCarousel />
-            <InputText
-              name="name"
-              label="NOMBRE"
-              placeholder="INGRESE EL NOMBRE DEL DESEO"
-              required
-            />
+            <IconCarousel icon={item.icon} onPrevStep={prevStep} onNextStep={nextStep} />
+            <InputText name="name" label="NOMBRE" placeholder="INGRESE EL NOMBRE DEL DESEO" required />
             <InputText
               name="value"
               label="VALOR"
@@ -93,15 +86,11 @@ const NuevoDeseo = ({ navigation, route }) => {
           <SingleButton
             icon="magic"
             sizeIcon={22}
-            style={{marginTop: 20}}
+            style={{ marginTop: 20 }}
             label={route.params === undefined ? 'CREAR DESEO' : 'EDITAR DESEO'}
             isLoading={isLoading}
             disabled={isLoading}
-            onPress={
-              route.params === undefined
-                ? handleSubmit(onSubmitNew)
-                : handleSubmit(onSubmitEdit)
-            }
+            onPress={route.params === undefined ? handleSubmit(onSubmitNew) : handleSubmit(onSubmitEdit)}
           />
         </FormProvider>
       </ScrollView>

@@ -3,16 +3,16 @@ import { useIsFocused } from '@react-navigation/native';
 
 import { getAllWish } from '../../../dataAccess/Wish';
 
-export const useGetWishes = () => {
+export const useGetWishes = (fulfilled = false) => {
   const isFocused = useIsFocused();
-  const [refresh, setRefresh] = useState(true);
+  const [refresh, doRefresh] = useState(true);
   const [wishes, setWishes] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getWishes = async () => {
       try {
-        const data = await getAllWish(false);
+        const data = await getAllWish(fulfilled);
         setLoading(false);
         setWishes(data);
       } catch (error) {
@@ -23,5 +23,5 @@ export const useGetWishes = () => {
     getWishes();
   }, [isFocused, refresh]);
 
-  return { wishes, loading, setRefresh };
+  return { wishes, loading, doRefresh };
 };

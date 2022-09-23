@@ -1,21 +1,21 @@
 export const whishesList = [
   {
     id: 1,
+    name: 'PELOTA',
+    value: 2000,
+    icon: 'futbol',
+  },
+  {
+    id: 2,
     name: 'BICICLETA',
     value: 3000,
     icon: 'bicycle',
   },
   {
-    id: 2,
+    id: 3,
     name: 'AUTO DE JUGUETE',
     value: 1000,
     icon: 'car',
-  },
-  {
-    id: 3,
-    name: 'PELOTA',
-    value: 2000,
-    icon: 'futbol',
   },
   {
     id: 4,
@@ -64,6 +64,4 @@ export const whishesList = [
 export const savings = 10500;
 export const myWallet = 1500;
 export const myWalletMoney = [1000, 200, 100, 50, 20, 10, 5];
-export const mySavingsMoney = [
-  1000, 500, 200, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25,
-];
+export const mySavingsMoney = [1000, 500, 200, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25];

@@ -1,32 +1,22 @@
-import { useEffect, useState } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useState } from 'react';
 
-import { whishesList } from '../../../mockData/deseos';
-
-export const useCarousel = () => {
-  const { setValue } = useFormContext();
-
-  const iconList = whishesList.map((item) => [item.icon, item.name]);
+export const useCarousel = (list = []) => {
   const [step, setStep] = useState(0);
-  const [item, setItem] = useState(iconList[step]);
-
-  const lastStep = iconList.length - 1;
+  const [item, setItem] = useState(list[0]);
+  const lastStep = list.length - 1;
   const firstStep = 0;
 
-  const nextStep = () =>
-    step === lastStep
-      ? (setItem(iconList[firstStep]), setStep(firstStep))
-      : (setItem(iconList[step + 1]), setStep(step + 1));
+  const nextStep = () => {
+    const index = step === lastStep ? firstStep : step + 1;
+    setItem(list[index]);
+    setStep(index);
+  };
 
-  const prevStep = () =>
-    step === firstStep
-      ? (setItem(iconList[lastStep]), setStep(lastStep))
-      : (setItem(iconList[step - 1]), setStep(step - 1));
-
-  useEffect(() => {
-    setValue('icon', item ? item[0] : null);
-    setValue('name', item ? item[1] : 'EJEMPLO');
-  });
+  const prevStep = () => {
+    const index = step === firstStep ? lastStep : step - 1;
+    setItem(list[index]);
+    setStep(index);
+  };
 
   return {
     item,

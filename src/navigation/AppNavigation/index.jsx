@@ -176,9 +176,9 @@ const MyWishesNavigation = () => (
     <MyWishesStack.Screen
       name={SCREEN_NAME.NEW_WISH}
       component={NewWish}
-      options={{
-        title: NAVIGATION_TITLE.NEW_WISH,
-      }}
+      options={({ route }) => ({
+        title: route.params ? NAVIGATION_TITLE.EDIT_WISH : NAVIGATION_TITLE.NEW_WISH,
+      })}
     />
     <MyWishesStack.Screen
       name={SCREEN_NAME.WISHES_FULLFILLED}

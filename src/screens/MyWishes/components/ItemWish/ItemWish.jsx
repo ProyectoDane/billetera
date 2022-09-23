@@ -11,7 +11,7 @@ import { formatNum } from '../../../../utils/functions/formatNum';
 import { toastNotification } from '../../../../utils/functions/toastNotifcation';
 import { AddRemoveContext } from '../../../AddRemove/AddRemoveContext';
 
-const ItemWish = ({ name, value, wishId, testID, icon, done, onDelete }) => {
+const ItemWish = ({ name, value, wishId, testID, icon, done, onChange }) => {
   const [collapse, setCollapse] = useState(false);
   const { totalMoneySavings } = useContext(AddRemoveContext);
 
@@ -42,28 +42,21 @@ const ItemWish = ({ name, value, wishId, testID, icon, done, onDelete }) => {
     });
 
   const handleAchieve = () => {
-    Alert.alert(
-      'ESTAS POR CUMPLIR TU DESEO',
-      ` ACORDATE DE SACAR ${formatNum(value)} DE TUS AHORROS`,
-      [
-        {
-          text: 'CONTINUAR',
-          onPress: async () => {
-            await fulfillWish(wishId);
-            navigation.dispatch(jumpToWishesFullfilled);
-            toastNotification(
-              'DESEO CUMPLIDO!',
-              'success',
-              'success',
-            );
-          },
+    Alert.alert('ESTAS POR CUMPLIR TU DESEO', ` ACORDATE DE SACAR ${formatNum(value)} DE TUS AHORROS`, [
+      {
+        text: 'CONTINUAR',
+        onPress: async () => {
+          await fulfillWish(wishId);
+          onChange();
+          navigation.dispatch(jumpToWishesFullfilled);
+          toastNotification('DESEO CUMPLIDO!', 'success', 'success');
         },
-        {
-          text: 'CANCELAR',
-          style: 'cancel',
-        },
-      ],
-    );
+      },
+      {
+        text: 'CANCELAR',
+        style: 'cancel',
+      },
+    ]);
   };
 
   const handleDelete = () => {
@@ -72,12 +65,8 @@ const ItemWish = ({ name, value, wishId, testID, icon, done, onDelete }) => {
         text: 'CONTINUAR',
         onPress: async () => {
           await deleteWish(wishId);
-          onDelete();
-          toastNotification(
-            'BORRASTE EL DESEO',
-            'success',
-            'success',
-          );
+          onChange();
+          toastNotification('BORRASTE EL DESEO', 'success', 'success');
         },
       },
       {
