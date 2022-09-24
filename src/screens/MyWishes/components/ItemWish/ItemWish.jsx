@@ -77,67 +77,92 @@ const ItemWish = ({ name, value, wishId, testID, icon, done, onChange }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.item}>
-        <View style={styles.iconItem}>
-          <FontAwesome5 name={icon} size={40} color={colors.white} />
-        </View>
-        <View style={styles.dataItem}>
-          <View style={styles.text}>
-            <Text style={styles.title}>{name}</Text>
-            <Text style={styles.valueItem}>VALOR: {formatNum(value)}</Text>
+    <View style={{...styles.container, padding: 10}}>
+      <View style={{...styles.item, flex: 1, padding: 10}}>
+        <View style={styles.itemTopSection}>
+          <View style={{flex: 0.20}}>
+            <View style={styles.iconItem}>
+              <FontAwesome5 name={icon} size={25} color={colors.primary}/>
+            </View>
           </View>
-          <Progress.Bar
-            color={colors.white}
-            unfilledColor={colors.darkCyan}
-            progress={!done ? progress : 1}
-            width={240}
-            height={10}
-            borderWidth={0}
-            borderRadius={10}
-          />
-        </View>
-        <View style={styles.chevron}>
-          <TouchableOpacity
-            testID={testID}
-            onPress={() => setCollapse((prevCollapse) => !prevCollapse)}>
-            <FontAwesome5
-              name={!collapse ? 'chevron-circle-down' : 'chevron-circle-up'}
-              size={24}
-              color={colors.white}
+          <View style={{...styles.dataItem, flex: 1.2, paddingLeft: 25}}>
+            <Progress.Bar
+                color={colors.primary}
+                unfilledColor={colors.primarySoft}
+                progress={!done ? progress : 1}
+                width={null}
+                height={15}
+                borderWidth={0}
+                borderRadius={10}
             />
-          </TouchableOpacity>
         </View>
-      </View>
-      {collapse && (
-        <View style={styles.collapse}>
+        </View>
+
+        <View style={{flexDirection: 'column', flex: 1}}>
+          <View style={styles.itemTextRow}>
+            <Text style={styles.itemLabel}>{name}</Text>
+            <Text style={styles.valueItem}>{formatNum(value)}</Text>
+          </View>
           {!done ? (
-            <>
-              <Text style={styles.itemDetails}>
-                TENES AHORRADO: {formatNum(totalMoneySavings)}
-              </Text>
-              <Text style={styles.itemDetails}>
-                TE FALTAN: {formatNum(missingMoney)}
-              </Text>
-            </>
-          ) : null}
+          <>
+            <View style={styles.itemTextRow}>
+              <Text style={styles.itemLabel}>TENES AHORRADO:</Text>
+              <Text style={styles.valueItem}>{formatNum(totalMoneySavings)}</Text>
+            </View>
+            <View style={styles.itemTextRow}>
+              <Text style={styles.itemLabel}>TE FALTAN:</Text>
+              <Text style={{...styles.valueItem, ...styles.valueItemSpecial}}>{formatNum(missingMoney)}</Text>
+            </View>
+          </>
+            ) : null}
+        </View>
+        <View>
           <View style={styles.actionsContainer}>
             <TouchableOpacity
-              disabled={done === 0 ? false : true}
-              onPress={handleAchieve}>
-              <Text style={[styles.actionBtn, textColor]}>CUMPLIR</Text>
+                disabled={done === 0 ? false : true}
+                onPress={handleAchieve}>
+              <Text style={{...styles.actionBtn, ...textColor}}>CUMPLIR</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              disabled={done === 1 ? true : false}
-              onPress={handleEdit}>
-              <Text style={[styles.actionBtn, editTextColor]}>EDITAR</Text>
+                disabled={done === 1 ? true : false}
+                onPress={handleEdit}>
+              <Text style={{...styles.actionBtn, ...editTextColor}}>EDITAR</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleDelete}>
-              <Text style={styles.actionBtn}>ELIMINAR</Text>
+              <Text style={{...styles.actionBtn}}>ELIMINAR</Text>
             </TouchableOpacity>
           </View>
         </View>
-      )}
+      </View>
+      {/*{true && (*/}
+      {/*  <View style={styles.collapse}>*/}
+      {/*    {!done ? (*/}
+      {/*      <>*/}
+      {/*        <Text style={styles.itemLabel}>*/}
+      {/*          TENES AHORRADO: {formatNum(totalMoneySavings)}*/}
+      {/*        </Text>*/}
+      {/*        <Text style={styles.itemLabel}>*/}
+      {/*          TE FALTAN: {formatNum(missingMoney)}*/}
+      {/*        </Text>*/}
+      {/*      </>*/}
+      {/*    ) : null}*/}
+      {/*    <View style={styles.actionsContainer}>*/}
+      {/*      <TouchableOpacity*/}
+      {/*        disabled={done === 0 ? false : true}*/}
+      {/*        onPress={handleAchieve}>*/}
+      {/*        <Text style={[styles.actionBtn, textColor]}>CUMPLIR</Text>*/}
+      {/*      </TouchableOpacity>*/}
+      {/*      <TouchableOpacity*/}
+      {/*        disabled={done === 1 ? true : false}*/}
+      {/*        onPress={handleEdit}>*/}
+      {/*        <Text style={[styles.actionBtn, editTextColor]}>EDITAR</Text>*/}
+      {/*      </TouchableOpacity>*/}
+      {/*      <TouchableOpacity onPress={handleDelete}>*/}
+      {/*        <Text style={styles.actionBtn}>ELIMINAR</Text>*/}
+      {/*      </TouchableOpacity>*/}
+      {/*    </View>*/}
+      {/*  </View>*/}
+      {/*)}*/}
     </View>
   );
 };

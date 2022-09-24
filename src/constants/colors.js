@@ -1,5 +1,6 @@
 export const colors = {
   primary: '#0093FF',
+  primarySoft: '#c1e9fb',
   secondary: '#ffa600',
   alternative: 'royalblue',
   disable: '#808080',
