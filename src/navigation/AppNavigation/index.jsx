@@ -35,6 +35,14 @@ const InformationStack = createStackNavigator();
 const WishesTopTab = createMaterialTopTabNavigator();
 const CalculatorStack = createStackNavigator();
 
+export const appNavigationScreenOptions = {
+    headerStyle: { backgroundColor: colors.white, elevation: 0 },
+    headerTintColor: colors.newBlack,
+    headerTitleStyle: { fontWeight: 'normal', fontSize: 14},
+    headerTitleAlign: 'center',
+    headerBackTitle: ' '
+}
+
 const HomeNavigation = () => {
   const forFade = ({ current }) => ({
     cardStyle: {
@@ -46,8 +54,7 @@ const HomeNavigation = () => {
       initialRouteName={SCREEN_NAME.HOME}
       detachInactiveScreens={false}
       screenOptions={({ route }) => ({
-        headerTitleStyle: { marginLeft: -15, fontSize: 18 },
-        headerStyle: { backgroundColor: colors.white, elevation: 10 },
+          ...appNavigationScreenOptions,
         headerLeft: ({ canGoBack, onPress }) => {
           if (route.name === SCREEN_NAME.HOME) return <ProfileButton sizeIcon={18} colorIcon={colors.newBlack} />;
           else if (canGoBack) {
@@ -63,8 +70,8 @@ const HomeNavigation = () => {
         name={SCREEN_NAME.HOME}
         component={HomeScreen}
         options={{
-          title: '',
-          cardStyleInterpolator: forFade,
+            // headerTitle: ' ',
+            cardStyleInterpolator: forFade,
         }}
       />
       <HomeStack.Screen
@@ -161,11 +168,7 @@ const HomeNavigation = () => {
 const MyWishesNavigation = () => (
   <MyWishesStack.Navigator
     initialRouteName={SCREEN_NAME.MY_WISHES}
-    screenOptions={{
-      headerStyle: { backgroundColor: colors.menu, elevation: 0 },
-      headerTintColor: colors.white,
-      headerTitleAlign: 'center',
-    }}>
+    screenOptions={{...appNavigationScreenOptions}}>
     <MyWishesStack.Screen
       name={SCREEN_NAME.MY_WISHES}
       component={WishesTab}
@@ -201,11 +204,7 @@ const MoneyTabSavings = ({ navigation }) => <AddRemoveSavings navigation={naviga
 const InformationNavigation = () => (
   <InformationStack.Navigator
     initialRouteName={SCREEN_NAME.INFORMATION}
-    screenOptions={{
-      headerStyle: { backgroundColor: colors.menu, elevation: 0 },
-      headerTintColor: colors.white,
-      headerTitleAlign: 'center',
-    }}>
+    screenOptions={{...appNavigationScreenOptions}}>
     <InformationStack.Screen
       name={SCREEN_NAME.INFORMATION}
       component={Information}
@@ -254,11 +253,7 @@ const InformationNavigation = () => (
 const CalculatorNavigation = () => (
   <CalculatorStack.Navigator
     initialRouteName={SCREEN_NAME.CALCULATOR}
-    screenOptions={{
-      headerStyle: { backgroundColor: colors.menu, elevation: 0 },
-      headerTintColor: colors.white,
-      headerTitleAlign: 'center',
-    }}>
+    screenOptions={{...appNavigationScreenOptions}}>
     <CalculatorStack.Screen
       name={SCREEN_NAME.CALCULATOR}
       component={Calculator}
@@ -271,10 +266,7 @@ const CalculatorNavigation = () => (
 
 const WishesTab = () => (
   <WishesTopTab.Navigator
-    screenOptions={{
-      tabBarLabelStyle: { fontSize: 14, fontWeight: 'bold' },
-      tabBarStyle: { backgroundColor: '#e9e9e9' },
-    }}>
+      screenOptions={{...appNavigationScreenOptions}}>
     <WishesTopTab.Screen name={NAVIGATION_TITLE.WISHES} component={MyWishes} />
     <WishesTopTab.Screen name={NAVIGATION_TITLE.WISHES_FULLFILLED} component={WishesFulfilled} />
   </WishesTopTab.Navigator>

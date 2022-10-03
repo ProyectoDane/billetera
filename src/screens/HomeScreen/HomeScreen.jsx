@@ -22,6 +22,7 @@ import CardText from '../../components/Card/CardText';
 import Amount from '../../components/Amount/Amount';
 import CardActions from '../../components/Card/CardActions';
 import CardContent from '../../components/Card/CardContent';
+import {appNavigationScreenOptions} from "../../navigation/AppNavigation";
 
 const HomeScreen = ({ navigation }) => {
   const { totalMoneyWallet, totalMoneySavings, currentUser, hasPurchase } = useContext(AddRemoveContext);
@@ -44,12 +45,12 @@ const HomeScreen = ({ navigation }) => {
     if (name)
       navigation.setOptions({
         headerTitle: () => (
-          <Text style={{ textTransform: 'uppercase', color: colors.newBlack }}>
+          <Text style={{ textTransform: 'uppercase'}}>
             HOLA, <Text style={{ fontWeight: 'bold' }}>{name}</Text>
           </Text>
         ),
       });
-    else navigation.setOptions({ headerTitle: 'INICIO', headerTitleStyle: { fontSize: 14, color: colors.newBlack } });
+    else navigation.setOptions({...appNavigationScreenOptions, headerTitle: 'INICIO'});
   }, [currentUser]);
 
   const marginTop = { marginTop: hasPurchase ? '12%' : '6%' };
