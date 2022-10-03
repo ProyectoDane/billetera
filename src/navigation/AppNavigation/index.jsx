@@ -106,14 +106,14 @@ const HomeNavigation = () => {
         name={SCREEN_NAME.ADD_REMOVE}
         component={MoneyTab}
         options={{
-          headerTitle: () => <NavTitle title={NAVIGATION_TITLE.ADD_REMOVE} iconName={'wallet'} />,
+          headerTitle: () => <NavTitle title={NAVIGATION_TITLE.ADD_REMOVE_WALLET} iconName={'wallet'} />,
         }}
       />
       <HomeStack.Screen
         name={SCREEN_NAME.ADD_REMOVE_SAVINGS}
         component={MoneyTabSavings}
         options={{
-          headerTitle: () => <NavTitle title={NAVIGATION_TITLE.ADD_REMOVE} iconName={'piggy-bank'} />,
+          headerTitle: () => <NavTitle title={NAVIGATION_TITLE.ADD_REMOVE_SAVINGS} iconName={'piggy-bank'} />,
         }}
       />
       <HomeStack.Screen
