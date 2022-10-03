@@ -78,7 +78,7 @@ const HomeNavigation = () => {
         name={SCREEN_NAME.MY_SAVINGS}
         component={MySavings}
         options={{
-          headerTitle: NAVIGATION_TITLE.MY_SAVINGS,
+          title: NAVIGATION_TITLE.MY_SAVINGS,
         }}
       />
       <HomeStack.Screen
@@ -99,7 +99,7 @@ const HomeNavigation = () => {
         name={SCREEN_NAME.ADD_REMOVE}
         component={MoneyTab}
         options={{
-          headerTitle: NAVIGATION_TITLE.ADD_REMOVE,
+          headerTitle: () => <NavTitle title={NAVIGATION_TITLE.ADD_REMOVE} iconName={'wallet'} />,
         }}
       />
       <HomeStack.Screen

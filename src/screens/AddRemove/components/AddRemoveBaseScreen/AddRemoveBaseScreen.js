@@ -1,20 +1,12 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { ScrollView, Alert, View } from 'react-native';
+import { Alert, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
+import { TabBar, TabView } from 'react-native-tab-view';
 import AddRemoveMoney from '../AddRemoveMoney';
+import { formatNum } from '../../../../utils/functions/formatNum';
 import SingleButton from '../../../../components/SingleButton';
-import { colors, SCREEN_NAME } from '../../../../constants';
-import Layout from '../../../../components/Layout';
-import Card from '../../../../components/Card/Card';
-import CardSection from '../../../../components/Card/CardSection';
-import SvgWallet from '../../../HomeScreen/SvgWallet';
-import CardText from '../../../../components/Card/CardText';
-import Amount from '../../../../components/Amount/Amount';
-import SvgPiggyBank from '../../../HomeScreen/SvgPiggyBank';
-import CardCollapse from '../../../../components/Card/CardCollapse';
-import SvgBills from '../../../MyWallet/SvgBills';
-import { totalize, withQuantity } from '../../../../utils/functions/common';
-import { styles } from './styles';
+import { colors } from '../../../../constants';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 export default function AddRemoveBaseScreen({
   navigation,
@@ -30,6 +22,44 @@ export default function AddRemoveBaseScreen({
   handleSave,
 }) {
   const [isLoading, setIsLoading] = useState(false);
+
+  const renderScene = ({ route }) => {
+    switch (route.key) {
+      case 'first':
+        return (
+          <AddRemoveMoney
+            initialMoney={initialBillsMoneyWallet}
+            actualMoney={actualBills}
+            setActualMoney={setActualBills}
+            actualMoneyWallet={actualMoneyWallet}
+            setActualMoneyWallet={setActualMoneyWallet}
+            totalMoneyWallet={totalMoneyWallet}
+          />
+        );
+      case 'second':
+        return (
+          <AddRemoveMoney
+            initialMoney={initialCoinsMoneyWallet}
+            actualMoney={actualCoins}
+            setActualMoney={setActualCoins}
+            actualMoneyWallet={actualMoneyWallet}
+            setActualMoneyWallet={setActualMoneyWallet}
+            totalMoneyWallet={totalMoneyWallet}
+          />
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  const layout = useWindowDimensions();
+
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: 'first', title: 'BILLETES' },
+    { key: 'second', title: 'MONEDAS' },
+  ]);
 
   const [hasUnsavedChanges, setHasUnsavedChanges] = React.useState(false);
 
@@ -59,7 +89,14 @@ export default function AddRemoveBaseScreen({
         // Prompt the user before leaving the screen
         Alert.alert(
           'Discard changes?',
-          'You have unsaved changes. Are you sure to discard them and leave the screen?',
+          'You have unsaved changes. Are you sure to discard them and leave the screen? ' +
+            (totalMoneyWallet - actualMoneyWallet) +
+            ' //' +
+            totalMoneyWallet +
+            ' // ' +
+            actualMoneyWallet +
+            ' //' +
+            hasUnsavedChanges,
           [
             { text: "Don't leave", style: 'cancel', onPress: () => {} },
             {
@@ -75,105 +112,75 @@ export default function AddRemoveBaseScreen({
     [navigation, hasUnsavedChanges],
   );
 
-  const bills = withQuantity(initialBillsMoneyWallet);
-  const coins = withQuantity(initialCoinsMoneyWallet);
-  const totalBills = totalize(bills);
-  const totalCoins = totalize(coins);
-  const flexrow = { flex: 1, flexDirection: 'row', alignItems: 'center' };
-  const svgicon = { width: 58, aspectRatio: 1 / 1, marginRight: 12 };
+  const getTabBarIcon = (props) => {
+    const { route } = props;
+    if (route.key === 'first') {
+      return <FontAwesome5 name="money-bill-wave" size={20} color={'white'} />;
+    } else {
+      return <FontAwesome5 name="coins" size={20} color={'white'} />;
+    }
+  };
+
+  const styles = StyleSheet.create({
+    scene: {
+      flex: 1,
+    },
+    tabLabel: {},
+    tabStyle: {
+      flex: 1,
+      flexDirection: 'row',
+    },
+  });
+
   return (
-    <Layout>
-      <ScrollView contentContainerStyle={styles.cardGroup}>
-        <View style={styles.container}>
-          <Card containerStyle={{ flex: 1 }}>
-            <CardSection>
-              <View style={flexrow}>
-                <SvgWallet style={svgicon} />
-                <CardText>total billetera</CardText>
-              </View>
-              <Amount>{totalMoneyWallet}</Amount>
-            </CardSection>
-          </Card>
-        </View>
-        <View style={[styles.container, { marginTop: -5 }]}>
-          <Card expandable>
-            <CardSection>
-              <View style={flexrow}>
-                <SvgPiggyBank style={svgicon} />
-                <CardText>Billetes</CardText>
-              </View>
-              <Amount>{totalBills}</Amount>
-            </CardSection>
-            <CardCollapse>
-              <View style={{ backgroundColor: '#fff' }}>
-                <AddRemoveMoney
-                  initialMoney={initialBillsMoneyWallet}
-                  actualMoney={actualBills}
-                  setActualMoney={setActualBills}
-                  actualMoneyWallet={actualMoneyWallet}
-                  setActualMoneyWallet={setActualMoneyWallet}
-                  totalMoneyWallet={totalMoneyWallet}
-                />
-              </View>
-            </CardCollapse>
-          </Card>
-        </View>
-        <View style={[styles.container, { marginTop: -5 }]}>
-          <Card expandable>
-            <CardSection>
-              <View style={flexrow}>
-                <SvgBills style={svgicon} />
-                <CardText>Monedas</CardText>
-              </View>
-              <Amount>{totalCoins}</Amount>
-            </CardSection>
-            <CardCollapse>
-              <View style={{ backgroundColor: '#fff' }}>
-                <AddRemoveMoney
-                  initialMoney={initialCoinsMoneyWallet}
-                  actualMoney={actualCoins}
-                  setActualMoney={setActualCoins}
-                  actualMoneyWallet={actualMoneyWallet}
-                  setActualMoneyWallet={setActualMoneyWallet}
-                  totalMoneyWallet={totalMoneyWallet}
-                />
-              </View>
-            </CardCollapse>
-          </Card>
-        </View>
-      </ScrollView>
-      <View>
+    <View style={{ flex: 1 }}>
+      <View
+        style={{
+          margin: 5,
+          flex: 0.1,
+          alignItems: 'center',
+          flexDirection: 'row',
+          justifyContent: 'center',
+        }}>
         <View
           style={{
-            bottom: 0,
-            left: 0,
-            right: 0,
-            backgroundColor: '#FFF',
+            backgroundColor: 'white',
+            padding: 5,
             borderRadius: 10,
-            elevation: 8,
           }}>
-          <SingleButton
-            label="GUARDAR"
-            isLoading={isLoading}
-            disabled={true}
-            onPress={innerHandleSave}
-            style={{ ...styles.container, width: '90%', height: 50 }}
-          />
-          <SingleButton
-            label="CANCELAR"
-            onPress={() => navigation.navigate(SCREEN_NAME.HOME)}
-            style={{
-              ...styles.container,
-              backgroundColor: colors.white,
-              borderColor: colors.primary,
-              borderWidth: 2,
-              width: '90%',
-              height: 50,
-            }}
-            textStyle={{ color: colors.primary }}
-          />
+          <Text style={{ fontSize: 30 }}>Total {formatNum(actualMoneyWallet)}</Text>
         </View>
       </View>
-    </Layout>
+      <TabView
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={{ width: layout.width }}
+        renderTabBar={(props) => (
+          <TabBar
+            {...props}
+            indicatorStyle={{ backgroundColor: colors.secondary, height: 5 }}
+            renderIcon={(props) => getTabBarIcon(props)}
+            tabStyle={styles.tabStyle}
+            labelStyle={styles.labelStyle}
+          />
+        )}
+      />
+      <View
+        style={{
+          paddingVertical: 0,
+          //  backgroundColor: colors.primary
+        }}>
+        <SingleButton
+          icon="money-bill-wave"
+          sizeIcon={22}
+          label="GUARDAR"
+          isLoading={isLoading}
+          disabled={isLoading}
+          onPress={innerHandleSave}
+          style={{ ...styles.container, width: '100%', height: 50 }}
+        />
+      </View>
+    </View>
   );
 }

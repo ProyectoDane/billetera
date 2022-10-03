@@ -5,19 +5,40 @@ import Spinner from '../Spinner/Spinner';
 
 import { colors } from '../../constants';
 import { styles } from './styles';
-import { FontAwesome5 } from '@expo/vector-icons';
+import {FontAwesome5} from "@expo/vector-icons";
 
-const SingleButton = ({ style, icon, label, sizeIcon, onPress, disabled, isLoading, textStyle }) => {
+const SingleButton = ({
+  style,
+  icon,
+  label,
+  sizeIcon,
+  onPress,
+  disabled,
+  isLoading,
+}) => {
   return (
-    <TouchableOpacity style={{ ...styles.baseBtn, ...style }} onPress={onPress} disabled={disabled}>
+    <TouchableOpacity
+      style={{ ...styles.baseBtn, ...style }}
+      onPress={onPress}
+      disabled={disabled}>
       {isLoading ? (
         <Spinner color={colors.white} size={26} />
       ) : (
-        <View style={{ flex: 1, flexDirection: 'row', alignContent: 'center' }}>
-          <View style={styles.textContainer}>
-            {icon && <FontAwesome5 style={styles.icon} name={icon} size={sizeIcon} color={colors.white} />}
-            {label ? <Text style={{ ...styles.text, ...textStyle }}>{label}</Text> : null}
-          </View>
+        <View style={{flex: 1,
+          flexDirection: "row",
+          alignContent: "center"}}
+        >
+            <View style={styles.textContainer}>
+          <FontAwesome5
+            style={styles.icon}
+            name={icon}
+            size={sizeIcon}
+            color={colors.white}
+          />
+          {label? (
+              <Text style={styles.text}>{label}</Text>
+          ):null}
+            </View>
         </View>
       )}
     </TouchableOpacity>
