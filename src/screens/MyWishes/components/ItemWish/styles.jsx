@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import { colors } from '../../../../constants';
+import {shadow} from "../../../../constants/styles";
 
 export const styles = StyleSheet.create({
   banner: {
@@ -40,11 +41,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
     borderRadius: 10,
-    elevation: 5,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.5,
-    shadowRadius: 2,
+    ...shadow
   },
   iconItem: {
     //flex: 1,

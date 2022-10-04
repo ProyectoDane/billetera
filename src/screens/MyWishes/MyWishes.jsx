@@ -17,7 +17,7 @@ const MyWishes = ({ navigation }) => {
     <Layout>
         <View style={{...styles.myWishesContainer}}>
             <View style={{...styles.wishTopTextLegend}}>
-                <Text>
+                <Text style={{textAlign: "center"}}>
                     PARA CALCULAR EL SALDO DE CADA DESEO SE CONSIDERA EL TOTAL DE <Text style={{ fontWeight: 'bold' }}>MIS AHORROS</Text>
                 </Text>
             </View>

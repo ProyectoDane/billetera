@@ -13,10 +13,11 @@ export const styles = StyleSheet.create({
   icon: {
     alignItems: 'center',
     justifyContent: 'center',
+    marginHorizontal: 40,
     borderRadius: 50,
-    height: 100,
-    width: 100,
-    backgroundColor: colors.darkBlue,
+    height: 80,
+    width: 80,
+    backgroundColor: colors.primarySoft,
   },
   button: {
     padding: 15,

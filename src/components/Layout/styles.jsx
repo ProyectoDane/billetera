@@ -4,6 +4,7 @@ import { colors } from '../../constants';
 
 export const styles = StyleSheet.create({
   container: {
+    // backgroundColor: "green",
     flex: 10,
   },
   text: {

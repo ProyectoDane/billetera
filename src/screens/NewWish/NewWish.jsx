@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { Text, View, ScrollView } from 'react-native';
-import { useForm, FormProvider } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import React, {useEffect, useState} from 'react';
+import {Keyboard, Text, TouchableWithoutFeedback, View} from 'react-native';
+import {FormProvider, useForm} from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup';
 
 import InputText from '../../components/InputText';
 import Layout from '../../components/Layout';
 import SingleButton from '../../components/SingleButton';
 import IconCarousel from '../../components/IconCarousel';
 
-import { styles } from './styles';
-import { WishSchema } from '../../validations/FormSchemas';
-import { getWishById, insertWish, updateWish } from '../../dataAccess/Wish';
-import { Wish } from '../../models/Wish';
-import { SCREEN_NAME } from '../../constants';
-import { toastNotification } from '../../utils/functions/toastNotifcation';
-import { useCarousel } from '../../components/IconCarousel/hooks/useCarousel';
-import { whishesList } from '../../mockData/deseos';
+import {styles} from './styles';
+import {WishSchema} from '../../validations/FormSchemas';
+import {getWishById, insertWish, updateWish} from '../../dataAccess/Wish';
+import {Wish} from '../../models/Wish';
+import {colors, SCREEN_NAME} from '../../constants';
+import {toastNotification} from '../../utils/functions/toastNotifcation';
+import {useCarousel} from '../../components/IconCarousel/hooks/useCarousel';
+import {whishesList} from '../../mockData/deseos';
 
 const icons = whishesList.map(({ icon, name }) => ({ icon, name }));
 
@@ -69,31 +69,56 @@ const NuevoDeseo = ({ navigation, route }) => {
 
   return (
     <Layout>
-      <ScrollView>
-        <Text style={styles.title}>AGREGAR ICONO</Text>
-        <FormProvider {...methods}>
-          <View style={styles.form}>
-            <IconCarousel icon={item.icon} onPrevStep={prevStep} onNextStep={nextStep} />
-            <InputText name="name" label="NOMBRE" placeholder="INGRESE EL NOMBRE DEL DESEO" required />
-            <InputText
-              name="value"
-              label="VALOR"
-              keyboardType="numeric"
-              placeholder="INGRESE EL VALOR DEL DESEO"
-              required
-            />
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={{...styles.newWishContainer}}>
+        <View style={{
+          // backgroundColor: "red",
+          flexBasis: 400,
+          flexGrow: 1,
+        }}>
+          <View style={styles.card}>
+            <Text style={styles.title}>ELEGIR ICONO</Text>
+            <FormProvider {...methods}>
+              <View style={styles.form}>
+                <IconCarousel icon={item.icon} onPrevStep={prevStep} onNextStep={nextStep} />
+                <InputText name="name" label="NOMBRE" placeholder="INGRESE EL NOMBRE DEL DESEO" required />
+                <InputText
+                  name="value"
+                  label="VALOR"
+                  keyboardType={"decimal-pad" }
+                  placeholder="INGRESE EL VALOR DEL DESEO"
+                  required
+                />
+              </View>
+            </FormProvider>
           </View>
-          <SingleButton
-            icon="magic"
-            sizeIcon={22}
-            style={{ marginTop: 20 }}
-            label={route.params === undefined ? 'CREAR DESEO' : 'EDITAR DESEO'}
-            isLoading={isLoading}
-            disabled={isLoading}
-            onPress={route.params === undefined ? handleSubmit(onSubmitNew) : handleSubmit(onSubmitEdit)}
-          />
-        </FormProvider>
-      </ScrollView>
+        </View>
+        <View style={styles.bottomButtonContainer}>
+          <View>
+              <SingleButton
+                // icon="magic"
+                // sizeIcon={22}
+                style={{  width: "100%", marginBottom: 10 }}
+                label={route.params === undefined ? 'AGREGAR DESEO' : 'EDITAR DESEO'}
+                isLoading={isLoading}
+                disabled={isLoading}
+                onPress={route.params === undefined ? handleSubmit(onSubmitNew) : handleSubmit(onSubmitEdit)}
+              />
+            <SingleButton
+                // icon="magic"
+                // sizeIcon={22}
+                style={{  width: "100%", backgroundColor: colors.white, borderWidth: 2,
+                  borderColor: colors.primary, color: colors.primary }}
+                label={"CANCELAR"}
+                isLoading={isLoading}
+                disabled={isLoading}
+                onPress={navigation.goBack}
+              />
+          </View>
+
+        </View>
+      </View>
+      </TouchableWithoutFeedback>
     </Layout>
   );
 };

@@ -3,11 +3,11 @@ import { StyleSheet } from 'react-native';
 import { colors } from '../../constants';
 
 const shadow2 = {
-  shadowColor: 'rgba(0, 0, 0, 0.5)',
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 2 },
   shadowOpacity: 0.5,
-  elevation: 3,
-  shadowRadius: 3,
-  shadowOffset: { width: 4, height: 4 },
+  shadowRadius: 2,
+  elevation: 2,
 };
 
 export const styles = StyleSheet.create({
@@ -18,11 +18,7 @@ export const styles = StyleSheet.create({
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
     marginBottom: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.5,
-    shadowRadius: 2,
-    elevation: 2,
+    ...shadow2
   },
   headerTitle: {
     paddingLeft: 20,
@@ -45,11 +41,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'column',
     // flexWrap: 'wrap',
     justifyContent: 'flex-start',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.5,
-    shadowRadius: 2,
-    elevation: 2,
+   ...shadow2
   },
   cardContainer: {
     // flex: 0.42,

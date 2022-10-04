@@ -33,10 +33,10 @@ const SingleButton = ({
             style={styles.icon}
             name={icon}
             size={sizeIcon}
-            color={colors.white}
+            color={style.color ? style.color : colors.white}
           />
           {label? (
-              <Text style={styles.text}>{label}</Text>
+              <Text style={{...styles.text, ...(style.color ? {color: style.color} : {})}}>{label}</Text>
           ):null}
             </View>
         </View>
