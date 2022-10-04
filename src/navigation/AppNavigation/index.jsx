@@ -33,7 +33,6 @@ const HomeStack = createStackNavigator();
 const MyWishesStack = createStackNavigator();
 const InformationStack = createStackNavigator();
 const WishesTopTab = createMaterialTopTabNavigator();
-const CalculatorStack = createStackNavigator();
 
 export const appNavigationScreenOptions = {
     headerStyle: { backgroundColor: colors.white, elevation: 0 },
@@ -60,7 +59,7 @@ const HomeNavigation = () => {
           else if (canGoBack) {
             return (
               <TouchableOpacity onPress={onPress} style={{ padding: 15 }}>
-                <SvgChevron style={{ width: 16, height: 16, transform: [{ rotate: '180deg' }] }} />
+                <SvgChevron style={{ width: 16, height: 16, transform: [{ rotate: '180deg' }], marginLeft: 0 }} />
               </TouchableOpacity>
             );
           }
@@ -139,9 +138,9 @@ const HomeNavigation = () => {
       />
       <HomeStack.Screen
         name={SCREEN_NAME.CALCULATOR_NAV}
-        component={CalculatorNavigation}
+        component={Calculator}
         options={{
-          headerShown: false,
+          // headerShown: false,
           title: NAVIGATION_TITLE.CALCULATOR,
         }}
       />
@@ -250,19 +249,6 @@ const InformationNavigation = () => (
   </InformationStack.Navigator>
 );
 
-const CalculatorNavigation = () => (
-  <CalculatorStack.Navigator
-    initialRouteName={SCREEN_NAME.CALCULATOR}
-    screenOptions={{...appNavigationScreenOptions}}>
-    <CalculatorStack.Screen
-      name={SCREEN_NAME.CALCULATOR}
-      component={Calculator}
-      options={{
-        title: NAVIGATION_TITLE.CALCULATOR,
-      }}
-    />
-  </CalculatorStack.Navigator>
-);
 
 const WishesTab = () => (
   <WishesTopTab.Navigator
