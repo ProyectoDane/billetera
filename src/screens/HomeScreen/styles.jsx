@@ -17,8 +17,12 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
-    elevation: 8,
     marginBottom: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 2,
   },
   headerTitle: {
     paddingLeft: 20,
@@ -41,6 +45,11 @@ export const styles = StyleSheet.create({
     flexDirection: 'column',
     // flexWrap: 'wrap',
     justifyContent: 'flex-start',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 2,
   },
   cardContainer: {
     // flex: 0.42,
@@ -48,7 +57,7 @@ export const styles = StyleSheet.create({
     // width: '100%',
   },
   buyBtn: {
-    ...shadow2,
+    // ...shadow2,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 5,
@@ -64,7 +73,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     height: 40,
     backgroundColor: colors.blueText,
-    ...shadow2,
+    // ...shadow2,
   },
   btnText: {
     fontWeight: 'bold',
