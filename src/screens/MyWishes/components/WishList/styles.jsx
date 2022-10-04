@@ -2,7 +2,9 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   list: {
-    paddingBottom: 60,
+    // paddingBottom: 60,
+    flexGrow: 1,
+    flexBasis: 300
   },
   withOutList: {
     alignItems: 'center',

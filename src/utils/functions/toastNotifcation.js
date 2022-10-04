@@ -31,7 +31,7 @@ export const toastNotification = (message, type, icon) => {
                 return "PELIGRO";
             case "info":
             default:
-                return "INFORMACION";
+                return null;
         }
     }
 

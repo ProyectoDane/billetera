@@ -42,14 +42,14 @@ const ItemWish = ({ name, value, wishId, testID, icon, done, onChange }) => {
     });
 
   const handleAchieve = () => {
-    Alert.alert('ESTAS POR CUMPLIR TU DESEO', ` ACORDATE DE SACAR ${formatNum(value)} DE TUS AHORROS`, [
+    Alert.alert('ESTAS POR CUMPLIR TU DESEO', ` ACORDATE DE SACAR ${formatNum(value)} DE "MIS AHORROS"`, [
       {
         text: 'CONTINUAR',
         onPress: async () => {
           await fulfillWish(wishId);
           onChange();
           navigation.dispatch(jumpToWishesFullfilled);
-          toastNotification('DESEO CUMPLIDO!', 'success', 'success');
+          toastNotification('✓ DESEO CUMPLIDO!', null, 'success');
         },
       },
       {
@@ -60,13 +60,13 @@ const ItemWish = ({ name, value, wishId, testID, icon, done, onChange }) => {
   };
 
   const handleDelete = () => {
-    Alert.alert('ADVERTENCIA', 'ESTAS SEGURO QUE QUERES ELIMINAR TU DESEO?', [
+    Alert.alert('', 'ESTAS SEGURO QUE QUERES ELIMINAR TU DESEO?', [
       {
-        text: 'CONTINUAR',
+        text: 'ELIMINAR',
         onPress: async () => {
           await deleteWish(wishId);
           onChange();
-          toastNotification('BORRASTE EL DESEO', 'success', 'success');
+          toastNotification('✓ BORRASTE EL DESEO', null, 'success');
         },
       },
       {
@@ -117,17 +117,20 @@ const ItemWish = ({ name, value, wishId, testID, icon, done, onChange }) => {
             ) : null}
         </View>
         <View>
-          <View style={styles.actionsContainer}>
+          <View style={{...styles.actionsContainer, ...(done? {justifyContent: "flex-end"}:{})}}>
+            { !done? (
             <TouchableOpacity
-                disabled={done === 0 ? false : true}
                 onPress={handleAchieve}>
               <Text style={{...styles.actionBtn, ...textColor}}>CUMPLIR</Text>
-            </TouchableOpacity>
+            </TouchableOpacity>)
+            : null }
+            { !done? (
             <TouchableOpacity
-                disabled={done === 1 ? true : false}
                 onPress={handleEdit}>
               <Text style={{...styles.actionBtn, ...editTextColor}}>EDITAR</Text>
             </TouchableOpacity>
+                )
+            : null }
             <TouchableOpacity onPress={handleDelete}>
               <Text style={{...styles.actionBtn}}>ELIMINAR</Text>
             </TouchableOpacity>

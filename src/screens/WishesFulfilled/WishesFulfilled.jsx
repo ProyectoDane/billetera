@@ -14,15 +14,6 @@ const WishesFulfilled = () => {
 
   return !loading ? (
     <View style={styles.list}>
-      <Text
-        style={{
-          textAlign: 'center',
-          fontWeight: 'bold',
-          fontSize: 16,
-          marginTop: 10,
-        }}>
-        DESEOS CUMPLIDOS
-      </Text>
       {wishesFulfilled.length > 0 ? (
         <FlatList
           data={wishesFulfilled}

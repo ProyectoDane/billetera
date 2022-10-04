@@ -41,7 +41,7 @@ const NuevoDeseo = ({ navigation, route }) => {
       await insertWish(new Wish(name, value, item.icon));
       reset();
       setIsLoading(false);
-      toastNotification('EL DESEO SE CREÓ CORRECTAMENTE!', 'success', 'success');
+      toastNotification('✓ EL DESEO SE CREÓ CORRECTAMENTE!', null, 'success');
       navigation.navigate(SCREEN_NAME.MY_WISHES);
     } catch (error) {
       console.log(error);
@@ -59,7 +59,7 @@ const NuevoDeseo = ({ navigation, route }) => {
       void (await updateWish({ id, icon, name, value }));
       reset();
       setIsLoading(false);
-      toastNotification('EL DESEO SE EDITÓ CORRECTAMENTE!', 'success', 'success');
+      toastNotification('✓ EL DESEO SE EDITÓ CORRECTAMENTE!', null, 'success');
       navigation.navigate(SCREEN_NAME.MY_WISHES);
     } catch (error) {
       console.log(error);
