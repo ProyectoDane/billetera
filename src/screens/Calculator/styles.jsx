@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.gray,
     maxWidth: '100%',
     minHeight: '34%',
-    alignItems: 'flex-end',
+    alignItems: 'center',
     justifyContent: 'flex-end',
   },
   resultText: {
@@ -14,6 +14,8 @@ export const styles = StyleSheet.create({
     color: colors.skyBlue,
     margin: 15,
     fontSize: 50,
+    // alignSelf: "center"
+
   },
   historyText: {
     color: colors.darkGray,

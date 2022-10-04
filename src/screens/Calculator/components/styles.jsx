@@ -4,16 +4,21 @@ import { colors } from '../../../constants';
 
 export const styles = StyleSheet.create({
   button: {
-    borderColor: colors.newBlack,
+    color: colors.red,
+    borderColor: colors.gray,
     alignItems: 'center',
     justifyContent: 'center',
-    minWidth: '24%',
     minHeight: '55%',
-    flex: 2,
     borderWidth: 1,
+    backgroundColor: colors.softGray,
+  },
+  operationButton: {
+    color: colors.white,
+    backgroundColor: colors.primarySoft,
   },
   textButton: {
     color: colors.darkGray,
     fontSize: 28,
+    fontWeight:"bold"
   },
 });

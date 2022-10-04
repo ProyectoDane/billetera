@@ -16,16 +16,11 @@ const CalcBtn = ({
   return (
     <TouchableOpacity
       key={button}
-      style={
-        isNumber
-          ? {
-              ...styles.button,
-              backgroundColor:
-                typeof button === 'number' ? colors.white : colors.softGray,
-              minWidth: '36%',
-            }
-          : { ...styles.button, ...style }
-      }
+      style={{
+          ...styles.button
+          , ...(!isNumber ? {...styles.operationButton} : {})
+          , ...style
+      }}
       onPress={onPress}>
       {arrowBackIcon ? (
         <Ionicons name="arrow-back-outline" size={30} color={colors.darkGray} />
