@@ -31,9 +31,7 @@ export const styles = StyleSheet.create({
     height: 70,
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor: colors.lavenderPurple,//colors.strongCyan,
     borderRadius: 10,
-    elevation: 5,
     marginBottom: 10
   },
   item: {
