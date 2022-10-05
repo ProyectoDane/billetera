@@ -1,15 +1,15 @@
-import React, { useContext, useState } from 'react';
-import { Text, View, TouchableOpacity, Alert } from 'react-native';
-import { useNavigation, TabActions } from '@react-navigation/native';
-import { FontAwesome5 } from '@expo/vector-icons';
+import React, {useContext, useState} from 'react';
+import {Alert, Text, TouchableOpacity, View} from 'react-native';
+import {CommonActions, useNavigation} from '@react-navigation/native';
+import {FontAwesome5} from '@expo/vector-icons';
 import * as Progress from 'react-native-progress/';
 
-import { colors, NAVIGATION_TITLE, SCREEN_NAME } from '../../../../constants';
-import { deleteWish, fulfillWish } from '../../../../dataAccess/Wish';
-import { styles } from './styles';
-import { formatNum } from '../../../../utils/functions/formatNum';
-import { toastNotification } from '../../../../utils/functions/toastNotifcation';
-import { AddRemoveContext } from '../../../AddRemove/AddRemoveContext';
+import {colors, NAVIGATION_TITLE, SCREEN_NAME} from '../../../../constants';
+import {deleteWish, fulfillWish} from '../../../../dataAccess/Wish';
+import {styles} from './styles';
+import {formatNum} from '../../../../utils/functions/formatNum';
+import {toastNotification} from '../../../../utils/functions/toastNotifcation';
+import {AddRemoveContext} from '../../../AddRemove/AddRemoveContext';
 
 const ItemWish = ({ name, value, wishId, testID, icon, done, onChange }) => {
   const [collapse, setCollapse] = useState(false);
@@ -28,9 +28,10 @@ const ItemWish = ({ name, value, wishId, testID, icon, done, onChange }) => {
   };
 
   const navigation = useNavigation();
-  const jumpToWishesFullfilled = TabActions.jumpTo(
-    NAVIGATION_TITLE.WISHES_FULLFILLED,
-  );
+  const jumpToWishesFullfilled = CommonActions.navigate({
+    name: NAVIGATION_TITLE.WISHES_FULLFILLED,
+    params: {},
+  });
 
   const handleEdit = () =>
     navigation.navigate(SCREEN_NAME.NEW_WISH, {

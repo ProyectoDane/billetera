@@ -5,6 +5,7 @@ export const SCREEN_NAME = {
   CALCULATOR: 'Calculator',
   MY_WALLET: 'MyWallet',
   MY_WISHES: 'MyWishes',
+  MY_WISHES_HOME: 'MyWishesHome',
   MY_SAVINGS: 'MySavings',
   PROFILE: 'Profile',
   NEW_WISH: 'NewWish',

@@ -12,7 +12,7 @@ import {styles} from './styles';
 import {WishSchema} from '../../validations/FormSchemas';
 import {getWishById, insertWish, updateWish} from '../../dataAccess/Wish';
 import {Wish} from '../../models/Wish';
-import {colors, SCREEN_NAME} from '../../constants';
+import {colors, NAVIGATION_TITLE, SCREEN_NAME} from '../../constants';
 import {toastNotification} from '../../utils/functions/toastNotifcation';
 import {useCarousel} from '../../components/IconCarousel/hooks/useCarousel';
 import {whishesList} from '../../mockData/deseos';
@@ -42,7 +42,7 @@ const NuevoDeseo = ({ navigation, route }) => {
       reset();
       setIsLoading(false);
       toastNotification('✓ EL DESEO SE CREÓ CORRECTAMENTE!', null, 'success');
-      navigation.navigate(SCREEN_NAME.MY_WISHES);
+      navigation.navigate(NAVIGATION_TITLE.WISHES);
     } catch (error) {
       console.log(error);
       setIsLoading(false);
@@ -60,7 +60,7 @@ const NuevoDeseo = ({ navigation, route }) => {
       reset();
       setIsLoading(false);
       toastNotification('✓ EL DESEO SE EDITÓ CORRECTAMENTE!', null, 'success');
-      navigation.navigate(SCREEN_NAME.MY_WISHES);
+      navigation.navigate(NAVIGATION_TITLE.WISHES);
     } catch (error) {
       console.log(error);
       setIsLoading(false);

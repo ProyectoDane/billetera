@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import {shadow} from "../../constants/styles";
 
 const shadow2 = {
   shadowColor: 'rgba(0, 0, 0, 0.5)',
@@ -15,10 +16,11 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   container: {
-    marginVertical: 10,
+    marginBottom: 10,
     flexDirection: 'row',
     width: '100%',
     minHeight: 100,
+    ...shadow
   },
 
   btnText: {

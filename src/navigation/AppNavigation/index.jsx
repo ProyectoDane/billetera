@@ -10,6 +10,7 @@ import MyWishes from '../../screens/MyWishes';
 import MySavings from '../../screens/MySavings';
 import Profile from '../../screens/Profile';
 import NewWish from '../../screens/NewWish';
+import WishesHome from '../../screens/WishesHome';
 import ProfileButton from '../../components/ProfileButton';
 import Survey from '../../screens/Survey/Survey';
 import About from '../../screens/About/About';
@@ -166,15 +167,27 @@ const HomeNavigation = () => {
 
 const MyWishesNavigation = () => (
   <MyWishesStack.Navigator
-    initialRouteName={SCREEN_NAME.MY_WISHES}
+    initialRouteName={SCREEN_NAME.MY_WISHES_HOME}
     screenOptions={{...appNavigationScreenOptions}}>
-    <MyWishesStack.Screen
-      name={SCREEN_NAME.MY_WISHES}
-      component={WishesTab}
-      options={{
-        title: NAVIGATION_TITLE.MY_WISHES,
-      }}
-    />
+      <MyWishesStack.Screen
+          name={SCREEN_NAME.MY_WISHES_HOME}
+          component={WishesHome}
+          options={{
+              title: NAVIGATION_TITLE.MY_WISHES,
+          }}
+      />
+      <MyWishesStack.Screen
+          name={NAVIGATION_TITLE.WISHES}
+          component={MyWishes}
+          options={{
+              title: NAVIGATION_TITLE.MY_WISHES,
+          }}
+      />
+      <MyWishesStack.Screen name={NAVIGATION_TITLE.WISHES_FULLFILLED}
+                            component={WishesFulfilled}
+                            options={{
+                                title: NAVIGATION_TITLE.WISHES_FULLFILLED,
+                            }}/>
     <MyWishesStack.Screen
       name={SCREEN_NAME.NEW_WISH}
       component={NewWish}
