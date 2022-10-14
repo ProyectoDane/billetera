@@ -35,6 +35,7 @@ const About = () => {
   }
 
   const members = [
+    {"name": "Guido Wagner", "url":"https://www.linkedin.com/in/guiw5/"},
     {"name": "Angles Peña", "url":"https://www.linkedin.com/in/angeles-pe%C3%B1a/"},
     {"name": "Federico Rodriguez", "url":"https://www.linkedin.com/in/rodriguezfederico/"},
     {"name": "Gonzalo Sansone", "url":"https://www.linkedin.com/in/gonzalo-sansone-b440a3196/"},
