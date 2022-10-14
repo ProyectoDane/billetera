@@ -48,7 +48,7 @@ const About = () => {
 
   return (
     <ScrollView style={styles.whiteContainer}>
-      <View style={styles.container}>
+      <View style={{...styles.container, paddingVertical: 20, paddingHorizontal: 5}}>
         {imageGenerator(daneLogo, width / 6, "http://www.proyectodane.org/")}
 
         <TextUppercase bold style={styles.title}>{labels.aboutScreen.dane}</TextUppercase>
