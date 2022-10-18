@@ -10,7 +10,7 @@ const InputText = ({
   label,
   required,
   editable,
-  keyboardType, inputStyle,
+  keyboardType, inputStyle,onSubmitEditing
 }) => {
   return (
     <Controller
@@ -27,6 +27,7 @@ const InputText = ({
               onChangeText={(e) => onChange(e)}
               editable={editable}
               keyboardType={keyboardType}
+              onSubmitEditing={onSubmitEditing}
             />
             {error && <Text style={styles.error}>{error.message}</Text>}
           </View>

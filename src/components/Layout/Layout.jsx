@@ -2,13 +2,13 @@ import React from 'react';
 import {StatusBar, View} from 'react-native';
 
 import {colors} from '../../constants';
-import {styles} from './styles';
+import {styles as layoutStyles} from './styles';
 
-const Layout = ({children}) => {
+const Layout = ({children}, style={}) => {
     return (
         // <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         //SafeAreaView ???
-        <View style={{...styles.container}}
+        <View style={{...layoutStyles.container, ...(style)}}
               edges={['top', 'left', 'right']}>
             <StatusBar barStyle="dark-content"
                        backgroundColor={colors.white}/>

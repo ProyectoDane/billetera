@@ -22,7 +22,7 @@ import CardText from '../../components/Card/CardText';
 import Amount from '../../components/Amount/Amount';
 import CardActions from '../../components/Card/CardActions';
 import CardContent from '../../components/Card/CardContent';
-import {appNavigationScreenOptions} from "../../navigation/AppNavigation";
+import {appNavigationScreenOptions} from "../../constants/navigation";
 
 const HomeScreen = ({ navigation }) => {
   const { totalMoneyWallet, totalMoneySavings, currentUser, hasPurchase } = useContext(AddRemoveContext);

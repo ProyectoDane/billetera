@@ -29,19 +29,12 @@ import WalletManualPayment from '../../screens/AddRemove/WalletManualPayment/Wal
 import SvgChevron from '../../components/CustomButton/SvgChevron';
 import { colors, NAVIGATION_TITLE, SCREEN_NAME } from '../../constants';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import {appNavigationScreenOptions} from "../../constants/navigation";
 
 const HomeStack = createStackNavigator();
 const MyWishesStack = createStackNavigator();
 const InformationStack = createStackNavigator();
 const WishesTopTab = createMaterialTopTabNavigator();
-
-export const appNavigationScreenOptions = {
-    headerStyle: { backgroundColor: colors.white, elevation: 0 },
-    headerTintColor: colors.newBlack,
-    headerTitleStyle: { fontWeight: 'normal', fontSize: 14},
-    headerTitleAlign: 'center',
-    headerBackTitle: ' '
-}
 
 const HomeNavigation = () => {
   const forFade = ({ current }) => ({

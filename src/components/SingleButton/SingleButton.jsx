@@ -16,6 +16,8 @@ const SingleButton = ({
   disabled,
   isLoading,
 }) => {
+
+  style = style || {};
   return (
     <TouchableOpacity
       style={{ ...styles.baseBtn, ...style }}

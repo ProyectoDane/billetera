@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import {colors} from "../../../constants";
+import {shadow} from "../../../constants/styles";
 
 export const styles = StyleSheet.create({
   form: {
@@ -21,15 +22,31 @@ export const styles = StyleSheet.create({
     color: 'black',
     // paddingTop: 25,
   },
-  valueBuy: {
+  resultTextLabel: {
+    flex: 3,
     fontSize: 17,
-    color: 'darkblue',
-    paddingTop: 15,
+    color: colors.newBlack,
+    textAlign: 'left',
+  },
+  resultTextAmount: {
+    flex: 1,
+    fontSize: 17,
+    color: colors.newBlack,
+    fontWeight: 'bold',
+    textAlign: 'right',
+  },
+  resultTextAmountVuelto: {
+    flex: 1,
+    fontSize: 17,
+    color: colors.orange,
+    fontWeight: 'bold',
     textAlign: 'right',
   },
   optBuyContainer: {
     flexDirection: 'column',
     justifyContent: 'space-evenly',
+    backgroundColor: colors.white,
+    ...shadow
   },
   optBuy: {
     fontSize: 17,
@@ -39,14 +56,14 @@ export const styles = StyleSheet.create({
   itemOptBuy: {
     flex: 1,
     flexDirection: 'row',
-    marginBottom: 5,
-    borderBottomColor: 'lightgray',
-    borderBottomWidth: 1,
     paddingBottom: 3,
+    marginBottom: 10,
   },
 
   text: {
     fontSize: 17,
+    alignSelf: 'center',
+    color: colors.newBlack
   },
   vuelto: {
     marginTop: 5,
@@ -76,6 +93,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   buyInputText: {
+    borderRadius: 10,
     borderTopRightRadius: 0,
     borderBottomRightRadius: 0,
     borderColor: colors.primary
