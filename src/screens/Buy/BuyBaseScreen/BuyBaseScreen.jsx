@@ -42,8 +42,7 @@ const BuyBaseScreen = ({
 
     const schema = BalanceSchema(totalMoneyWallet);
     const methods = useForm({
-        defaultValues: {amount: ''},
-        resolver: yupResolver(schema),
+        defaultValues: {amount: ''}, resolver: yupResolver(schema),
     });
 
     const {handleSubmit, reset} = methods;
@@ -139,17 +138,7 @@ const BuyBaseScreen = ({
             setPurchase(true);
             navigation.navigate(SCREEN_NAME.HOME);
 
-            vuelto
-                ? toastNotification(
-                    `ACORDATE DE CARGAR TU VUELTO DE ${vuelto} EN LA BILLETERA !`,
-                    'info',
-                    'info',
-                )
-                : toastNotification(
-                    'LA COMPRA SE REALIZÓ CORRECTAMENTE!',
-                    'success',
-                    'success',
-                );
+            vuelto ? toastNotification(`ACORDATE DE CARGAR TU VUELTO DE ${vuelto} EN LA BILLETERA !`, 'info', 'info',) : toastNotification('LA COMPRA SE REALIZÓ CORRECTAMENTE!', 'success', 'success',);
 
             setIsLoading(false);
         } catch (error) {
@@ -158,30 +147,25 @@ const BuyBaseScreen = ({
         }
     };
 
-    return (
-        <Layout style={{}}>
+    return (<Layout style={{}}>
 
 
             <View container style={{
-                flex: 1,
-                // flexBasis: 50,
+                flex: 1, // flexBasis: 50,
                 // flexGrow: 0,
                 // flexShrink: 1,
-                flexDirection: 'column',
-                // alignItems: 'flex-start',
+                flexDirection: 'column', // alignItems: 'flex-start',
 
             }}>
                 <View style={{}}>
                     <FormProvider {...methods}>
                         <View style={{
-                            marginBottom: 10,
-                            paddingHorizontal: 20,
+                            marginBottom: 10, paddingHorizontal: 20,
                         }}>
                             <View
                                 style={{flexDirection: 'row', marginTop: 10}}>
                                 <Text style={{
-                                    ...styles.resultTextLabel,
-                                    fontWeight: 'bold'
+                                    ...styles.resultTextLabel, fontWeight: 'bold'
                                 }}>
                                     TENES:
                                 </Text>
@@ -193,8 +177,7 @@ const BuyBaseScreen = ({
                         <View style={{
                             // flex: 1,
                             flexDirection: 'row',
-                            alignItems: 'flex-start',
-                            ...styles.form,
+                            alignItems: 'flex-start', ...styles.form,
                             paddingHorizontal: 10,
                             marginBottom: 10,
                         }}>
@@ -226,37 +209,25 @@ const BuyBaseScreen = ({
                         </View>
                     </FormProvider>
                 </View>
-                {valueBuy ? (
-                    <View style={{
-                        flex: 1,
-                        flexDirection: 'column',
-                        justifyContent: 'flex-start',
-                        flexGrow: 1,
+                {valueBuy ? (<View style={{
+                        flex: 1, flexDirection: 'column', justifyContent: 'flex-start', flexGrow: 1,
                     }}>
                         <View style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            flex: 10,
-                            justifyContent: "flex-start",
+                            display: "flex", flexDirection: "column", flex: 10, justifyContent: "flex-start",
                         }}>
 
                             <View style={{
-                                flexGrow: 1,
-                                flexShrink: 0,
-                                flex: 1,
-                                padding: 10,
+                                flexGrow: 1, flexShrink: 0, flex: 1, padding: 10,
                             }}>
                                 <View
                                     style={{
                                         borderRadius: 10,
-                                        padding: 10,
-                                        ...styles.optBuyContainer,
+                                        padding: 10, ...styles.optBuyContainer,
                                         borderWidth: 1,
                                         borderColor: 'lightgray',
                                     }}>
                                     <View style={{
-                                        flexDirection: 'row',
-                                        marginTop: 10
+                                        flexDirection: 'row', marginTop: 10
                                     }}>
                                         <Text style={styles.resultTextLabel}>
                                             VALOR DE LA COMPRA:
@@ -266,8 +237,7 @@ const BuyBaseScreen = ({
                                         </Text>
                                     </View>
                                     <View style={{
-                                        flexDirection: 'row',
-                                        marginBottom: 10
+                                        flexDirection: 'row', marginBottom: 10
                                     }}>
                                         <Text style={styles.resultTextLabel}>
                                             FORMA DE PAGO SUGERIDA:
@@ -276,12 +246,10 @@ const BuyBaseScreen = ({
                                             {formatNum(cantidadPagar)}
                                         </Text>
                                     </View>
-                                    {optionBill ? (
-                                        <ScrollView persistentScrollbar={true}>
+                                    {optionBill ? (<ScrollView persistentScrollbar={true}>
                                             <View style={{marginRight: 10}}>
-                                                {optionBill.map((item, index) => (
-                                                    <View key={index}
-                                                          style={styles.itemOptBuy}>
+                                                {optionBill.map((item, index) => (<View key={index}
+                                                                                        style={styles.itemOptBuy}>
                                                         <Text
                                                             style={{flex: 5, ...styles.text}}>
                                                             {item}
@@ -290,25 +258,18 @@ const BuyBaseScreen = ({
                                                             key={'money_' + index}
                                                             {...optPay[index]}
                                                             style={{
-                                                                flex: 3,
-                                                                width: null,
-                                                                height: 60,
-                                                                resizeMode: 'contain',
+                                                                flex: 3, width: null, height: 60, resizeMode: 'contain',
                                                             }}
                                                         />
-                                                    </View>
-                                                ))}
+                                                    </View>))}
                                             </View>
-                                        </ScrollView>
-                                    ) : null}
-                                    {vuelto ? (
-                                        <View
+                                        </ScrollView>) : null}
+                                    {vuelto ? (<View
                                             style={{
-                                                flexDirection: 'row',
-                                                marginTop: 10
+                                                flexDirection: 'row', marginTop: 10
                                             }}>
                                             <Text
-                                                style={styles.resultTextLabel}>
+                                                style={{...styles.resultTextLabel, fontWeight: "bold"}}>
                                                 TU VUELTO:
                                             </Text>
                                             <Text
@@ -327,8 +288,7 @@ const BuyBaseScreen = ({
                                         // icon="magic"
                                         // sizeIcon={22}
                                         style={{
-                                            width: "100%",
-                                            marginBottom: 10
+                                            width: "100%", marginBottom: 10
                                         }}
                                         label="USAR SUGERIDO"
                                         isLoading={isLoading}
@@ -354,13 +314,11 @@ const BuyBaseScreen = ({
 
                             </View>
                         </View>
-                    </View>
-                ) : null}
+                    </View>) : null}
 
 
             </View>
-        </Layout>
-    );
+        </Layout>);
 };
 
 export default BuyBaseScreen;

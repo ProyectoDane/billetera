@@ -66,7 +66,7 @@ const HomeScreen = ({ navigation }) => {
             <View style={{ flex: 1, flexDirection: 'row' }}>
               <View style={{ flex: 0.6, marginRight: 10 }}>
                 <View style={{ flex: 1 }}>
-                  <Text style={styles.headerTitle}>¿COMOPAGO?</Text>
+                  <Text style={styles.headerTitle}>¿COMO PAGO?</Text>
                   <Text style={[styles.headerSubtitle, marginTop]}>
                     UNA MANERA FÁCIL DE <Text style={{ fontWeight: 'bold' }}>APRENDER A USAR TU DINERO</Text>
                   </Text>
