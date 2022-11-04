@@ -4,7 +4,7 @@ import { Text, View, TouchableWithoutFeedback as TouchableWithNativeFeedback, To
 import { AddRemoveContext } from '../AddRemove/AddRemoveContext';
 import Layout from '../../components/Layout';
 
-import { colors, SCREEN_NAME } from '../../constants';
+import {colors, SCREEN_NAME, TABS_NAME} from '../../constants';
 import { styles } from './styles';
 import { surveyDone } from '../../dataAccess/User';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -29,7 +29,7 @@ const HomeScreen = ({ navigation }) => {
 
   useEffect(() => {
     const isDone = async () => {
-      const done = await surveyDone();
+      const done = await surveyDone(currentUser.id);
       if (!done) {
         setTimeout(() => {
           navigation.navigate(SCREEN_NAME.INFORMATION_NAV, { screen: SCREEN_NAME.SURVEY, firstTime: true });
@@ -51,7 +51,7 @@ const HomeScreen = ({ navigation }) => {
         ),
       });
     else navigation.setOptions({...appNavigationScreenOptions, headerTitle: 'INICIO'});
-  }, [currentUser]);
+  }, [currentUser.id]);
 
   const marginTop = { marginTop: hasPurchase ? '12%' : '6%' };
   const flexrow = { flex: 1, flexDirection: 'row', alignItems: 'center' };

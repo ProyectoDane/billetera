@@ -71,7 +71,7 @@ export default function SavingsManualPayment({ navigation }) {
   const handleSave = async () => {
     setIsLoading(true);
 
-    await innerSaveManualPaymentSavings(
+    await innerSaveManualPaymentSavings( context.currentUser.id,
       initialCoinsMoneySavings,
       actualCoinsSavings,
       initialBillsMoneySavings,

@@ -1,19 +1,19 @@
-import React, { useContext, useEffect } from 'react';
-import { Text, View } from 'react-native';
+import React, {useContext, useEffect} from 'react';
+import {Text, View} from 'react-native';
 
-import { AddRemoveContext } from '../AddRemove/AddRemoveContext';
+import {AddRemoveContext} from '../AddRemove/AddRemoveContext';
 import Layout from '../../components/Layout';
 
-import { SCREEN_NAME, TABS_NAME } from '../../constants';
-import { styles } from './styles';
-import getMoney from '../../utils/functions/loadMoneyToContext';
-import { surveyDone } from '../../dataAccess/User';
+import {SCREEN_NAME, TABS_NAME} from '../../constants';
+import {styles} from './styles';
+import {surveyDone} from '../../dataAccess/User';
+import {changeCurrentUserAndReload} from "../../utils/functions/loadUserToContext";
 
 const LoadingScreen = ({ navigation }) => {
   const context = useContext(AddRemoveContext);
 
   useEffect(() => {
-    console.log('SOMETHING HAPPENS');
+    // console.log('SOMETHING HAPPENS');
     const isDone = async () => {
       const done = await surveyDone();
       if (!done) {
@@ -28,12 +28,17 @@ const LoadingScreen = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', async () => {
-      await getMoney(context);
-      navigation.navigate(SCREEN_NAME.HOME);
-    });
-    return unsubscribe;
-  }, [navigation]);
+    async function onFocus() {
+        // await getMoney(context);
+        console.log("focus! ")
+        await changeCurrentUserAndReload(1, context);
+        navigation.navigate(SCREEN_NAME.HOME);
+    }
+    navigation.addListener('focus', onFocus);
+    return () => {
+      navigation.removeListener('focus', onFocus);
+    }
+  }, []);
 
   return (
     <Layout hideTextFooter>

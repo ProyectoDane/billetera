@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, {useRef, useState, useEffect, useContext} from 'react';
 import { View, ActivityIndicator, useWindowDimensions } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { useIsFocused } from '@react-navigation/native';
@@ -9,27 +9,30 @@ import SingleButton from '../../components/SingleButton';
 import { styles } from './styles';
 import { labels, colors, SCREEN_NAME } from '../../constants';
 import { updateSurveyDone, surveyDone } from '../../dataAccess/User';
+import {AddRemoveContext} from "../AddRemove/AddRemoveContext";
 
 //TODO: Configurar para que se ejecute al iniciar app por primera vez.
 
 const Survey = ({ navigation, route }) => {
+  const {currentUser} = useContext(AddRemoveContext);
+
   const [firstTime, setFirstTime] = useState(!!route?.params?.firstTime);
   const [done, setDone] = useState(false);
   const isFocused = useIsFocused();
 
-  useEffect(() => {
+  useEffect(async () => {
     const init = async () => {
-      const isDone = await surveyDone();
+      const isDone = await surveyDone(currentUser.id);
       if (!isDone) {
-        await updateSurveyDone();
+        await updateSurveyDone(currentUser.id);
       }
     };
-    init();
+    await init();
   }, [isFocused]);
 
-  useEffect(() => {
+  useEffect(async () => {
     if (firstTime && done) {
-      updateSurveyDone();
+      await updateSurveyDone(currentUser.id);
       setTimeout(() => {
         navigation.popToTop();
         navigation.navigate(SCREEN_NAME.HOME);

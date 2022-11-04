@@ -12,15 +12,16 @@ import Layout from '../../components/Layout';
 import Input from '../../components/Input';
 import ImagePicker from '../../components/ImagePicker';
 
-import { labels, colors } from '../../constants';
+import {labels, colors, SCREEN_NAME} from '../../constants';
 
 import { getUser, updateName, updatePhoto } from '../../dataAccess/User';
 import { User } from '../../models/User';
 
 import { styles } from './styles';
 import {AddRemoveContext} from "../AddRemove/AddRemoveContext";
+import SingleButton from "../../components/SingleButton";
 
-const Profile = () => {
+const Profile = ({navigation, route}) => {
   const [user, setUser] = useState(new User());
 
   const {
@@ -32,15 +33,15 @@ const Profile = () => {
   useEffect(() => {
     const findUser = async () => {
       try {
-        const user = await getUser();
+        const user = await getUser(currentUser.id);
         setUser(user);
-        setCurrentUser(user);
+        // setCurrentUser(user);
       } catch (error) {
         console.log(error);
       }
     };
     void findUser();
-  }, []);
+  }, [currentUser.id]);
 
   const changeName = (name) => {
     const userUpdated = { ...user, name };
@@ -89,6 +90,11 @@ const Profile = () => {
             )}
           </View>
           <ImagePicker setImage={changePhoto} />
+          <SingleButton
+              style={{  width: "100%", marginBottom: 10 }}
+              label={'CAMBIAR DE USUARIO'}
+              onPress={() => navigation.navigate(SCREEN_NAME.SWITCH_USER)}
+          />
         </View>
       </TouchableWithoutFeedback>
     </Layout>

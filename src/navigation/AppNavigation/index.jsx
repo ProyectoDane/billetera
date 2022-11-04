@@ -9,6 +9,7 @@ import MyWallet from '../../screens/MyWallet';
 import MyWishes from '../../screens/MyWishes';
 import MySavings from '../../screens/MySavings';
 import Profile from '../../screens/Profile';
+import SwitchUser from "../../screens/SwitchUser";
 import NewWish from '../../screens/NewWish';
 import WishesHome from '../../screens/WishesHome';
 import ProfileButton from '../../components/ProfileButton';
@@ -128,6 +129,13 @@ const HomeNavigation = () => {
         component={Profile}
         options={{
           title: NAVIGATION_TITLE.PROFILE,
+        }}
+      />
+        <HomeStack.Screen
+        name={SCREEN_NAME.SWITCH_USER}
+        component={SwitchUser}
+        options={{
+          title: NAVIGATION_TITLE.SWITCH_USER,
         }}
       />
       <HomeStack.Screen
