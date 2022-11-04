@@ -26,6 +26,7 @@ import SavingsManualPayment from '../../screens/AddRemove/SavingsManualPayment';
 import AddRemoveWallet from '../../screens/AddRemove/AddRemoveWallet';
 import AddRemoveSavings from '../../screens/AddRemove/AddRemoveSavings';
 import WalletManualPayment from '../../screens/AddRemove/WalletManualPayment/WalletManualPayment';
+import LoadingScreen from '../../screens/HomeScreen/LoadingScreen';
 
 import SvgChevron from '../../components/CustomButton/SvgChevron';
 import { colors, NAVIGATION_TITLE, SCREEN_NAME } from '../../constants';
@@ -73,6 +74,14 @@ const HomeNavigation = () => {
         component={MyWallet}
         options={{
           headerTitle: NAVIGATION_TITLE.MY_WALLET,
+        }}
+      />
+        <HomeStack.Screen
+        name={SCREEN_NAME.LOADING}
+        component={LoadingScreen}
+        options={{
+          headerTitle: '',
+            headerLeft: ()=> null,
         }}
       />
       <HomeStack.Screen

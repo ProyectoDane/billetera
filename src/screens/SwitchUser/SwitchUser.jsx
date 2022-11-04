@@ -1,7 +1,7 @@
 import Layout from "../../components/Layout";
 import {styles as WalletStyles} from "../MyWallet/styles";
 import {Image, ScrollView, View} from "react-native";
-import {changeCurrentUserAndReload} from "../../utils/functions/loadUserToContext";
+import {changeCurrentUserAndReload, loadUserToContext} from "../../utils/functions/loadUserToContext";
 import React, {useContext, useEffect, useState} from "react";
 import {AddRemoveContext} from "../AddRemove/AddRemoveContext";
 import {colors, SCREEN_NAME} from "../../constants";
@@ -21,16 +21,22 @@ const SwitchUser = ({navigation, route}) => {
     const context = useContext(AddRemoveContext);
 
     useEffect(() => {
+        let cancel = false;
         async function doEffect() {
             const allUsers = await getAllUsers();
-            setUsers(allUsers);
+            if (!cancel)
+                setUsers(allUsers);
         }
 
         doEffect();
+        return () => { cancel = true;}
+
     }, []);
 
     async function handleClick(userId) {
-        let user = await changeCurrentUserAndReload(userId, context);
+        // navigation.navigate(SCREEN_NAME.LOADING, {switchUserId:userId });
+
+        let user = await loadUserToContext(userId, context);
         console.log(`current user name: ${user.name}`);
         if (user.name == "") {
             navigation.navigate(SCREEN_NAME.PROFILE);

@@ -31,16 +31,22 @@ const Profile = ({navigation, route}) => {
 
 
   useEffect(() => {
+    let cancel = false;
     const findUser = async () => {
       try {
         const user = await getUser(currentUser.id);
-        setUser(user);
+        if (!cancel)
+          setUser(user);
         // setCurrentUser(user);
       } catch (error) {
         console.log(error);
       }
     };
     void findUser();
+
+    return () => {
+      cancel = true;
+    }
   }, [currentUser.id]);
 
   const changeName = (name) => {
