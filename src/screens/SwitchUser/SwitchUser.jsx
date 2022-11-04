@@ -10,7 +10,7 @@ import Card from "../../components/Card/Card";
 import CardSection from "../../components/Card/CardSection";
 import CardText from "../../components/Card/CardText";
 import {FontAwesome5} from "@expo/vector-icons";
-import {styles as WhisestStyles} from "../WishesHome/styles";
+import {styles as WishesStyles} from "../WishesHome/styles";
 
 const flexrow = {flex: 1, flexDirection: 'row', alignItems: 'center'};
 
@@ -49,7 +49,7 @@ const SwitchUser = ({navigation, route}) => {
                               <CardSection
                                   onPress={ () => handleClick(elem.id)}>
                                   <View style={flexrow}>
-                                      <View style={{...WhisestStyles.icon, padding: 5}}>
+                                      <View style={{...WishesStyles.icon, padding: 5}}>
                                           {elem.photo ? (
                                               <Image
                                                   accessibilityRole="image"

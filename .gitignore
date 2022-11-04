@@ -14,3 +14,6 @@ web-build/
 /.idea/
 /package-lock.json
 yarn.lock
+/dist/
+/ios/
+/android/
