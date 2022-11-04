@@ -24,7 +24,8 @@ import SavingsBuy from '../../screens/Buy/SavingsBuy';
 import SavingsManualPayment from '../../screens/AddRemove/SavingsManualPayment';
 import AddRemoveWallet from '../../screens/AddRemove/AddRemoveWallet';
 import AddRemoveSavings from '../../screens/AddRemove/AddRemoveSavings';
-import WalletManualPayment from '../../screens/AddRemove/WalletManualPayment/WalletManualPayment';
+import WalletManualPayment from '../../screens/AddRemove/WalletManualPayment/WalletManualPayment'
+import Onboarding from '../../screens/Onboarding'
 
 import SvgChevron from '../../components/CustomButton/SvgChevron';
 import { colors, NAVIGATION_TITLE, SCREEN_NAME } from '../../constants';
@@ -223,6 +224,13 @@ const InformationNavigation = () => (
       options={{
         title: NAVIGATION_TITLE.INFO,
       }}
+    />
+    <InformationStack.Screen
+      name={SCREEN_NAME.ONBOARDING_NAV}
+      component={Onboarding}
+      options={{
+        headerShown: false
+      }}      
     />
     <InformationStack.Screen
       name={SCREEN_NAME.PROFILE}
