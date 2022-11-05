@@ -4,10 +4,11 @@ import { colors } from '../../constants';
 
 const styles = StyleSheet.create({    
     indicator: {
+        flex: 1,
         width: 10,
         height: 10,
         backgroundColor: colors.skyBlue,
-        borderRadius: 5,
+        borderRadius: 2,
         marginHorizontal: 5
     }
 })

@@ -16,7 +16,8 @@ const styles = StyleSheet.create({
     width,
     bottom: 20,
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    paddingHorizontal: 10,
   },
   visualContainer: {
     position: 'absolute',
