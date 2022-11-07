@@ -1,30 +1,11 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { colors } from '../../constants';
 
-const {widthScreen} = Dimensions.get('screen').width
-const {width} = Dimensions.get('window').width
-
-const styles = StyleSheet.create({    
+const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.white,
-    justifyContent: 'center',
-    alignItems: 'center'
-
+    flex: 1,
+    backgroundColor: colors.white,        
   },
-  indicatorContainer: {
-    position: 'absolute',
-    width,
-    bottom: 20,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    paddingHorizontal: 10,
-  },
-  visualContainer: {
-    position: 'absolute',
-    width: widthScreen,
-    bottom: 20,
-    flexDirection: 'row'
-  }
-})
+});
 
-export default styles
+export default styles;

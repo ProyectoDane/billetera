@@ -1,4 +1,4 @@
-export const colors = {
+export const colors = {  
   primary: '#0093FF',
   primarySoft: '#c1e9fb',
   secondary: '#ffa600',
@@ -25,6 +25,7 @@ export const colors = {
   softGray: '#ededed',
   gray: '#f5f5f5',
   blueText: '#0699E8', //00A0F5
+  slide:'#d9d9d9',
 
   // colors dane icon
   purple: '#8a4894',

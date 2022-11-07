@@ -1,47 +1,49 @@
-import React from 'react'
-import { View, Text, FlatList } from 'react-native'
-import Slide from '../../components/Slide'
-import Indicators from '../../components/Indicators'
+import React from 'react';
+import { StatusBar, View, Text } from 'react-native';
 
-// Assets
-import pic01 from './assets/pic01.png'
-import pic02 from './assets/pic02.png'
-import pic03 from './assets/pic03.png'
+import OnboardSlide from '../../components/OnboardSlide';
 
 import styles from './styles'
 
+// Assets
+import pic01 from './assets/pic01.png';
+import pic02 from './assets/pic02.png';
+import pic03 from './assets/pic03.png';
+
 const slides = [
   {
-    id: "1",
-    title: 'BIENVENIDO A ¿CÓMO PAGO?',
-    subtitle: 'UNA MANERA FÁCIL DE APRENDER A USAR TU DINERO',
-    img: pic01,  
+    id: '1',
+    title: 'BIENVENIDO A',
+    subtitle1: '¿CÓMO PAGO?',
+    subtitle2: 'UNA MANERA FÁCIL DE',
+    subtitle3: 'APRENDER A USAR TU DINERO',
+    img: pic01,
   },
   {
-    id: "2",
-    title: 'CARGA TU BILLETERA Y TUS AHORROS',
-    subtitle: 'CONOCE LOS BILLETES Y LAS MONEDAS. APRENDE A USARLOS',
-    img: pic02,  
+    id: '2',
+    title: 'CARGA TU BILLETERA',
+    subtitle1: 'Y TUS AHORROS',
+    subtitle2: 'CONOCE LOS BILLETES Y LAS',
+    subtitle3: 'MONEDAS. APRENDE A USARLOS',
+    img: pic02,
   },
   {
-    id: "3",
-    title: 'HACE TU LISTA DE DESEOS',
-    subtitle: 'APRENDE A AHORRAR PARA COMPRARTE LO QUE TE PROPONGAS',
-    img: pic03,  
+    id: '3',
+    title: 'HACE TU',
+    subtitle1: 'LISTA DE DESEOS',
+    subtitle2: 'APRENDE A AHORRAR PARA',
+    subtitle3: 'COMPRARTE LO QUE TE PROPONGAS',
+    img: pic03,
   },
-]
-
-
+];
 
 const Onboarding = () => {
   return (
     <View style={styles.container}>
-      <FlatList horizontal pagingEnabled showsHorizontalScrollIndicator={false} data={slides} keyExtractor={item => item.id} renderItem={({item}) => <Slide item={item} />} />
-      <View style={styles.indicatorContainer}>
-        <Indicators indicatorCount={slides.length} />
-      </View>
+      <StatusBar hidden />
+      <OnboardSlide slides={slides} />
     </View>
-  )
-}
+  );
+};
 
-export default Onboarding
+export default Onboarding;
