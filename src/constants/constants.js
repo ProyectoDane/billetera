@@ -29,6 +29,7 @@ export const SCREEN_NAME = {
   CALCULATOR_NAV: 'CalculatorNav',
   WISHES_NAV: 'WishesNav',
   INFORMATION_NAV: 'InformationNav',
+  ONBOARDING_NAV: 'OnboardingNav'
 };
 
 // Title navigation style

@@ -65,7 +65,7 @@ const Information = ({navigation}) => {
                 <View style={WalletStyles.container}>
                     <Card containerStyle={{flex: 1,}}>
                         <CardSection
-                            onPress={() => toastNotification("Under Construction")}>
+                            onPress={() => navigation.navigate(SCREEN_NAME.ONBOARDING_NAV)}>
                             <View style={flexrow}>
                                 <View style={WhisestStyles.icon}>
                                     <FontAwesome5
