@@ -37,11 +37,11 @@ const slides = [
   },
 ];
 
-const Onboarding = () => {
+const Onboarding = (props) => {
   return (
     <View style={styles.container}>
       <StatusBar hidden />
-      <OnboardSlide slides={slides} />
+      <OnboardSlide slides={slides} {...props} />
     </View>
   );
 };

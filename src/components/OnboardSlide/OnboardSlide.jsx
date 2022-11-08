@@ -5,12 +5,17 @@ import Indicators from './Indicators';
 import Slide from './Slide';
 import Button from './Button';
 
+import { SCREEN_NAME } from '../../constants';
+
 import styles from './styles';
 
-const OnboardSlide = ({ slides = [], onDone }) => {
+const OnboardSlide = ({ slides = [], onDone, navigation }) => {
   if (!slides || !slides.length) return null;
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const flatListRef = useRef();
+
+  const goTour = () => navigation.navigate(SCREEN_NAME.INFORMATION);
+  const goApp = () => navigation.navigate(SCREEN_NAME.HOME);
 
   const onViewableItemsChanged = useRef((item) => {
     const index = item.viewableItems[0].index;
@@ -48,18 +53,13 @@ const OnboardSlide = ({ slides = [], onDone }) => {
           {currentSlideIndex < slides.length - 1 ? (
             <Button title="CONTINUAR" icon="long-arrow-alt-right" mode="contained" onPress={handleNext} />
           ) : (
-            <Button
-              title="EMPECEMOS"
-              icon="long-arrow-alt-right"
-              mode="contained"
-              onPress={() => console.log('Entrar a la app...')}
-            />
+            <Button title="EMPECEMOS" icon="long-arrow-alt-right" mode="contained" onPress={goApp} />
           )}
           <View style={{ marginTop: 14 }} />
           {currentSlideIndex < slides.length - 1 ? (
             <Button title="SALTAR" mode="outlined" onPress={handleSkip} />
           ) : (
-            <Button title="IR A ENCUESTA" mode="outlined" onPress={() => console.log('Ir a encuesta...')} />
+            <Button title="IR A ENCUESTA" mode="outlined" onPress={goTour} />
           )}
         </View>
       </View>
