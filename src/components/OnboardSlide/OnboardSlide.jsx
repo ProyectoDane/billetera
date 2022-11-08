@@ -14,7 +14,7 @@ const OnboardSlide = ({ slides = [], onDone, navigation }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const flatListRef = useRef();
 
-  const goTour = () => navigation.navigate(SCREEN_NAME.INFORMATION);
+  const goToSurvey = () => navigation.navigate(SCREEN_NAME.SURVEY, {fromTour: true});
   const goApp = () => navigation.navigate(SCREEN_NAME.HOME);
 
   const onViewableItemsChanged = useRef((item) => {
@@ -59,7 +59,7 @@ const OnboardSlide = ({ slides = [], onDone, navigation }) => {
           {currentSlideIndex < slides.length - 1 ? (
             <Button title="SALTAR" mode="outlined" onPress={handleSkip} />
           ) : (
-            <Button title="IR A ENCUESTA" mode="outlined" onPress={goTour} />
+            <Button title="IR A ENCUESTA" mode="outlined" onPress={goToSurvey} />
           )}
         </View>
       </View>

@@ -14,8 +14,21 @@ import { updateSurveyDone, surveyDone } from '../../dataAccess/User';
 
 const Survey = ({ navigation, route }) => {
   const [firstTime, setFirstTime] = useState(!!route?.params?.firstTime);
+  const [fromTour, setFromTour] = useState(!!route?.params?.fromTour);
   const [done, setDone] = useState(false);
   const isFocused = useIsFocused();
+
+
+  useEffect(()=> {
+    console.log(fromTour)
+    const unsuscribe = navigation.addListener('blur', (e) => {
+      if (fromTour) {
+        navigation.popToTop();
+        navigation.navigate(SCREEN_NAME.HOME);
+      }
+    });
+    return unsuscribe;
+  },[navigation]);
 
   useEffect(() => {
     const init = async () => {
