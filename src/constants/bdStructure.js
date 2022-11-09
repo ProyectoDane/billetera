@@ -37,4 +37,8 @@ export const queryInsertMoney = [
 
 export const queryInsertUser = [
   'INSERT INTO User (name, photo, surveyDone) SELECT "", "", 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 1);',
+  'INSERT INTO User (name, photo, surveyDone) SELECT "", "", 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 2);',
+  'INSERT INTO User (name, photo, surveyDone) SELECT "", "", 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 3);',
+  'INSERT INTO User (name, photo, surveyDone) SELECT "", "", 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 4);',
+  'INSERT INTO User (name, photo, surveyDone) SELECT "", "", 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 5);',
 ];

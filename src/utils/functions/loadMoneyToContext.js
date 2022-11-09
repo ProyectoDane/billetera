@@ -42,7 +42,11 @@ async function getTotalSavings(userId) {
 async function getMoney(context) {
   const start = new Date();
 
-  let user =  await getUser();
+  // let userId = context.currentUser?.id || 1;
+  let userId = context.currentUser?.id;
+  console.log(`getMoney for user ${userId}`);
+
+  let user =  await getUser(userId);
   let billetes = await getBills(); //Maestro de billetes
   let monedas = await getCoins(); //Maestro de monedas
 
@@ -95,7 +99,7 @@ async function getMoney(context) {
   });
 
   //// USER
-  context.setCurrentUser(user);
+  // context.setCurrentUser(user);
 
   /////// WALLET
 

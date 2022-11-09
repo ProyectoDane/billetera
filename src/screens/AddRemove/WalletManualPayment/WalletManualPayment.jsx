@@ -72,7 +72,7 @@ export default function WalletManualPayment({ navigation }) {
   const handleSave = async () => {
     setIsLoading(true);
 
-    await innerSaveManualPayment(
+    await innerSaveManualPayment( context.currentUser.id,
       initialCoinsMoneyWallet,
       actualCoins,
       initialBillsMoneyWallet,

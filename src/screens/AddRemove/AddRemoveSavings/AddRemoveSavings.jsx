@@ -26,7 +26,7 @@ export default function AddRemoveSavings({ navigation }) {
   const handleSave = async () => {
     setIsLoading(true);
 
-    await innerSaveAddRemoveSavings(
+    await innerSaveAddRemoveSavings( context.currentUser.id,
       initialCoinsMoneySavings,
       actualCoinsSavings,
       initialBillsMoneySavings,

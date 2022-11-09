@@ -7,6 +7,7 @@ import AppNavigation from './src/navigation/AppNavigation';
 import { initialization } from './src/db/queries';
 import { AddRemoveContext } from './src/screens/AddRemove/AddRemoveContext';
 import getMoney from './src/utils/functions/loadMoneyToContext';
+import {changeCurrentUserAndReload} from "./src/utils/functions/loadUserToContext";
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -15,21 +16,42 @@ const Root = () => {
   const context = useContext(AddRemoveContext);
   const [appIsReady, setAppIsReady] = useState(false);
 
-  useEffect(async () => {
-    try {
-      await initialization();
-      await getMoney(context);
-    } catch (e) {
-      console.warn(e);
-    } finally {
-      setAppIsReady(true);
+  useEffect(() => {
+    async function doEffect() {
+      try {
+        await initialization();
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        // setAppIsReady(true);
+      }
     }
+    doEffect();
   }, []);
 
-  const onLayoutRootView = useCallback(async () => {
-    if (appIsReady) {
-      await SplashScreen.hideAsync();
+  useEffect(() => {
+    async function doEffect() {
+      try {
+        let userId = context.currentUser?.id || 1;
+        await changeCurrentUserAndReload(userId, context);
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        setAppIsReady(true);
+      }
     }
+
+    doEffect();
+  }, [context.currentUser?.id || 1]);
+
+
+  const onLayoutRootView = useCallback(() => {
+    async function doEffect() {
+      if (appIsReady) {
+        await SplashScreen.hideAsync();
+      }
+    }
+    doEffect();
   }, [appIsReady]);
 
   if (!appIsReady) return null;

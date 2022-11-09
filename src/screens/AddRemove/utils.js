@@ -31,6 +31,7 @@ export function calcularEntraSale(subMoney, addMoney, initialList, novedades) {
 }
 
 export async function innerSaveAddRemove(
+    userId,
   initialCoinsMoneyWallet,
   coins,
   initialBillsMoneyWallet,
@@ -46,21 +47,22 @@ export async function innerSaveAddRemove(
   if (addMoney.length) {
     for (let property in addMoney) {
       const { money_id, quantity } = addMoney[property];
-      await insertMoneyToWallet(1, money_id, quantity);
+      await insertMoneyToWallet(userId, money_id, quantity);
     }
   }
 
   if (subMoney.length) {
     for (let property in subMoney) {
       const { money_id, quantity } = subMoney[property];
-      await deleteMoneyWallet(1, money_id, quantity);
+      await deleteMoneyWallet(userId, money_id, quantity);
     }
   }
   let end = new Date();
   const diff = end - start;
-  console.log(`innerSaveAddRemove took ${diff} ms`);
+  console.log(`innerSaveAddRemove took ${diff} ms for userId ${userId}`);
 }
 export async function innerSaveAddRemoveSavings(
+    userId,
   initialCoinsMoneyWallet,
   coins,
   initialBillsMoneyWallet,
@@ -75,14 +77,14 @@ export async function innerSaveAddRemoveSavings(
   if (addMoney.length) {
     for (let property in addMoney) {
       const { money_id, quantity } = addMoney[property];
-      await insertMoneyToSaving(1, money_id, quantity);
+      await insertMoneyToSaving(userId, money_id, quantity);
     }
   }
 
   if (subMoney.length) {
     for (let property in subMoney) {
       const { money_id, quantity } = subMoney[property];
-      await deleteMoneySaving(1, money_id, quantity);
+      await deleteMoneySaving(userId, money_id, quantity);
     }
   }
 }
@@ -109,6 +111,7 @@ export function calcularEntraSaleManualPayment(
 }
 
 export async function innerSaveManualPayment(
+    userId,
   initialCoinsMoneyWallet,
   coins,
   initialBillsMoneyWallet,
@@ -122,12 +125,13 @@ export async function innerSaveManualPayment(
   if (subMoney.length) {
     for (let property in subMoney) {
       const { money_id, quantity } = subMoney[property];
-      await deleteMoneyWallet(1, money_id, quantity);
+      await deleteMoneyWallet(userId, money_id, quantity);
     }
   }
 }
 
 export async function innerSaveManualPaymentSavings(
+    userId,
   initialCoinsMoneySavings,
   coins,
   initialBillsMoneySavings,
@@ -141,7 +145,7 @@ export async function innerSaveManualPaymentSavings(
   if (subMoney.length) {
     for (let elem of subMoney) {
       const { money_id, quantity } = elem;
-      await deleteMoneySaving(1, money_id, quantity);
+      await deleteMoneySaving(userId, money_id, quantity);
     }
   }
 }

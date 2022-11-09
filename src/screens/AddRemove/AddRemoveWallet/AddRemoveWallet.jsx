@@ -23,7 +23,7 @@ export default function AddRemoveWallet({ navigation }) {
   const context = useContext(AddRemoveContext);
 
   const handleSave = async () => {
-    await innerSaveAddRemove(initialCoinsMoneyWallet, actualCoins, initialBillsMoneyWallet, actualBills);
+    await innerSaveAddRemove(context.currentUser.id, initialCoinsMoneyWallet, actualCoins, initialBillsMoneyWallet, actualBills);
     await getMoney(context);
     toastNotification('SE ACTUALIZO EL DINERO CORRECTAMENTE!', 'success', 'success');
     navigation.navigate(SCREEN_NAME.HOME);

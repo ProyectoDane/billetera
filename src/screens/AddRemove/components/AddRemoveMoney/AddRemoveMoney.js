@@ -39,7 +39,7 @@ const AddRemoveMoney = ({
         {actualMoney.map((elem, index) => {
           return (
             <MoneyObjectAddRemove
-              key={`name: ${elem.image} - amount: ${elem.amount}`}
+              key={`name: ${elem.image} - amount: ${elem.amount} - ${elem.id}`}
               handleAdd={() => handleAdd(elem, index)}
               handleSub={() => handleSub(elem, index)}
               {...elem}
