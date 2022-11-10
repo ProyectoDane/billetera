@@ -1,23 +1,19 @@
-import React, {useState, useEffect, useContext} from 'react';
-import {
-  Keyboard,
-  TouchableWithoutFeedback,
-  View,
-  Image,
-  useWindowDimensions,
-} from 'react-native';
-import { FontAwesome5 } from '@expo/vector-icons';
+import React, {useContext, useEffect, useState} from 'react';
+import {Image, Keyboard, TouchableWithoutFeedback, useWindowDimensions, View,} from 'react-native';
+import {FontAwesome5} from '@expo/vector-icons';
 
 import Layout from '../../components/Layout';
 import Input from '../../components/Input';
 import ImagePicker from '../../components/ImagePicker';
 
-import {labels, colors, SCREEN_NAME} from '../../constants';
+import {colors, labels, SCREEN_NAME} from '../../constants';
 
-import { getUser, updateName, updatePhoto } from '../../dataAccess/User';
-import { User } from '../../models/User';
+import {getUser, updateName, updatePhoto} from '../../dataAccess/User';
+import {User} from '../../models/User';
 
-import { styles } from './styles';
+import {styles} from './styles';
+import {styles as wishStyle} from '../MyWishes/styles'
+
 import {AddRemoveContext} from "../AddRemove/AddRemoveContext";
 import SingleButton from "../../components/SingleButton";
 
@@ -68,41 +64,49 @@ const Profile = ({navigation, route}) => {
 
   return (
     <Layout>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View>
-          <View style={styles.container}>
-            <Input
-              text={user.name.toUpperCase()}
-              onFinish={changeName}
-              placeholder={labels.insertName}
-              style={styles.name}
-            />
+      <View style={wishStyle.myWishesContainer}>
+        <View style={{flex: 1}}>
+          <View style={{...styles.card}}>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+              <View>
+                <View style={styles.container}>
+                  <Input
+                      text={user.name.toUpperCase()}
+                      onFinish={changeName}
+                      placeholder={labels.insertName}
+                      style={styles.name}
+                  />
 
-            {user.photo ? (
-              <Image
-                accessibilityRole="image"
-                source={{ uri: user.photo }}
-                style={imageStyle}
-              />
-            ) : (
-              <View style={{ ...styles.emptyPhoto, ...imageStyle }}>
-                <FontAwesome5
-                  style={styles.centered}
-                  name="user-alt"
-                  size={width / 2}
-                  color={colors.miBilletera}
-                />
+                  {user.photo ? (
+                      <Image
+                          accessibilityRole="image"
+                          source={{ uri: user.photo }}
+                          style={imageStyle}
+                      />
+                  ) : (
+                      <View style={{ ...styles.emptyPhoto, ...imageStyle }}>
+                        <FontAwesome5
+                            style={styles.centered}
+                            name="user-alt"
+                            size={width / 2}
+                            color={colors.miBilletera}
+                        />
+                      </View>
+                  )}
+                </View>
+                <ImagePicker setImage={changePhoto} />
               </View>
-            )}
+            </TouchableWithoutFeedback>
           </View>
-          <ImagePicker setImage={changePhoto} />
+        </View>
+        <View style={{...wishStyle.bottomButtonContainer}}>
           <SingleButton
               style={{  width: "100%", marginBottom: 10 }}
               label={'CAMBIAR DE USUARIO'}
               onPress={() => navigation.navigate(SCREEN_NAME.SWITCH_USER)}
           />
         </View>
-      </TouchableWithoutFeedback>
+      </View>
     </Layout>
   );
 };
