@@ -85,7 +85,7 @@ const NuevoDeseo = ({ navigation, route }) => {
                 <InputText
                   name="value"
                   label="VALOR"
-                  keyboardType={"decimal-pad" }
+                  keyboardType={"numeric"}
                   placeholder="INGRESE EL VALOR DEL DESEO"
                   required
                 />
