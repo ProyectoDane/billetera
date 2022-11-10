@@ -40,19 +40,23 @@ const Survey = ({ navigation, route }) => {
         await updateSurveyDone(currentUser.id);
       }
     };
-    await init();
+    init();
   }, [isFocused]);
 
-  useEffect(async () => {
-    if (firstTime && done) {
-      await updateSurveyDone(currentUser.id);
-      setTimeout(() => {
-        navigation.popToTop();
-        navigation.navigate(SCREEN_NAME.HOME);
-      }, 1000);
-    } else if (!done && !isFocused) {
-      navigation.goBack();
+  useEffect(() => {
+    async function init() {
+
+      if (firstTime && done) {
+        await updateSurveyDone(currentUser.id);
+        setTimeout(() => {
+          navigation.popToTop();
+          navigation.navigate(SCREEN_NAME.HOME);
+        }, 1000);
+      } else if (!done && !isFocused) {
+        navigation.goBack();
+      }
     }
+    init();
   }, [done, firstTime]);
 
   const refWebView = useRef(null);
