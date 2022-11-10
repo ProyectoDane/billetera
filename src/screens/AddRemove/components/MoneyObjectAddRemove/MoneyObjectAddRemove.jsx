@@ -3,6 +3,7 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
 import ItemMoney from '../ItemMoney';
+import { colors } from '../../../../constants';
 
 export const MoneyObjectAddRemove = ({ comprar = false, ...elem }) => {
   const [restante, setRestante] = useState(elem.quantity);
@@ -23,31 +24,20 @@ export const MoneyObjectAddRemove = ({ comprar = false, ...elem }) => {
     <View
       style={{
         flex: 1,
-        justifyContent: 'space-around',
         flexDirection: 'row',
-        paddingVertical: 5,
+        justifyContent: 'space-evenly',
+        paddingVertical: 5,        
       }}>
       <View style={{ marginRight: 15 }}>
         <ItemMoney {...elem} />
         {comprar ? <Text>{`TENES ${restante} EN LA BILLETERA`}</Text> : null}
       </View>
-      <View>
-        <View>
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize: BUTTON_FONT_SIZE,
-              paddingHorizontal: 5,
-              flex: 1,
-            }}>
-            {total}
-          </Text>
-        </View>
+      <View>        
         <View
           style={{
             flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'space-around',
+            flexDirection: 'row',            
+            alignItems: 'center'
           }}>
           {/**
            * si comprar es true, logica de comprar, sino logica de addremove
@@ -57,7 +47,7 @@ export const MoneyObjectAddRemove = ({ comprar = false, ...elem }) => {
            * disabled={comprar? logicaComprar : elem.quantity === 0}
            */}
           <TouchableOpacity
-            style={{ marginRight: 10 }}
+            style={{ marginRight: 0 }}
             disabled={comprar ? total === 0 : elem.quantity === 0}
             onPress={() => {
               sub();
@@ -69,14 +59,22 @@ export const MoneyObjectAddRemove = ({ comprar = false, ...elem }) => {
               color={
                 comprar
                   ? total === 0
-                    ? 'grey'
-                    : 'red'
+                    ? colors.softCyan
+                    : colors.skyBlue
                   : elem.quantity === 0
-                  ? 'grey'
-                  : 'red'
+                  ? colors.softCyan
+                  : colors.skyBlue
               }
             />
           </TouchableOpacity>
+
+          <Text
+            style={{              
+              fontSize: BUTTON_FONT_SIZE,
+              paddingHorizontal: 10
+            }}>
+            {total}
+          </Text>
           {/**
            * si comprar es true, logica de comprar, sino logica de addremove
            *
@@ -98,9 +96,9 @@ export const MoneyObjectAddRemove = ({ comprar = false, ...elem }) => {
               color={
                 comprar
                   ? restante === 0 || elem.totalMoneyWallet <= 0
-                    ? 'grey'
-                    : 'green'
-                  : 'green'
+                    ? colors.skyBlue
+                    : colors.skyBlue
+                  : colors.skyBlue
               }
             />
           </TouchableOpacity>
