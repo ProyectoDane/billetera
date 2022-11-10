@@ -55,7 +55,7 @@ export const whishesList = [
   },
   {
     id: 10,
-    name: 'SALIDA CON AMIGOS????',
+    name: 'SALIDA CON AMIGOS',
     value: 3700,
     icon: 'user-friends',
   },
