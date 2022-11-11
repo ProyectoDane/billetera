@@ -7,6 +7,11 @@ import { formatNum } from '../../../../utils/functions/formatNum';
 import SingleButton from '../../../../components/SingleButton';
 import { colors } from '../../../../constants';
 import { FontAwesome5 } from '@expo/vector-icons';
+import {styles as whishesStyles} from "../../../MyWishes/styles";
+import { default as cardStyles} from "../../../../components/Card/styles";
+import {shadow} from "../../../../constants/styles";
+import {styles as itemWishStyles} from "../../../MyWishes/components/ItemWish/styles";
+import {styles as WishesStyles} from "../../../WishesHome/styles";
 
 export default function AddRemoveBaseScreen({
   navigation,
@@ -20,6 +25,8 @@ export default function AddRemoveBaseScreen({
   initialBillsMoneyWallet, //array: billetes iniciales (guardados en la BD)
   initialCoinsMoneyWallet, //array: coins  iniciales (guardados en la BD)
   handleSave,
+    itemTitle,
+    itemIcon
 }) {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -52,8 +59,6 @@ export default function AddRemoveBaseScreen({
         return null;
     }
   };
-
-  const layout = useWindowDimensions();
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
@@ -115,9 +120,9 @@ export default function AddRemoveBaseScreen({
   const getTabBarIcon = (props) => {
     const { route } = props;
     if (route.key === 'first') {
-      return <FontAwesome5 name="money-bill-wave" size={20} color={'white'} />;
+      return <FontAwesome5 name="money-bill-wave" size={20} color={colors.primary} />;
     } else {
-      return <FontAwesome5 name="coins" size={20} color={'white'} />;
+      return <FontAwesome5 name="coins" size={20} color={colors.primary} />;
     }
   };
 
@@ -125,49 +130,66 @@ export default function AddRemoveBaseScreen({
     scene: {
       flex: 1,
     },
-    tabLabel: {},
+    tabLabel: {
+        // backgroundColor: "red"
+        color: colors.primary
+    },
     tabStyle: {
       flex: 1,
       flexDirection: 'row',
+        // backgroundColor: colors.white
     },
+      indicatorStyle: {
+          backgroundColor: colors.primary,
+          height: 5,
+
+      }
   });
 
   return (
-    <View style={{ flex: 1 }}>
-      <View
-        style={{
-          margin: 5,
-          flex: 0.1,
-          alignItems: 'center',
-          flexDirection: 'row',
-          justifyContent: 'center',
-        }}>
+    <View style={{flex: 1, justifyContent: "center", flexBasis: 60 }}>
         <View
-          style={{
-            backgroundColor: 'white',
-            padding: 5,
-            borderRadius: 10,
-          }}>
-          <Text style={{ fontSize: 30 }}>Total {formatNum(actualMoneyWallet)}</Text>
-        </View>
+            style={{
+                ...cardStyles.card,
+                margin: 10,
+                width: "auto",
+                flex: 1,
+                flexShrink: 0,
+                flexGrow: 1,
+                ...shadow,
+            }}>
+            <View style={{...itemWishStyles.itemTextRow, marginVertical: 10}}>
+                <View style={{...WishesStyles.icon, padding: 10}}>
+                    <FontAwesome5 name={itemIcon} size={16}
+                                  style={{color: colors.primary}} />
+                </View>
+                <Text style={{...itemWishStyles.itemLabel}}>
+                    TOTAL {itemTitle}</Text>
+                <Text
+                    style={{...itemWishStyles.valueItem, ...itemWishStyles.valueItemSpecial}}>{formatNum(actualMoneyWallet)}</Text>
+            </View>
       </View>
-      <TabView
-        navigationState={{ index, routes }}
-        renderScene={renderScene}
-        onIndexChange={setIndex}
-        initialLayout={{ width: layout.width }}
-        renderTabBar={(props) => (
-          <TabBar
-            {...props}
-            indicatorStyle={{ backgroundColor: colors.secondary, height: 5 }}
-            renderIcon={(props) => getTabBarIcon(props)}
-            tabStyle={styles.tabStyle}
-            labelStyle={styles.labelStyle}
+        <View style={{...cardStyles.card, ...shadow, flex: 15, margin: 10, width: "auto"}}>
+          <TabView
+            navigationState={{ index, routes }}
+            renderScene={renderScene}
+            onIndexChange={setIndex}
+            // initialLayout={{ width: "50%" }}
+            renderTabBar={(props) => (
+              <TabBar
+                {...props}
+                indicatorStyle={styles.indicatorStyle}
+                style={{ backgroundColor: colors.white}}
+                renderIcon={(props) => getTabBarIcon(props)}
+                tabStyle={styles.tabStyle}
+                labelStyle={styles.tabLabel}
+              />
+            )}
           />
-        )}
-      />
+        </View>
       <View
         style={{
+            ...whishesStyles.bottomButtonContainer,
           paddingVertical: 0,
           //  backgroundColor: colors.primary
         }}>
@@ -178,7 +200,7 @@ export default function AddRemoveBaseScreen({
           isLoading={isLoading}
           disabled={isLoading}
           onPress={innerHandleSave}
-          style={{ ...styles.container, width: '100%', height: 50 }}
+          style={{ ...styles.container, width: '100%', marginBottom: 10  }}
         />
       </View>
     </View>
