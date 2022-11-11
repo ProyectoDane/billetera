@@ -1,17 +1,12 @@
 import React, {useContext, useState} from 'react';
-import {Text, useWindowDimensions, View} from 'react-native';
-import {TabView} from 'react-native-tab-view';
-
-import SingleButton from '../../../components/SingleButton';
-import {colors, SCREEN_NAME} from '../../../constants';
+import {SCREEN_NAME} from '../../../constants';
 import {formatNum} from '../../../utils/functions/formatNum';
 import getMoney from '../../../utils/functions/loadMoneyToContext';
 import {toastNotification} from '../../../utils/functions/toastNotifcation';
 import {AddRemoveContext} from '../AddRemoveContext';
 import {ManualPaymentContext} from '../ManualPaymentContext';
 import {innerSaveManualPayment} from '../utils';
-import WalletManualPaymentBills
-  from './WalletManualPaymentBills/WalletManualPaymentBills';
+import ManualPaymentBaseScreen from "../components/ManualPaymentBaseScreen/ManualPaymentBaseScreen";
 
 export default function WalletManualPayment({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -23,51 +18,10 @@ export default function WalletManualPayment({ navigation }) {
     initialBillsMoneyWallet,
     initialCoinsMoneyWallet,
   } = useContext(AddRemoveContext);
-
-  const { totalPaymentWallet, setTotalPaymentWallet } =
-    useContext(ManualPaymentContext);
-
-  const [totalFreeze] = useState(() => totalPaymentWallet);
-
-  const renderScene = ({ route }) => {
-    switch (route.key) {
-      case 'first':
-        return (
-          <WalletManualPaymentBills
-            initialMoney={initialBillsMoneyWallet}
-            actualMoney={actualBills}
-            setActualMoney={setActualBills}
-            actualMoneyWallet={totalPaymentWallet}
-            setActualMoneyWallet={setTotalPaymentWallet}
-            totalMoneyWallet={totalPaymentWallet}
-          />
-        );
-      case 'second':
-        return (
-          <WalletManualPaymentBills
-            initialMoney={initialCoinsMoneyWallet}
-            actualMoney={actualCoins}
-            setActualMoney={setActualCoins}
-            actualMoneyWallet={totalPaymentWallet}
-            setActualMoneyWallet={setTotalPaymentWallet}
-            totalMoneyWallet={totalPaymentWallet}
-          />
-        );
-
-      default:
-        return null;
-    }
-  };
+    const { totalPaymentWallet, setTotalPaymentWallet } =
+        useContext(ManualPaymentContext);
 
   const context = useContext(AddRemoveContext);
-
-  const layout = useWindowDimensions();
-
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    { key: 'first', title: 'BILLETES' },
-    { key: 'second', title: 'MONEDAS' },
-  ]);
 
   const handleSave = async () => {
     setIsLoading(true);
@@ -99,52 +53,16 @@ export default function WalletManualPayment({ navigation }) {
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      <View style={{backgroundColor: "white", marginHorizontal: 5}}>
-
-        <View>
-          <Text style={{fontSize: 30, textAlign: 'right'}}>
-            TOTAL {formatNum(totalFreeze)}
-          </Text>
-        </View>
-        <View>
-        </View>
-        <Text style={{fontSize: 30, textAlign: 'right'}}>
-          {totalPaymentWallet > 0
-              ? `TE FALTA PAGAR ${formatNum(totalPaymentWallet)}`
-              : totalPaymentWallet === 0
-                  ? `PAGASTE JUSTO`
-                  : `TU VUELTO ES ${formatNum(Math.abs(totalPaymentWallet))}`}
-        </Text>
-      </View>
-      <TabView
-        navigationState={{ index, routes }}
-        renderScene={renderScene}
-        onIndexChange={setIndex}
-        initialLayout={{ width: layout.width }}
-
-      />
-      <View style={{ paddingVertical: 0 }}>
-        <SingleButton
-          icon="money-bill-wave"
-          sizeIcon={22}
-          label="CONFIRMAR"
-          isLoading={isLoading}
-          disabled={
-            isLoading || (totalPaymentWallet !== 0 && totalPaymentWallet > 0)
-          }
-          onPress={handleSave}
-          style={{
-            width: "100%",
-            height: 50,
-            marginTop: 0,
-            backgroundColor:
-              totalPaymentWallet !== 0 && totalPaymentWallet > 0
-                ? colors.disable
-                : colors.secondary,
-          }}
-        />
-      </View>
-    </View>
+    <ManualPaymentBaseScreen
+        actualBills={actualBills}
+        setActualBills={setActualBills}
+        actualCoins={actualCoins}
+        setActualCoins={setActualCoins}
+        initialBillsMoneyWallet={initialBillsMoneyWallet}
+        initialCoinsMoneyWallet={initialCoinsMoneyWallet}
+        totalPaymentWallet={totalPaymentWallet}
+        setTotalPaymentWallet={setTotalPaymentWallet}
+        handleSave={handleSave}
+    />
   );
 }

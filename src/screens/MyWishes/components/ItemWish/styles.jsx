@@ -74,14 +74,15 @@ export const styles = StyleSheet.create({
   itemTextRow: {
     flex: 1,
     flexDirection: "row",
-    marginBottom: 10,
+    marginBottom: 5,
 
   },
   valueItem: {
     flex: 0.7,
     textAlign: 'right',
     fontWeight: "900",
-    color: colors.newBlack
+    color: colors.newBlack,
+    fontVariant: ['tabular-nums']
   },
   valueItemSpecial: {
     color: colors.orange,

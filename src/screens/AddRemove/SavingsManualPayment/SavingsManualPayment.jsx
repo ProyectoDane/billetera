@@ -1,16 +1,12 @@
-import React, { useContext, useState } from 'react';
-import { Text, View, useWindowDimensions, StyleSheet } from 'react-native';
-import { TabView } from 'react-native-tab-view';
-
-import SingleButton from '../../../components/SingleButton';
-import { colors, SCREEN_NAME } from '../../../constants';
-import { formatNum } from '../../../utils/functions/formatNum';
+import React, {useContext, useState} from 'react';
+import {SCREEN_NAME} from '../../../constants';
+import {formatNum} from '../../../utils/functions/formatNum';
 import getMoney from '../../../utils/functions/loadMoneyToContext';
-import { toastNotification } from '../../../utils/functions/toastNotifcation';
-import { AddRemoveContext } from '../AddRemoveContext';
-import { ManualPaymentContext } from '../ManualPaymentContext';
-import { innerSaveManualPaymentSavings } from '../utils';
-import SavingsManualPaymentBills from './SavingsManualPaymentBills/SavingsManualPaymentBills';
+import {toastNotification} from '../../../utils/functions/toastNotifcation';
+import {AddRemoveContext} from '../AddRemoveContext';
+import {ManualPaymentContext} from '../ManualPaymentContext';
+import {innerSaveManualPaymentSavings} from '../utils';
+import ManualPaymentBaseScreen from "../components/ManualPaymentBaseScreen/ManualPaymentBaseScreen";
 
 export default function SavingsManualPayment({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -26,47 +22,8 @@ export default function SavingsManualPayment({ navigation }) {
   const { totalPaymentSavings, setTotalPaymentSavings } =
     useContext(ManualPaymentContext);
 
-  const [totalFreeze] = useState(() => totalPaymentSavings);
-
-  const renderScene = ({ route }) => {
-    switch (route.key) {
-      case 'first':
-        return (
-          <SavingsManualPaymentBills
-            initialMoney={initialBillsMoneySavings}
-            actualMoney={actualBillsSavings}
-            setActualMoney={setActualBillsSavings}
-            actualMoneySavings={totalPaymentSavings}
-            setActualMoneySavings={setTotalPaymentSavings}
-            totalMoneySavings={totalPaymentSavings}
-          />
-        );
-      case 'second':
-        return (
-          <SavingsManualPaymentBills
-            initialMoney={initialCoinsMoneySavings}
-            actualMoney={actualCoinsSavings}
-            setActualMoney={setActualCoinsSavings}
-            actualMoneySavings={totalPaymentSavings}
-            setActualMoneySavings={setTotalPaymentSavings}
-            totalMoneySavings={totalPaymentSavings}
-          />
-        );
-
-      default:
-        return null;
-    }
-  };
-
   const context = useContext(AddRemoveContext);
 
-  const layout = useWindowDimensions();
-
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    { key: 'first', title: 'BILLETES' },
-    { key: 'second', title: 'MONEDAS' },
-  ]);
 
   const handleSave = async () => {
     setIsLoading(true);
@@ -98,46 +55,16 @@ export default function SavingsManualPayment({ navigation }) {
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      <View style={{ backgroundColor: '#BBB' }}>
-        <Text style={{ fontSize: 30, textAlign: 'center' }}>
-          TOTAL {formatNum(totalFreeze)}
-        </Text>
-      </View>
-      <View style={{ backgroundColor: '#BBB' }}>
-        <Text style={{ fontSize: 30, textAlign: 'center' }}>
-          {totalPaymentSavings > 0
-            ? `TE FALTA PAGAR ${formatNum(totalPaymentSavings)}`
-            : totalPaymentSavings === 0
-            ? `PAGASTE JUSTO`
-            : `TU VUELTO ES ${formatNum(Math.abs(totalPaymentSavings))}`}
-        </Text>
-      </View>
-      <TabView
-        navigationState={{ index, routes }}
-        renderScene={renderScene}
-        onIndexChange={setIndex}
-        initialLayout={{ width: layout.width }}
+      <ManualPaymentBaseScreen
+          actualBills={actualBillsSavings}
+          setActualBills={setActualBillsSavings}
+          actualCoins={actualCoinsSavings}
+          setActualCoins={setActualCoinsSavings}
+          initialBillsMoneyWallet={initialBillsMoneySavings}
+          initialCoinsMoneyWallet={initialCoinsMoneySavings}
+          totalPaymentWallet={totalPaymentSavings}
+          setTotalPaymentWallet={setTotalPaymentSavings}
+          handleSave={handleSave}
       />
-      <View style={{ paddingVertical: 5 }}>
-        <SingleButton
-          icon="money-bill-wave"
-          sizeIcon={22}
-          label="CONFIRMAR"
-          isLoading={isLoading}
-          disabled={
-            isLoading || (totalPaymentSavings !== 0 && totalPaymentSavings > 0)
-          }
-          onPress={handleSave}
-          style={{
-            marginTop: 0,
-            backgroundColor:
-              totalPaymentSavings !== 0 && totalPaymentSavings > 0
-                ? colors.disable
-                : colors.secondary,
-          }}
-        />
-      </View>
-    </View>
   );
 }

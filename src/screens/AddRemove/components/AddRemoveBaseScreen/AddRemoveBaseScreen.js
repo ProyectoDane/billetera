@@ -7,11 +7,12 @@ import { formatNum } from '../../../../utils/functions/formatNum';
 import SingleButton from '../../../../components/SingleButton';
 import { colors } from '../../../../constants';
 import { FontAwesome5 } from '@expo/vector-icons';
-import {styles as whishesStyles} from "../../../MyWishes/styles";
+import {styles as myWishesStyles} from "../../../MyWishes/styles";
 import { default as cardStyles} from "../../../../components/Card/styles";
 import {shadow} from "../../../../constants/styles";
 import {styles as itemWishStyles} from "../../../MyWishes/components/ItemWish/styles";
-import {styles as WishesStyles} from "../../../WishesHome/styles";
+import { styles as WishesStyles} from "../../../WishesHome/styles";
+import { styles as commonStyles } from '../../commonAddRemoveStyles';
 
 export default function AddRemoveBaseScreen({
   navigation,
@@ -126,25 +127,6 @@ export default function AddRemoveBaseScreen({
     }
   };
 
-  const styles = StyleSheet.create({
-    scene: {
-      flex: 1,
-    },
-    tabLabel: {
-        // backgroundColor: "red"
-        color: colors.primary
-    },
-    tabStyle: {
-      flex: 1,
-      flexDirection: 'row',
-        // backgroundColor: colors.white
-    },
-      indicatorStyle: {
-          backgroundColor: colors.primary,
-          height: 5,
-
-      }
-  });
 
   return (
     <View style={{flex: 1, justifyContent: "center", flexBasis: 60 }}>
@@ -178,20 +160,19 @@ export default function AddRemoveBaseScreen({
             renderTabBar={(props) => (
               <TabBar
                 {...props}
-                indicatorStyle={styles.indicatorStyle}
+                indicatorStyle={commonStyles.indicatorStyle}
                 style={{ backgroundColor: colors.white}}
                 renderIcon={(props) => getTabBarIcon(props)}
-                tabStyle={styles.tabStyle}
-                labelStyle={styles.tabLabel}
+                tabStyle={commonStyles.tabStyle}
+                labelStyle={commonStyles.tabLabel}
               />
             )}
           />
         </View>
       <View
         style={{
-            ...whishesStyles.bottomButtonContainer,
+            ...myWishesStyles.bottomButtonContainer,
           paddingVertical: 0,
-          //  backgroundColor: colors.primary
         }}>
         <SingleButton
           icon="money-bill-wave"
@@ -200,7 +181,7 @@ export default function AddRemoveBaseScreen({
           isLoading={isLoading}
           disabled={isLoading}
           onPress={innerHandleSave}
-          style={{ ...styles.container, width: '100%', marginBottom: 10  }}
+          style={{ ...WishesStyles.container, width: '100%', marginBottom: 10  }}
         />
       </View>
     </View>

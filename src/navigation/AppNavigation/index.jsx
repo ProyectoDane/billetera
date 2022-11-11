@@ -131,7 +131,7 @@ const HomeNavigation = () => {
         name={SCREEN_NAME.SAVINGS_MANUAL_PAYMENT}
         component={ManualMoneyTabSavings}
         options={{
-          headerTitle: () => <NavTitle title={NAVIGATION_TITLE.SAVINGS_MANUAL_PAYMENT} iconName={'piggy-bank'} />,
+          headerTitle: () => <NavTitle title={NAVIGATION_TITLE.SAVINGS_MANUAL_PAYMENT}  iconName={'piggy-bank'} />,
         }}
       />
       <HomeStack.Screen

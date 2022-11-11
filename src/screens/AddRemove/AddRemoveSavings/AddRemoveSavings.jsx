@@ -44,16 +44,16 @@ export default function AddRemoveSavings({ navigation }) {
   return (
       <AddRemoveBaseScreen
           navigation={navigation}
-                           actualBills={actualBillsSavings}
-                           setActualBills={setActualBillsSavings}
-                           actualCoins={actualCoinsSavings}
-                           setActualCoins={setActualCoinsSavings}
-                           totalMoneyWallet={totalMoneySavings} //number: El total guardado en la BD
-                           actualMoneyWallet={actualMoneySavings} //number: El total antes de guardar (auxiliar)
-                           setActualMoneyWallet={setActualMoneySavings}
-                           initialBillsMoneyWallet={initialBillsMoneySavings} //array: billetes iniciales (guardados en la BD)
-                           initialCoinsMoneyWallet={initialCoinsMoneySavings} //array: coins iniciales (guardados en la BD)
-                           handleSave={handleSave}
+          actualBills={actualBillsSavings}
+          setActualBills={setActualBillsSavings}
+          actualCoins={actualCoinsSavings}
+          setActualCoins={setActualCoinsSavings}
+          totalMoneyWallet={totalMoneySavings} //number: El total guardado en la BD
+          actualMoneyWallet={actualMoneySavings} //number: El total antes de guardar (auxiliar)
+          setActualMoneyWallet={setActualMoneySavings}
+          initialBillsMoneyWallet={initialBillsMoneySavings} //array: billetes iniciales (guardados en la BD)
+          initialCoinsMoneyWallet={initialCoinsMoneySavings} //array: coins iniciales (guardados en la BD)
+          handleSave={handleSave}
           itemTitle={'\'MIS AHORROS\''}
           itemIcon={'piggy-bank'}
       />
