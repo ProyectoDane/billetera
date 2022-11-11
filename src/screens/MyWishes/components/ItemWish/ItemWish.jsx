@@ -1,23 +1,22 @@
-import React, {useContext, useState} from 'react';
-import {Alert, Text, TouchableOpacity, View} from 'react-native';
-import {CommonActions, useNavigation} from '@react-navigation/native';
-import {FontAwesome5} from '@expo/vector-icons';
+import React, { useContext, useState } from 'react';
+import { Alert, Text, TouchableOpacity, View } from 'react-native';
+import { CommonActions, useNavigation } from '@react-navigation/native';
+import { FontAwesome5 } from '@expo/vector-icons';
 import * as Progress from 'react-native-progress/';
 
-import {colors, NAVIGATION_TITLE, SCREEN_NAME} from '../../../../constants';
-import {deleteWish, fulfillWish} from '../../../../dataAccess/Wish';
-import {styles} from './styles';
-import {formatNum} from '../../../../utils/functions/formatNum';
-import {toastNotification} from '../../../../utils/functions/toastNotifcation';
-import {AddRemoveContext} from '../../../AddRemove/AddRemoveContext';
+import { colors, NAVIGATION_TITLE, SCREEN_NAME } from '../../../../constants';
+import { deleteWish, fulfillWish } from '../../../../dataAccess/Wish';
+import { styles } from './styles';
+import { formatNum } from '../../../../utils/functions/formatNum';
+import { toastNotification } from '../../../../utils/functions/toastNotifcation';
+import { AddRemoveContext } from '../../../AddRemove/AddRemoveContext';
 
 const ItemWish = ({ name, value, wishId, testID, icon, done, onChange }) => {
   const [collapse, setCollapse] = useState(false);
   const { totalMoneySavings } = useContext(AddRemoveContext);
 
   const progress = totalMoneySavings ? totalMoneySavings / value : 0;
-  const missingMoney =
-    value - totalMoneySavings < 0 ? 0 : value - totalMoneySavings;
+  const missingMoney = value - totalMoneySavings < 0 ? 0 : value - totalMoneySavings;
   // const remainingMoney = totalMoneySavings - Number(value);
 
   const textColor = {
@@ -61,9 +60,9 @@ const ItemWish = ({ name, value, wishId, testID, icon, done, onChange }) => {
   };
 
   const handleDelete = () => {
-    Alert.alert('', 'ESTAS SEGURO QUE QUERES ELIMINAR TU DESEO?', [
+    Alert.alert('', 'QUERES ELIMINAR EL DESEO?', [
       {
-        text: 'ELIMINAR',
+        text: 'SI',
         onPress: async () => {
           await deleteWish(wishId);
           onChange();
@@ -71,69 +70,68 @@ const ItemWish = ({ name, value, wishId, testID, icon, done, onChange }) => {
         },
       },
       {
-        text: 'CANCELAR',
+        text: 'NO',
         style: 'cancel',
       },
     ]);
   };
 
   return (
-    <View style={{...styles.container, padding: 10}}>
-      <View style={{...styles.item, flex: 1, padding: 10}}>
+    <View style={{ ...styles.container, padding: 10 }}>
+      <View style={{ ...styles.item, flex: 1, padding: 10 }}>
         <View style={styles.itemTopSection}>
-          <View style={{flex: 0.20}}>
+          <View style={{ flex: 0.2 }}>
             <View style={styles.iconItem}>
-              <FontAwesome5 name={icon} size={25} color={colors.primary}/>
+              <FontAwesome5 name={icon} size={25} color={colors.primary} />
             </View>
           </View>
-          <View style={{...styles.dataItem, flex: 1.2, paddingLeft: 25}}>
-            <Progress.Bar
+          <View style={{ ...styles.dataItem, flex: 1.2, paddingLeft: 25 }}>
+            {!done && (
+              <Progress.Bar
                 color={colors.primary}
                 unfilledColor={colors.primarySoft}
-                progress={!done ? progress : 1}
+                progress={progress}
                 width={null}
                 height={15}
                 borderWidth={0}
                 borderRadius={10}
-            />
-        </View>
+              />
+            )}
+          </View>
         </View>
 
-        <View style={{flexDirection: 'column', flex: 1}}>
+        <View style={{ flexDirection: 'column', flex: 1 }}>
           <View style={styles.itemTextRow}>
             <Text style={styles.itemLabel}>{name}</Text>
             <Text style={styles.valueItem}>{formatNum(value)}</Text>
           </View>
           {!done ? (
-          <>
-            <View style={styles.itemTextRow}>
-              <Text style={styles.itemLabel}>TENES AHORRADO:</Text>
-              <Text style={styles.valueItem}>{formatNum(totalMoneySavings)}</Text>
-            </View>
-            <View style={styles.itemTextRow}>
-              <Text style={styles.itemLabel}>TE FALTAN:</Text>
-              <Text style={{...styles.valueItem, ...styles.valueItemSpecial}}>{formatNum(missingMoney)}</Text>
-            </View>
-          </>
-            ) : null}
+            <>
+              <View style={styles.itemTextRow}>
+                <Text style={styles.itemLabel}>TENES AHORRADO:</Text>
+                <Text style={styles.valueItem}>{formatNum(totalMoneySavings)}</Text>
+              </View>
+              <View style={styles.itemTextRow}>
+                <Text style={styles.itemLabel}>TE FALTAN:</Text>
+                <Text style={{ ...styles.valueItem, ...styles.valueItemSpecial }}>{formatNum(missingMoney)}</Text>
+              </View>
+            </>
+          ) : null}
         </View>
         <View>
-          <View style={{...styles.actionsContainer, ...(done? {justifyContent: "flex-end"}:{})}}>
-            { !done? (
-            <TouchableOpacity
-                onPress={handleAchieve}>
-              <Text style={{...styles.actionBtn, ...textColor}}>CUMPLIR</Text>
-            </TouchableOpacity>)
-            : null }
-            { !done? (
-            <TouchableOpacity
-                onPress={handleEdit}>
-              <Text style={{...styles.actionBtn, ...editTextColor}}>EDITAR</Text>
-            </TouchableOpacity>
-                )
-            : null }
+          <View style={{ ...styles.actionsContainer, ...(done ? { justifyContent: 'flex-end' } : {}) }}>
+            {!done ? (
+              <TouchableOpacity onPress={handleAchieve}>
+                <Text style={{ ...styles.actionBtn, ...textColor }}>CUMPLIR</Text>
+              </TouchableOpacity>
+            ) : null}
+            {!done ? (
+              <TouchableOpacity onPress={handleEdit}>
+                <Text style={{ ...styles.actionBtn, ...editTextColor }}>EDITAR</Text>
+              </TouchableOpacity>
+            ) : null}
             <TouchableOpacity onPress={handleDelete}>
-              <Text style={{...styles.actionBtn}}>ELIMINAR</Text>
+              <Text style={{ ...styles.actionBtn }}>ELIMINAR</Text>
             </TouchableOpacity>
           </View>
         </View>
