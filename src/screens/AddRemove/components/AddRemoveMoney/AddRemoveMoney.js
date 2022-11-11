@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import { ScrollView, View } from 'react-native';
 import MoneyObjectAddRemove from '../MoneyObjectAddRemove/MoneyObjectAddRemove';
 
@@ -9,12 +9,31 @@ const AddRemoveMoney = ({
   actualMoneyWallet, //number: total dinero en la instancia
   setActualMoneyWallet, //number: total dinero en la BD
   totalMoneyWallet,
+  isBuyFlow,
 }) => {
+  const [money, setMoney] = useState([]);
+
   useEffect(() => {
     if (totalMoneyWallet !== actualMoneyWallet) {
       setActualMoneyWallet(totalMoneyWallet);
     }
-    setActualMoney(JSON.parse(JSON.stringify(initialMoney)));
+    if (isBuyFlow) {
+      //solo nos quedamos con los elementos que tenemos en la billetera/ahorros
+      setActualMoney(
+          JSON.parse(
+              JSON.stringify(initialMoney.filter((elem) => elem.quantity > 0)),
+          ),
+      );
+    } else {
+      //todos los billetes posibles
+      setActualMoney(JSON.parse(JSON.stringify(initialMoney)));
+    }
+
+    setMoney(
+        JSON.parse(
+            JSON.stringify(initialMoney.filter((elem) => elem.quantity > 0)),
+        ),
+    );
   }, []);
 
   const handleAdd = (elem, index) => {
@@ -36,12 +55,13 @@ const AddRemoveMoney = ({
           paddingVertical: 10,
           paddingHorizontal: 10,
         }}>
-        {actualMoney.map((elem, index) => {
+        { (isBuyFlow? money : actualMoney).map((elem, index) => {
           return (
             <MoneyObjectAddRemove
               key={`name: ${elem.image} - amount: ${elem.amount} - ${elem.id}`}
-              handleAdd={() => handleAdd(elem, index)}
-              handleSub={() => handleSub(elem, index)}
+              handleAdd={() => isBuyFlow ? handleSub(elem, index) : handleAdd(elem, index)}
+              handleSub={() => isBuyFlow ? handleAdd(elem, index) : handleSub(elem, index)}
+              comprar={isBuyFlow}
               {...elem}
             />
           );
