@@ -46,10 +46,29 @@ export const surveyDone = async (id = 1) => {
   }
 };
 
+export const tourDone = async (id = 1) => {
+  try {
+    console.log(`Checking if tour is done for user ${id}`);
+    const result = await executeSelect(`SELECT * FROM User WHERE id = ${id}`);
+    return !!result._array[0].tourDone;
+  } catch (err) {
+    console.log('Error: ', err);
+  }
+};
+
 export const updateSurveyDone = async (id = 1, change = true) => {
   try {
     await executeQuery2(
       `UPDATE User SET surveyDone = ${change ? 1 : 0} WHERE id = ${id}`,
+    );
+  } catch (err) {
+    console.log('Error: ', err);
+  }
+};
+export const updateTourDone = async (id = 1, change = true) => {
+  try {
+    await executeQuery2(
+      `UPDATE User SET tourDone = ${change ? 1 : 0} WHERE id = ${id}`,
     );
   } catch (err) {
     console.log('Error: ', err);

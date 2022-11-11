@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, {useState, useRef, useContext} from 'react';
 import { FlatList, View } from 'react-native';
 
 import Indicators from './Indicators';
@@ -8,14 +8,21 @@ import Button from './Button';
 import { SCREEN_NAME } from '../../constants';
 
 import styles from './styles';
+import {updateTourDone} from "../../dataAccess/User";
+import {AddRemoveContext} from "../../screens/AddRemove/AddRemoveContext";
 
 const OnboardSlide = ({ slides = [], onDone, navigation }) => {
+  const { currentUser } = useContext(AddRemoveContext);
+
   if (!slides || !slides.length) return null;
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const flatListRef = useRef();
 
   const goToSurvey = () => navigation.navigate(SCREEN_NAME.SURVEY, {fromTour: true});
-  const goApp = () => navigation.navigate(SCREEN_NAME.HOME);
+  const goApp = async () => {
+    await updateTourDone(currentUser.id);
+    navigation.navigate(SCREEN_NAME.HOME);
+  }
 
   const onViewableItemsChanged = useRef((item) => {
     const index = item.viewableItems[0].index;
