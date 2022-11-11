@@ -4,6 +4,7 @@ import { AntDesign } from '@expo/vector-icons';
 
 import ItemMoney from '../ItemMoney';
 import { colors } from '../../../../constants';
+import {formatAmount} from "../../../../utils/functions/formatNum";
 
 export const MoneyObjectAddRemove = ({ comprar = false, ...elem }) => {
   const [restante, setRestante] = useState(elem.quantity);
@@ -18,7 +19,8 @@ export const MoneyObjectAddRemove = ({ comprar = false, ...elem }) => {
     setRestante(restante + 1);
   };
 
-  const BUTTON_FONT_SIZE = 40;
+  const BUTTON_FONT_SIZE = 25;
+  const QUANTITY_FONT_SIZE = 20;
 
   return (
     <View
@@ -28,16 +30,17 @@ export const MoneyObjectAddRemove = ({ comprar = false, ...elem }) => {
         justifyContent: 'space-evenly',
         paddingVertical: 5,        
       }}>
-      <View style={{ marginRight: 15 }}>
-        <ItemMoney {...elem} />
-        {comprar ? <Text>{`TENES ${restante} EN LA BILLETERA`}</Text> : null}
+      <View style={{ marginRight: 15, flex: 6 }}>
+        <ItemMoney {...elem} style={{width: "auto", }} />
+        {comprar ? <Text style={{color: colors.newBlack}}>{`TENES ${restante} EN LA BILLETERA`}</Text> : null}
       </View>
-      <View>        
+      <View style={{flex: 3, alignSelf: "center"}}>
         <View
           style={{
             flex: 1,
             flexDirection: 'row',            
-            alignItems: 'center'
+            alignItems: 'center',
+              justifyContent: "center"
           }}>
           {/**
            * si comprar es true, logica de comprar, sino logica de addremove
@@ -69,10 +72,11 @@ export const MoneyObjectAddRemove = ({ comprar = false, ...elem }) => {
           </TouchableOpacity>
 
           <Text
-            style={{              
-              fontSize: BUTTON_FONT_SIZE,
-              paddingHorizontal: 10
-            }}>
+              style={{
+                  fontSize: QUANTITY_FONT_SIZE,
+                  paddingHorizontal: 10,
+                  fontVariant: ['tabular-nums']
+              }}>
             {total}
           </Text>
           {/**

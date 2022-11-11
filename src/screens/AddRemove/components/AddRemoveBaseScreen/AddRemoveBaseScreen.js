@@ -7,6 +7,9 @@ import { formatNum } from '../../../../utils/functions/formatNum';
 import SingleButton from '../../../../components/SingleButton';
 import { colors } from '../../../../constants';
 import { FontAwesome5 } from '@expo/vector-icons';
+import {styles as whishesStyles} from "../../../MyWishes/styles";
+import { default as cardStyles} from "../../../../components/Card/styles";
+import {shadow} from "../../../../constants/styles";
 
 export default function AddRemoveBaseScreen({
   navigation,
@@ -115,9 +118,9 @@ export default function AddRemoveBaseScreen({
   const getTabBarIcon = (props) => {
     const { route } = props;
     if (route.key === 'first') {
-      return <FontAwesome5 name="money-bill-wave" size={20} color={'white'} />;
+      return <FontAwesome5 name="money-bill-wave" size={20} color={colors.primary} />;
     } else {
-      return <FontAwesome5 name="coins" size={20} color={'white'} />;
+      return <FontAwesome5 name="coins" size={20} color={colors.primary} />;
     }
   };
 
@@ -125,15 +128,24 @@ export default function AddRemoveBaseScreen({
     scene: {
       flex: 1,
     },
-    tabLabel: {},
+    tabLabel: {
+        // backgroundColor: "red"
+        color: colors.primary
+    },
     tabStyle: {
       flex: 1,
       flexDirection: 'row',
+        // backgroundColor: colors.white
     },
+      indicatorStyle: {
+          backgroundColor: colors.primary,
+          height: 5,
+
+      }
   });
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{flex: 1 }}>
       <View
         style={{
           margin: 5,
@@ -151,23 +163,27 @@ export default function AddRemoveBaseScreen({
           <Text style={{ fontSize: 30 }}>Total {formatNum(actualMoneyWallet)}</Text>
         </View>
       </View>
-      <TabView
-        navigationState={{ index, routes }}
-        renderScene={renderScene}
-        onIndexChange={setIndex}
-        initialLayout={{ width: layout.width }}
-        renderTabBar={(props) => (
-          <TabBar
-            {...props}
-            indicatorStyle={{ backgroundColor: colors.secondary, height: 5 }}
-            renderIcon={(props) => getTabBarIcon(props)}
-            tabStyle={styles.tabStyle}
-            labelStyle={styles.labelStyle}
+        <View style={{...cardStyles.card, ...shadow, flex: 1, margin: 10, width: "auto"}}>
+          <TabView
+            navigationState={{ index, routes }}
+            renderScene={renderScene}
+            onIndexChange={setIndex}
+            // initialLayout={{ width: "50%" }}
+            renderTabBar={(props) => (
+              <TabBar
+                {...props}
+                indicatorStyle={styles.indicatorStyle}
+                style={{ backgroundColor: colors.white}}
+                renderIcon={(props) => getTabBarIcon(props)}
+                tabStyle={styles.tabStyle}
+                labelStyle={styles.tabLabel}
+              />
+            )}
           />
-        )}
-      />
+        </View>
       <View
         style={{
+            ...whishesStyles.bottomButtonContainer,
           paddingVertical: 0,
           //  backgroundColor: colors.primary
         }}>
@@ -178,7 +194,7 @@ export default function AddRemoveBaseScreen({
           isLoading={isLoading}
           disabled={isLoading}
           onPress={innerHandleSave}
-          style={{ ...styles.container, width: '100%', height: 50 }}
+          style={{ ...styles.container, width: '100%', marginBottom: 10  }}
         />
       </View>
     </View>
