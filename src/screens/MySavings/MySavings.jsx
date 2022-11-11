@@ -6,13 +6,13 @@ import { AddRemoveContext } from '../AddRemove/AddRemoveContext';
 import { styles } from '../MyWallet/styles';
 import SvgWallet from '../HomeScreen/SvgWallet';
 import SvgBills from '../MyWallet/SvgBills';
-import SvgPiggyBank from '../HomeScreen/SvgPiggyBank';
 import CardSection from '../../components/Card/CardSection';
 import Card from '../../components/Card/Card';
 import Amount from '../../components/Amount/Amount';
 import CardText from '../../components/Card/CardText';
 import CardCollapse from '../../components/Card/CardCollapse';
 import WalletCarrousel from '../MyWallet/WalletCarrousel';
+import SvgCash from '../MyWallet/SvgCash';
 
 const totalize = (list) =>
   list.reduce((prevTotal, item) => {
@@ -47,7 +47,7 @@ export default function MySavings() {
           <Card expandable>
             <CardSection>
               <View style={flexrow}>
-                <SvgPiggyBank style={svgicon} />
+                <SvgCash style={svgicon} />
                 <CardText>Billetes</CardText>
               </View>
               <Amount>{totalBills}</Amount>
