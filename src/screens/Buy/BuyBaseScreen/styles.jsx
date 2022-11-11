@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
     textAlign: 'left',
   },
   resultTextAmount: {
-    flex: 1,
+    flex: 2,
     fontSize: 17,
     color: colors.newBlack,
     fontWeight: 'bold',

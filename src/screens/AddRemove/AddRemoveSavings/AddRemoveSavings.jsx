@@ -52,8 +52,11 @@ export default function AddRemoveSavings({ navigation }) {
                            actualMoneyWallet={actualMoneySavings} //number: El total antes de guardar (auxiliar)
                            setActualMoneyWallet={setActualMoneySavings}
                            initialBillsMoneyWallet={initialBillsMoneySavings} //array: billetes iniciales (guardados en la BD)
-                           initialCoinsMoneyWallet={initialCoinsMoneySavings} //array: coins  iniciales (guardados en la BD)
-                           handleSave={handleSave} />
+                           initialCoinsMoneyWallet={initialCoinsMoneySavings} //array: coins iniciales (guardados en la BD)
+                           handleSave={handleSave}
+          itemTitle={'\'MIS AHORROS\''}
+          itemIcon={'piggy-bank'}
+      />
   );
 }
 

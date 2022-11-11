@@ -42,6 +42,8 @@ export default function AddRemoveWallet({ navigation }) {
       initialBillsMoneyWallet={initialBillsMoneyWallet} //array: billetes iniciales (guardados en la BD)
       initialCoinsMoneyWallet={initialCoinsMoneyWallet} //array: coins  iniciales (guardados en la BD)
       handleSave={handleSave}
+      itemTitle={'\'MI BILLETERA\''}
+      itemIcon={'wallet'}
     />
   );
 }
