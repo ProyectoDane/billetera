@@ -40,7 +40,13 @@ const OnboardSlide = ({ slides = [], onDone, navigation }) => {
 
   return (
     <>
-      <View>
+      <View style={{
+        display: "flex",
+          flexDirection: "column",
+          flex: 1,
+          justifyContent: "flex-start"
+
+      }}>
         <FlatList
           ref={flatListRef}
           horizontal
@@ -56,7 +62,7 @@ const OnboardSlide = ({ slides = [], onDone, navigation }) => {
           onViewableItemsChanged={onViewableItemsChanged.current}
         />
 
-        <View style={{ marginTop: 100, paddingHorizontal: 11 }}>
+        <View style={{ marginTop: 10, paddingHorizontal: 11, backgroundColor: "red" }}>
           {currentSlideIndex < slides.length - 1 ? (
             <Button title="CONTINUAR" icon="long-arrow-alt-right" mode="contained" onPress={handleNext} />
           ) : (
