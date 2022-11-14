@@ -62,7 +62,7 @@ const OnboardSlide = ({ slides = [], onDone, navigation }) => {
           onViewableItemsChanged={onViewableItemsChanged.current}
         />
 
-        <View style={{ marginTop: 10, paddingHorizontal: 11, backgroundColor: "red" }}>
+        <View style={{ marginTop: 10, paddingHorizontal: 11, }}>
           {currentSlideIndex < slides.length - 1 ? (
             <Button title="CONTINUAR" icon="long-arrow-alt-right" mode="contained" onPress={handleNext} />
           ) : (
