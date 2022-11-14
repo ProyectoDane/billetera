@@ -4,9 +4,9 @@ import { Text, View, TouchableWithoutFeedback as TouchableWithNativeFeedback, To
 import { AddRemoveContext } from '../AddRemove/AddRemoveContext';
 import Layout from '../../components/Layout';
 
-import {colors, SCREEN_NAME, TABS_NAME} from '../../constants';
+import {colors, NAVIGATION_TITLE, SCREEN_NAME, TABS_NAME} from '../../constants';
 import { styles } from './styles';
-import { surveyDone } from '../../dataAccess/User';
+import {surveyDone, tourDone} from '../../dataAccess/User';
 import { LinearGradient } from 'expo-linear-gradient';
 import SvgCalculator from './SvgCalculator';
 import SvgWishes from './SvgWishes';
@@ -29,12 +29,15 @@ const HomeScreen = ({ navigation }) => {
 
   useEffect(() => {
     const isDone = async () => {
-      const done = await surveyDone(currentUser.id);
-      if (!done) {
-        setTimeout(() => {
-          navigation.navigate(SCREEN_NAME.INFORMATION_NAV, { screen: SCREEN_NAME.SURVEY, firstTime: true });
-        }, 50);
-      }
+        const [isSurveyDone, isTourDone] = await Promise.all([surveyDone(currentUser.id), tourDone(currentUser.id)]);
+
+        if (!isTourDone) {
+            navigation.navigate(SCREEN_NAME.INFORMATION_NAV, {screen: SCREEN_NAME.ONBOARDING_NAV });
+        } else if (!isSurveyDone) {
+            setTimeout(() => {
+                navigation.navigate(SCREEN_NAME.INFORMATION_NAV, {screen: SCREEN_NAME.SURVEY, firstTime: true});
+            }, 50);
+        }
     };
 
     isDone();

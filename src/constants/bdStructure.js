@@ -1,5 +1,5 @@
 export const queryCreateTables = [
-  'CREATE TABLE IF NOT EXISTS User (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, photo TEXT, surveyDone INTEGER)',
+  'CREATE TABLE IF NOT EXISTS User (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, photo TEXT, surveyDone INTEGER, tourDone INTEGER)',
   'CREATE TABLE IF NOT EXISTS Money (id INTEGER PRIMARY KEY AUTOINCREMENT, image TEXT, amount REAL, isCoins INTEGER)',
   'CREATE TABLE IF NOT EXISTS Wish (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, value INTEGER, icon TEXT, done INTEGER, userId INTEGER REFERENCES User(id))',
   'CREATE TABLE IF NOT EXISTS Wallet (id INTEGER PRIMARY KEY AUTOINCREMENT, quantity INTEGER, moneyId INTEGER REFERENCES Money(id), userId INTEGER REFERENCES User(id))',
@@ -41,4 +41,9 @@ export const queryInsertUser = [
   'INSERT INTO User (name, photo, surveyDone) SELECT "", "", 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 3);',
   'INSERT INTO User (name, photo, surveyDone) SELECT "", "", 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 4);',
   'INSERT INTO User (name, photo, surveyDone) SELECT "", "", 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 5);',
+  'INSERT INTO User (name, photo, surveyDone) SELECT "", "", 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 6);',
+  'INSERT INTO User (name, photo, surveyDone) SELECT "", "", 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 7);',
+  'INSERT INTO User (name, photo, surveyDone) SELECT "", "", 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 8);',
+  'INSERT INTO User (name, photo, surveyDone) SELECT "", "", 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 9);',
+  'INSERT INTO User (name, photo, surveyDone) SELECT "", "", 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 10);',
 ];

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, {useState, useRef, useContext} from 'react';
 import { FlatList, View } from 'react-native';
 
 import Indicators from './Indicators';
@@ -8,14 +8,21 @@ import Button from './Button';
 import { SCREEN_NAME } from '../../constants';
 
 import styles from './styles';
+import {updateTourDone} from "../../dataAccess/User";
+import {AddRemoveContext} from "../../screens/AddRemove/AddRemoveContext";
 
 const OnboardSlide = ({ slides = [], onDone, navigation }) => {
+  const { currentUser } = useContext(AddRemoveContext);
+
   if (!slides || !slides.length) return null;
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const flatListRef = useRef();
 
   const goToSurvey = () => navigation.navigate(SCREEN_NAME.SURVEY, {fromTour: true});
-  const goApp = () => navigation.navigate(SCREEN_NAME.HOME);
+  const goApp = async () => {
+    await updateTourDone(currentUser.id);
+    navigation.navigate(SCREEN_NAME.HOME);
+  }
 
   const onViewableItemsChanged = useRef((item) => {
     const index = item.viewableItems[0].index;
@@ -33,7 +40,13 @@ const OnboardSlide = ({ slides = [], onDone, navigation }) => {
 
   return (
     <>
-      <View>
+      <View style={{
+        display: "flex",
+          flexDirection: "column",
+          flex: 1,
+          justifyContent: "flex-start"
+
+      }}>
         <FlatList
           ref={flatListRef}
           horizontal
@@ -49,7 +62,7 @@ const OnboardSlide = ({ slides = [], onDone, navigation }) => {
           onViewableItemsChanged={onViewableItemsChanged.current}
         />
 
-        <View style={{ marginTop: 100, paddingHorizontal: 11 }}>
+        <View style={{ marginTop: 10, paddingHorizontal: 11, }}>
           {currentSlideIndex < slides.length - 1 ? (
             <Button title="CONTINUAR" icon="long-arrow-alt-right" mode="contained" onPress={handleNext} />
           ) : (

@@ -35,6 +35,7 @@ const About = () => {
   }
 
   const members = [
+    {"name": "Leandro Favre", "url":"https://www.linkedin.com/in/leandro-f-7a06a8171/"},
     {"name": "Guido Wagner", "url":"https://www.linkedin.com/in/guiw5/"},
     {"name": "Angles Peña", "url":"https://www.linkedin.com/in/angeles-pe%C3%B1a/"},
     {"name": "Federico Rodriguez", "url":"https://www.linkedin.com/in/rodriguezfederico/"},
@@ -48,7 +49,7 @@ const About = () => {
 
   return (
     <ScrollView style={styles.whiteContainer}>
-      <View style={{...styles.container, paddingVertical: 20, paddingHorizontal: 5}}>
+      <View style={{...styles.container, paddingVertical: 20, marginBottom: 20, paddingHorizontal: 5}}>
         {imageGenerator(daneLogo, width / 6, "http://www.proyectodane.org/")}
 
         <TextUppercase bold style={styles.title}>{labels.aboutScreen.dane}</TextUppercase>
@@ -59,7 +60,7 @@ const About = () => {
         <Text paragraph>{labels.aboutScreen.ideaText}</Text>
         <TextUppercase bold style={styles.title}>{labels.aboutScreen.development}</TextUppercase>
         <View>
-          {imageGenerator(intiveLogo, width / 6, "https://intive.com/")}
+          {imageGenerator(intiveLogo, width / 8, "https://intive.com/")}
           <MarkedList counterRenderer={disc}>
             {members.map((elem, index)=>(
                 <Text key={index} style={{ flexShrink: 2, marginVertical: 3 }}  onPress={() => Linking.openURL(elem.url)}>

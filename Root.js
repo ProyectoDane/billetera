@@ -1,12 +1,11 @@
-import React, { useEffect, useContext, useCallback, useState } from 'react';
-import { View } from 'react-native';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
+import {View} from 'react-native';
 import FlashMessage from 'react-native-flash-message';
 import * as SplashScreen from 'expo-splash-screen';
 
 import AppNavigation from './src/navigation/AppNavigation';
-import { initialization } from './src/db/queries';
-import { AddRemoveContext } from './src/screens/AddRemove/AddRemoveContext';
-import getMoney from './src/utils/functions/loadMoneyToContext';
+import {initialization} from './src/db/queries';
+import {AddRemoveContext} from './src/screens/AddRemove/AddRemoveContext';
 import {changeCurrentUserAndReload} from "./src/utils/functions/loadUserToContext";
 
 // Keep the splash screen visible while we fetch resources

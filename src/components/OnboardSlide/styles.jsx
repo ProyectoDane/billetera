@@ -4,11 +4,14 @@ const { width } = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
   indicatorContainer: {
-    position: 'absolute',
     width,
-    bottom: 20,
+    marginTop: 15,
     flexDirection: 'row',
-    paddingHorizontal: 5 
+    paddingHorizontal: 5 ,
+    flexBasis: 20,
+    flexGrow: 0,
+    flexShrink: 1,
+    justifyContent: "center",
   }
 });
 
