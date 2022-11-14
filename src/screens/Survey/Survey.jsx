@@ -33,7 +33,7 @@ const Survey = ({ navigation, route }) => {
     return unsuscribe;
   },[navigation]);
 
-  useEffect(async () => {
+  useEffect(() => {
     const init = async () => {
       const isDone = await surveyDone(currentUser.id);
       if (!isDone) {
