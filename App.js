@@ -4,7 +4,7 @@ import Root from './Root';
 import { AddRemoveProvider } from './src/screens/AddRemove/AddRemoveContext';
 import { ManualPaymentProvider } from './src/screens/AddRemove/ManualPaymentContext';
 import * as ErrorRecovery from "expo-error-recovery";
-import * as Sentry from 'sentry-expo';
+// import * as Sentry from 'sentry-expo';
 
 const defaultErrorHandler = ErrorUtils.getGlobalHandler();
 
