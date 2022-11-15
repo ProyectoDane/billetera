@@ -127,6 +127,27 @@ export default function AddRemoveBaseScreen({
     }
   };
 
+  const MyTabs = React.useMemo(() => {
+    return (
+      <TabView
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        // initialLayout={{ width: "50%" }}
+        renderTabBar={(props) => (
+          <TabBar
+            {...props}
+            indicatorStyle={commonStyles.indicatorStyle}
+            style={{ backgroundColor: colors.white }}
+            renderIcon={(props) => getTabBarIcon(props)}
+            tabStyle={commonStyles.tabStyle}
+            labelStyle={commonStyles.tabLabel}
+          />
+        )}
+      />
+    );
+  }, []);
+
 
   return (
     <View style={{flex: 1, justifyContent: "center", flexBasis: 60 }}>
@@ -152,22 +173,7 @@ export default function AddRemoveBaseScreen({
             </View>
       </View>
         <View style={{...cardStyles.card, ...shadow, flex: 15, margin: 10, width: "auto"}}>
-          <TabView
-            navigationState={{ index, routes }}
-            renderScene={renderScene}
-            onIndexChange={setIndex}
-            // initialLayout={{ width: "50%" }}
-            renderTabBar={(props) => (
-              <TabBar
-                {...props}
-                indicatorStyle={commonStyles.indicatorStyle}
-                style={{ backgroundColor: colors.white}}
-                renderIcon={(props) => getTabBarIcon(props)}
-                tabStyle={commonStyles.tabStyle}
-                labelStyle={commonStyles.tabLabel}
-              />
-            )}
-          />
+          {MyTabs}
         </View>
       <View
         style={{
