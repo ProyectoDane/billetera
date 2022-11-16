@@ -56,6 +56,7 @@ export default function SavingsManualPayment({ navigation }) {
 
   return (
       <ManualPaymentBaseScreen
+          navigation={navigation}
           actualBills={actualBillsSavings}
           setActualBills={setActualBillsSavings}
           actualCoins={actualCoinsSavings}

@@ -7,8 +7,7 @@ import {colors} from '../../../../constants';
 import {formatNum} from '../../../../utils/functions/formatNum';
 import {FontAwesome5} from "@expo/vector-icons";
 import {styles as commonStyles} from '../../commonAddRemoveStyles';
-import {styles as myWishesStyles} from "../../../MyWishes/styles";
-import {shadow} from "../../../../constants/styles";
+import {bottomButtonContainer, shadow} from "../../../../constants/styles";
 import {default as cardStyles} from "../../../../components/Card/styles";
 import {styles as itemWishStyles} from "../../../MyWishes/components/ItemWish/styles";
 import AddRemoveMoney from "../../components/AddRemoveMoney";
@@ -68,6 +67,12 @@ export default function ManualPaymentBaseScreen({ navigation,
         { key: 'first', title: 'BILLETES' },
         { key: 'second', title: 'MONEDAS' },
     ]);
+
+    const innerHandleSave = async function () {
+        setIsLoading(true);
+        await handleSave();
+        setIsLoading(false);
+    }
 
     const getTabBarIcon = (props) => {
         const { route } = props;
@@ -136,8 +141,10 @@ export default function ManualPaymentBaseScreen({ navigation,
             </View>
             <View
                 style={{
-                    ...myWishesStyles.bottomButtonContainer,
-                    paddingVertical: 0,
+                    ...bottomButtonContainer,
+                    flexBasis: 130,
+                    paddingBottom: 40,
+                    paddingTop: 15
                 }}>
                 <SingleButton
                     icon="money-bill-wave"
@@ -147,16 +154,29 @@ export default function ManualPaymentBaseScreen({ navigation,
                     disabled={
                         isLoading || (totalPaymentWallet !== 0 && totalPaymentWallet > 0)
                     }
-                    onPress={handleSave}
+                    onPress={innerHandleSave}
                     style={{
                         width: "100%",
+                        marginBottom: 10,
                         backgroundColor:
                             totalPaymentWallet !== 0 && totalPaymentWallet > 0
                                 ? colors.disable
                                 : colors.primary,
                     }}
                 />
-
+                <SingleButton
+                    style={{
+                        width: "100%",
+                        backgroundColor: colors.white,
+                        borderWidth: 2,
+                        borderColor: colors.primary,
+                        color: colors.primary
+                    }}
+                    label="VOLVER"
+                    onPress={() => {
+                        navigation.goBack();
+                    }}
+                />
             </View>
         </View>
     );

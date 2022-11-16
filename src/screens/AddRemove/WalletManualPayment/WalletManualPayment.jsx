@@ -54,6 +54,7 @@ export default function WalletManualPayment({ navigation }) {
 
   return (
     <ManualPaymentBaseScreen
+        navigation={navigation}
         actualBills={actualBills}
         setActualBills={setActualBills}
         actualCoins={actualCoins}
