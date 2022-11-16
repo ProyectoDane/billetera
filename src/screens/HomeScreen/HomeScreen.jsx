@@ -54,7 +54,7 @@ const HomeScreen = ({ navigation }) => {
         ),
       });
     else navigation.setOptions({...appNavigationScreenOptions, headerTitle: 'INICIO'});
-  }, [currentUser.id]);
+  }, [currentUser]);
 
   const marginTop = { marginTop: hasPurchase ? '12%' : '6%' };
   const flexrow = { flex: 1, flexDirection: 'row', alignItems: 'center' };
