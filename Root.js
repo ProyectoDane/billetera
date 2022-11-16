@@ -6,33 +6,32 @@ import * as SplashScreen from 'expo-splash-screen';
 import AppNavigation from './src/navigation/AppNavigation';
 import {initialization} from './src/db/queries';
 import {AddRemoveContext} from './src/screens/AddRemove/AddRemoveContext';
-import {changeCurrentUserAndReload} from "./src/utils/functions/loadUserToContext";
+import getMoney from './src/utils/functions/loadMoneyToContext';
+import {getUser} from './src/dataAccess/User';
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
+const INIT_USER_ID = 1;
 
 const Root = () => {
   const context = useContext(AddRemoveContext);
   const [appIsReady, setAppIsReady] = useState(false);
+  const currentUserId = context.currentUser?.id;
 
   useEffect(() => {
-    async function doEffect() {
+    // anytime the userId changes will load the money
+    if (currentUserId) {
+      getMoney(context);
+    }
+  }, [currentUserId]);
+
+  useEffect(() => {
+    async function firstLoad() {
       try {
         await initialization();
-      } catch (e) {
-        console.warn(e);
-      } finally {
-        // setAppIsReady(true);
-      }
-    }
-    doEffect();
-  }, []);
-
-  useEffect(() => {
-    async function doEffect() {
-      try {
-        let userId = context.currentUser?.id || 1;
-        await changeCurrentUserAndReload(userId, context);
+        const user = await getUser(INIT_USER_ID);
+        console.log(`load user to context ${user.name}`);
+        context.setCurrentUser(user);
       } catch (e) {
         console.warn(e);
       } finally {
@@ -40,18 +39,12 @@ const Root = () => {
       }
     }
 
-    doEffect();
-  }, [context.currentUser?.id || 1]);
-
+    firstLoad();
+  }, []);
 
   const onLayoutRootView = useCallback(() => {
-    async function doEffect() {
-      if (appIsReady) {
-        await SplashScreen.hideAsync();
-      }
-    }
-    doEffect();
-  }, [appIsReady]);
+    SplashScreen.hideAsync();
+  }, []);
 
   if (!appIsReady) return null;
   return (
