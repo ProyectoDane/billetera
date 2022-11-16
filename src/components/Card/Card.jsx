@@ -33,12 +33,14 @@ const Card = ({ expandable = false, children, containerStyle, style }) => {
           <TouchableWithoutFeedback onPress={expandable ? toggle : null}>
             <View style={styles2}>{children}</View>
           </TouchableWithoutFeedback>
-          <AnimatedBox open={expanded}>
-            <View>
-              <View style={divider} />
-              {content}
-            </View>
-          </AnimatedBox>
+          { expandable ? (
+            <AnimatedBox open={expanded}>
+              <View>
+                <View style={divider} />
+                {content}
+              </View>
+            </AnimatedBox>
+          ) : null }
         </View>
       </View>
     </ToggleContext.Provider>
