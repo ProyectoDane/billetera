@@ -7,15 +7,14 @@ export const styles = StyleSheet.create({
     },
     tabLabel: {
         // backgroundColor: "red"
-        color: colors.primary
+        color: colors.newBlack,
     },
     tabStyle: {
         flex: 1,
         flexDirection: 'row',
     },
     indicatorStyle: {
-        backgroundColor: colors.primary,
-        height: 5,
-
+        backgroundColor: '#ef8639',
+        height: 3,
     }
 });

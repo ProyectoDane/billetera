@@ -20,7 +20,7 @@ const SingleButton = ({
   style = style || {};
   return (
     <TouchableOpacity
-      style={{ ...styles.baseBtn, ...style }}
+      style={{ ...styles.baseBtn, ...style, ...(disabled && !isLoading? { opacity: 0.4 } : {}) }}
       onPress={onPress}
       disabled={disabled}>
       {isLoading ? (

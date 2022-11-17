@@ -1,18 +1,20 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { Alert, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
+import { Alert, View } from 'react-native';
 import { TabBar, TabView } from 'react-native-tab-view';
 import AddRemoveMoney from '../AddRemoveMoney';
-import { formatNum } from '../../../../utils/functions/formatNum';
 import SingleButton from '../../../../components/SingleButton';
 import { colors } from '../../../../constants';
 import { FontAwesome5 } from '@expo/vector-icons';
 import {styles as myWishesStyles} from "../../../MyWishes/styles";
 import { default as cardStyles} from "../../../../components/Card/styles";
 import {shadow} from "../../../../constants/styles";
-import {styles as itemWishStyles} from "../../../MyWishes/components/ItemWish/styles";
 import { styles as WishesStyles} from "../../../WishesHome/styles";
 import { styles as commonStyles } from '../../commonAddRemoveStyles';
+import Card from '../../../../components/Card/Card';
+import CardSection from '../../../../components/Card/CardSection';
+import CardText from '../../../../components/Card/CardText';
+import Amount from '../../../../components/Amount/Amount';
 
 export default function AddRemoveBaseScreen({
   navigation,
@@ -26,8 +28,8 @@ export default function AddRemoveBaseScreen({
   initialBillsMoneyWallet, //array: billetes iniciales (guardados en la BD)
   initialCoinsMoneyWallet, //array: coins  iniciales (guardados en la BD)
   handleSave,
-    itemTitle,
-    itemIcon
+  itemTitle,
+  itemIcon,
 }) {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -72,7 +74,7 @@ export default function AddRemoveBaseScreen({
   React.useEffect(() => {
     setHasUnsavedChanges(Boolean(totalMoneyWallet - actualMoneyWallet != 0));
     // console.log(`${actualMoneyWallet}, ${totalMoneyWallet}, ${hasUnsavedChanges}`);
-  }, [actualMoneyWallet]);
+  }, [totalMoneyWallet, actualMoneyWallet]);
 
   const innerHandleSave = async () => {
     setIsLoading(true);
@@ -121,9 +123,9 @@ export default function AddRemoveBaseScreen({
   const getTabBarIcon = (props) => {
     const { route } = props;
     if (route.key === 'first') {
-      return <FontAwesome5 name="money-bill-wave" size={20} color={colors.primary} />;
+      return <FontAwesome5 name="money-bill-wave" size={22} color={colors.primary} style={{marginRight:5}} />;
     } else {
-      return <FontAwesome5 name="coins" size={20} color={colors.primary} />;
+      return <FontAwesome5 name="coins" size={22} color={colors.primary} style={{marginRight:5}}/>;
     }
   };
 
@@ -137,8 +139,9 @@ export default function AddRemoveBaseScreen({
         renderTabBar={(props) => (
           <TabBar
             {...props}
+            pressColor={'transparent'}
             indicatorStyle={commonStyles.indicatorStyle}
-            style={{ backgroundColor: colors.white }}
+            style={{ backgroundColor: colors.white, height: 55 }}
             renderIcon={(props) => getTabBarIcon(props)}
             tabStyle={commonStyles.tabStyle}
             labelStyle={commonStyles.tabLabel}
@@ -149,32 +152,21 @@ export default function AddRemoveBaseScreen({
   }, []);
 
 
+  const flexrow = {flex: 1, flexDirection: 'row', alignItems: 'center'};
   return (
-    <View style={{flex: 1, justifyContent: "center", flexBasis: 60 }}>
-        <View
-            style={{
-                ...cardStyles.card,
-                margin: 10,
-                width: "auto",
-                flex: 1,
-                flexShrink: 0,
-                flexGrow: 1,
-                ...shadow,
-            }}>
-            <View style={{...itemWishStyles.itemTextRow, marginVertical: 10}}>
-                <View style={{...WishesStyles.icon, padding: 10}}>
-                    <FontAwesome5 name={itemIcon} size={16}
-                                  style={{color: colors.primary}} />
-                </View>
-                <Text style={{...itemWishStyles.itemLabel}}>
-                    TOTAL {itemTitle}</Text>
-                <Text
-                    style={{...itemWishStyles.valueItem, ...itemWishStyles.valueItemSpecial}}>{formatNum(actualMoneyWallet)}</Text>
-            </View>
+    <View style={{flex: 1, justifyContent: 'center', flexBasis: 60}}>
+      <Card containerStyle={{flex: 0.9, maxHeight: 100}}>
+        <CardSection>
+          <View style={flexrow}>
+            {itemIcon}
+            <CardText>{itemTitle}</CardText>
+          </View>
+          <Amount>{actualMoneyWallet}</Amount>
+        </CardSection>
+      </Card>
+      <View style={{...cardStyles.card, ...shadow, flex: 5, margin: 10, width: 'auto'}}>
+        {MyTabs}
       </View>
-        <View style={{...cardStyles.card, ...shadow, flex: 15, margin: 10, width: "auto"}}>
-          {MyTabs}
-        </View>
       <View
         style={{
             ...myWishesStyles.bottomButtonContainer,
@@ -185,7 +177,7 @@ export default function AddRemoveBaseScreen({
           sizeIcon={22}
           label="GUARDAR"
           isLoading={isLoading}
-          disabled={isLoading}
+          disabled={!hasUnsavedChanges}
           onPress={innerHandleSave}
           style={{ ...WishesStyles.container, width: '100%', marginBottom: 10  }}
         />

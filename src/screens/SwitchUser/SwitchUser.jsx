@@ -1,7 +1,6 @@
 import Layout from "../../components/Layout";
 import {styles as WalletStyles} from "../MyWallet/styles";
 import {Image, ScrollView, View} from "react-native";
-import {changeCurrentUserAndReload, loadUserToContext} from "../../utils/functions/loadUserToContext";
 import React, {useContext, useEffect, useState} from "react";
 import {AddRemoveContext} from "../AddRemove/AddRemoveContext";
 import {colors, SCREEN_NAME} from "../../constants";
@@ -36,9 +35,10 @@ const SwitchUser = ({navigation, route}) => {
     async function handleClick(userId) {
         // navigation.navigate(SCREEN_NAME.LOADING, {switchUserId:userId });
 
-        let user = await loadUserToContext(userId, context);
-        console.log(`current user name: ${user.name}`);
-        if (user.name == "") {
+        const selectedUser = users.find(u => u.id === userId);
+        context.setCurrentUser(selectedUser);
+        console.log(`Switched user name: ${selectedUser.name}`);
+        if (selectedUser.name == "") {
             navigation.navigate(SCREEN_NAME.PROFILE);
         } else {
             navigation.navigate(SCREEN_NAME.HOME);

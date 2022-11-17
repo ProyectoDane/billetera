@@ -6,6 +6,7 @@ import getMoney from '../../../utils/functions/loadMoneyToContext';
 import {toastNotification} from '../../../utils/functions/toastNotifcation';
 import {SCREEN_NAME} from '../../../constants';
 import AddRemoveBaseScreen from '../components/AddRemoveBaseScreen/AddRemoveBaseScreen';
+import SvgPiggyBank from '../../HomeScreen/SvgPiggyBank';
 
 export default function AddRemoveSavings({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -40,7 +41,8 @@ export default function AddRemoveSavings({ navigation }) {
     );
     navigation.navigate(SCREEN_NAME.HOME);
   };
-
+  
+  const svgicon = {width: 58, aspectRatio: 1 / 1, marginRight: 12};  
   return (
       <AddRemoveBaseScreen
           navigation={navigation}
@@ -54,8 +56,8 @@ export default function AddRemoveSavings({ navigation }) {
           initialBillsMoneyWallet={initialBillsMoneySavings} //array: billetes iniciales (guardados en la BD)
           initialCoinsMoneyWallet={initialCoinsMoneySavings} //array: coins iniciales (guardados en la BD)
           handleSave={handleSave}
-          itemTitle={'\'MIS AHORROS\''}
-          itemIcon={'piggy-bank'}
+          itemTitle={'MIS AHORROS'}
+          itemIcon={<SvgPiggyBank style={svgicon} />}
       />
   );
 }

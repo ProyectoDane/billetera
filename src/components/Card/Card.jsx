@@ -18,7 +18,11 @@ const Card = ({ expandable = false, children, containerStyle, style }) => {
     [expanded, content],
   );
 
-  const cardWrapper = StyleSheet.flatten([{ padding: 12 }, expandable ? { flex: 1 } : { flex: 0.42 }, containerStyle]);
+  const cardWrapper = StyleSheet.flatten([
+    {padding: 12},
+    expandable ? {flex: 1} : {flex: 0.42, maxHeight: 160},
+    containerStyle,
+  ]);
   const styles2 = StyleSheet.flatten([expandable ? styles.cardContent : styles.cardContentFlex, style]);
   const divider = {
     borderBottomWidth: 1,

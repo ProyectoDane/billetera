@@ -36,14 +36,14 @@ export const queryInsertMoney = [
 ];
 
 export const queryInsertUser = [
-  'INSERT INTO User (name, photo, surveyDone) SELECT "", "", 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 1);',
-  'INSERT INTO User (name, photo, surveyDone) SELECT "", "", 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 2);',
-  'INSERT INTO User (name, photo, surveyDone) SELECT "", "", 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 3);',
-  'INSERT INTO User (name, photo, surveyDone) SELECT "", "", 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 4);',
-  'INSERT INTO User (name, photo, surveyDone) SELECT "", "", 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 5);',
-  'INSERT INTO User (name, photo, surveyDone) SELECT "", "", 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 6);',
-  'INSERT INTO User (name, photo, surveyDone) SELECT "", "", 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 7);',
-  'INSERT INTO User (name, photo, surveyDone) SELECT "", "", 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 8);',
-  'INSERT INTO User (name, photo, surveyDone) SELECT "", "", 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 9);',
-  'INSERT INTO User (name, photo, surveyDone) SELECT "", "", 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 10);',
+  'INSERT INTO User (name, photo, surveyDone, tourDone) SELECT "", "", 0, 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 1);',
+  'INSERT INTO User (name, photo, surveyDone, tourDone) SELECT "", "", 0, 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 2);',
+  'INSERT INTO User (name, photo, surveyDone, tourDone) SELECT "", "", 0, 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 3);',
+  'INSERT INTO User (name, photo, surveyDone, tourDone) SELECT "", "", 0, 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 4);',
+  'INSERT INTO User (name, photo, surveyDone, tourDone) SELECT "", "", 0, 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 5);',
+  'INSERT INTO User (name, photo, surveyDone, tourDone) SELECT "", "", 0, 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 6);',
+  'INSERT INTO User (name, photo, surveyDone, tourDone) SELECT "", "", 0, 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 7);',
+  'INSERT INTO User (name, photo, surveyDone, tourDone) SELECT "", "", 0, 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 8);',
+  'INSERT INTO User (name, photo, surveyDone, tourDone) SELECT "", "", 0, 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 9);',
+  'INSERT INTO User (name, photo, surveyDone, tourDone) SELECT "", "", 0, 0 WHERE NOT EXISTS(SELECT 1 FROM User WHERE id = 10);',
 ];
