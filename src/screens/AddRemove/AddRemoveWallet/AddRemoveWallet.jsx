@@ -6,6 +6,7 @@ import getMoney from '../../../utils/functions/loadMoneyToContext';
 import { toastNotification } from '../../../utils/functions/toastNotifcation';
 import { SCREEN_NAME } from '../../../constants';
 import AddRemoveBaseScreen from '../components/AddRemoveBaseScreen/AddRemoveBaseScreen';
+import SvgWallet from '../../HomeScreen/SvgWallet';
 
 export default function AddRemoveWallet({ navigation }) {
   const {
@@ -29,6 +30,7 @@ export default function AddRemoveWallet({ navigation }) {
     navigation.navigate(SCREEN_NAME.HOME);
   };
 
+  const svgicon = {width: 58, aspectRatio: 1 / 1, marginRight: 12};
   return (
     <AddRemoveBaseScreen
       navigation={navigation}
@@ -42,8 +44,8 @@ export default function AddRemoveWallet({ navigation }) {
       initialBillsMoneyWallet={initialBillsMoneyWallet} //array: billetes iniciales (guardados en la BD)
       initialCoinsMoneyWallet={initialCoinsMoneyWallet} //array: coins  iniciales (guardados en la BD)
       handleSave={handleSave}
-      itemTitle={'\'MI BILLETERA\''}
-      itemIcon={'wallet'}
+      itemTitle={'MI BILLETERA'}
+      itemIcon={<SvgWallet style={svgicon} />}
     />
   );
 }

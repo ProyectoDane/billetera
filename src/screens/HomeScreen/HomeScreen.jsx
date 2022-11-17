@@ -41,7 +41,7 @@ const HomeScreen = ({ navigation }) => {
     };
 
     isDone();
-  }, []);
+  }, [currentUser.id]);
 
   useEffect(() => {
     let name = currentUser.name;

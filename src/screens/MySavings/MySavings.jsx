@@ -4,7 +4,7 @@ import { ScrollView, View } from 'react-native';
 import Layout from '../../components/Layout';
 import { AddRemoveContext } from '../AddRemove/AddRemoveContext';
 import { styles } from '../MyWallet/styles';
-import SvgWallet from '../HomeScreen/SvgWallet';
+import SvgPiggyBank from '../HomeScreen/SvgPiggyBank';
 import SvgBills from '../MyWallet/SvgBills';
 import CardSection from '../../components/Card/CardSection';
 import Card from '../../components/Card/Card';
@@ -36,7 +36,7 @@ export default function MySavings() {
           <Card containerStyle={{ flex: 1 }}>
             <CardSection>
               <View style={flexrow}>
-                <SvgWallet style={svgicon} />
+                <SvgPiggyBank style={svgicon} />
                 <CardText>total ahorros</CardText>
               </View>
               <Amount>{totalMoneySavings}</Amount>
