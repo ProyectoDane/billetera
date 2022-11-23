@@ -23,7 +23,19 @@ export const AddRemoveProvider = ({ children }) => {
 
   const [currentUser, setCurrentUser] = useState({});
   const [hasPurchase, setPurchase] = useState(false);
-  const [appRefresh, forceRefresh] = useState(null);
+  const [appRefresh, setAppRefresh] = useState(null);
+
+  const forceRefresh = () => setAppRefresh(new Date());
+
+  const waitRefresh = async () => {
+    forceRefresh();
+    await wait();
+  };
+
+  const wait = async (ms = 1000) => {
+    await new Promise((resolve) => setTimeout(resolve, ms));
+  };
+
   return (
     <AddRemoveContext.Provider
       value={{
@@ -72,6 +84,8 @@ export const AddRemoveProvider = ({ children }) => {
 
         appRefresh,
         forceRefresh,
+        waitRefresh,
+        wait,
       }}>
       {children}
     </AddRemoveContext.Provider>

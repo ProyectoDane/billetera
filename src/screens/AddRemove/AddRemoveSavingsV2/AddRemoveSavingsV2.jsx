@@ -1,7 +1,7 @@
 import React, {useContext, useState, useEffect, useMemo} from 'react';
 import {AddRemoveContext} from '../AddRemoveContext';
 import {innerSaveAddRemoveSavings} from '../utils';
-// import getMoney from '../../../utils/functions/loadMoneyToContext';
+import {calculateChanges} from '../../../utils/functions/calculateChanges';
 import {toastNotification} from '../../../utils/functions/toastNotifcation';
 import {colors, SCREEN_NAME} from '../../../constants';
 import SvgPiggyBank from '../../HomeScreen/SvgPiggyBank';
@@ -33,7 +33,7 @@ export default function AddRemoveSavings({navigation}) {
     initialBillsMoneySavings,
     initialCoinsMoneySavings,
     currentUser,
-    forceRefresh,
+    waitRefresh,
   } = context;
   const [isLoading, setIsLoading] = useState(false);
   const [index, setIndex] = React.useState(0);
@@ -51,13 +51,20 @@ export default function AddRemoveSavings({navigation}) {
   //Check for dirty changes before exiting
   useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', (e) => {
+      const onDiscardPress = () => {
+        setActualMoneySavings(totalMoneySavings);
+        setActualBillsSavings(initialBillsMoneySavings);
+        setActualCoinsSavings(initialCoinsMoneySavings);
+        navigation.dispatch(e.data.action);
+      };
+
       if (!isLoading && hasUnsavedChanges) {
         e.preventDefault();
-        promptAlert(totalMoneySavings, actualMoneySavings, hasUnsavedChanges, () => navigation.dispatch(e.data.action));
+        promptAlert(totalMoneySavings, actualMoneySavings, hasUnsavedChanges, onDiscardPress);
       } else return;
     });
     return unsubscribe;
-  }, [navigation, hasUnsavedChanges, isLoading]);
+  }, [navigation, totalMoneySavings, actualMoneySavings, hasUnsavedChanges, isLoading]);
 
   const handleSave = async () => {
     setIsLoading(true);
@@ -68,32 +75,35 @@ export default function AddRemoveSavings({navigation}) {
       initialBillsMoneySavings,
       actualBillsSavings,
     );
-    forceRefresh(new Date());
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await waitRefresh();
     toastNotification('SE ACTUALIZO EL DINERO CORRECTAMENTE!', 'success', 'success');
     navigation.navigate(SCREEN_NAME.HOME);
   };
 
-  const renderScene = useMemo(
-    () =>
-      SceneMap({
-        first: () => (
+  const renderScene = SceneMap({
+    first: useMemo(
+      () => () =>
+        (
           <AddRemoveMoneyV2
             moneyArray={initialBillsMoneySavings}
             setCurrentMoney={setActualBillsSavings}
             setTotal={setActualMoneySavings}
           />
         ),
-        second: () => (
+      [initialBillsMoneySavings],
+    ),
+    second: useMemo(
+      () => () =>
+        (
           <AddRemoveMoneyV2
             moneyArray={initialCoinsMoneySavings}
             setCurrentMoney={setActualCoinsSavings}
             setTotal={setActualMoneySavings}
           />
         ),
-      }),
-    [totalMoneySavings],
-  );
+      [initialCoinsMoneySavings],
+    ),
+  });
 
   const svgicon = {width: 58, aspectRatio: 1 / 1, marginRight: 12};
   const flexrow = {flex: 1, flexDirection: 'row', alignItems: 'center'};
@@ -171,15 +181,5 @@ export const promptAlert = (total, actual, hasChanges, onPress) => {
         onPress: onPress,
       },
     ],
-  );
-};
-export const calculateChanges = (initialBills, initialCoins, actualBills, actualCoins) => {
-  const initialBillsQuantities = initialBills.map((x) => x.quantity);
-  const initialCoinsQuantities = initialCoins.map((x) => x.quantity);
-  const actualBillsQuantities = actualBills.map((x) => x.quantity);
-  const actualCoinsQuantities = actualCoins.map((x) => x.quantity);
-  return (
-    JSON.stringify(initialBillsQuantities) !== JSON.stringify(actualBillsQuantities) ||
-    JSON.stringify(initialCoinsQuantities) !== JSON.stringify(actualCoinsQuantities)
   );
 };
