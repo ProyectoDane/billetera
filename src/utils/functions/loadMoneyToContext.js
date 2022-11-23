@@ -1,6 +1,6 @@
 import { getBills, getCoins } from '../../dataAccess/Money';
-import { getDineroWallet, getTotalWallet } from '../../dataAccess/Wallet';
-import { getDineroSaving, getTotalSaving } from '../../dataAccess/Savings';
+import { getDineroWallet } from '../../dataAccess/Wallet';
+import { getDineroSaving } from '../../dataAccess/Savings';
 import {getUser} from "../../dataAccess/User";
 
 async function getTotal(userId) {
@@ -50,9 +50,6 @@ async function getMoney(context) {
   let billetes = await getBills(); //Maestro de billetes
   let monedas = await getCoins(); //Maestro de monedas
 
-  let billetesSavings = billetes.map(({...el}) => el); // JSON.parse(JSON.stringify(billetes));
-  let monedasSavings = monedas.map(({...el}) => el); // JSON.parse(JSON.stringify(monedas));
-
   const { moneyWallet, totalWallet } = await getTotal(user.id);
   const { moneySavings, totalSavings } = await getTotalSavings(user.id);
 
@@ -78,7 +75,7 @@ async function getMoney(context) {
     return auxEl;
   });
 
-  let totalBilletesSavings = billetesSavings.map((el) => {
+  let totalBilletesSavings = billetes.map((el) => {
     let indexMoney = idMoneySavings.indexOf(el.id);
     let auxEl = {...el};
     if (indexMoney > -1) {
@@ -88,7 +85,7 @@ async function getMoney(context) {
     return auxEl;
   });
 
-  let totalCoinsSavings = monedasSavings.map((el) => {
+  let totalCoinsSavings = monedas.map((el) => {
     let indexMoney = idMoneySavings.indexOf(el.id);
     let auxEl = {...el};
     if (indexMoney > -1) {

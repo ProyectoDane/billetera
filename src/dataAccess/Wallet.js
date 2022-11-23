@@ -23,7 +23,7 @@ export const getTotalWallet = async (userId = 1) => {
 
 export const getDineroWallet = async (userId = 1) => {
   let money = [];
-  let query = `SELECT * FROM Wallet AS w , Money AS m WHERE w.moneyId = m.id AND w.userId =?`;
+  let query = `SELECT * FROM Wallet w JOIN Money m ON w.moneyId = m.id WHERE w.userId =?`;
 
   try {
     let result = await executeQuery2(query, [userId]);

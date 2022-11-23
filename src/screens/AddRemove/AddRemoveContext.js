@@ -23,6 +23,7 @@ export const AddRemoveProvider = ({ children }) => {
 
   const [currentUser, setCurrentUser] = useState({});
   const [hasPurchase, setPurchase] = useState(false);
+  const [appRefresh, forceRefresh] = useState(null);
   return (
     <AddRemoveContext.Provider
       value={{
@@ -68,6 +69,9 @@ export const AddRemoveProvider = ({ children }) => {
         //purchase
         hasPurchase,
         setPurchase,
+
+        appRefresh,
+        forceRefresh,
       }}>
       {children}
     </AddRemoveContext.Provider>
