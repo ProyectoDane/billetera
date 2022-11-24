@@ -38,8 +38,8 @@ const ImagePicker = ({setImage}) => {
 
         const result = await ImagePickerExpo.launchCameraAsync();
 
-        if (!result.cancelled) {
-            setImage(result.uri);
+        if (!result.canceled) {
+            setImage(result.assets[0].uri);
         }
     };
 
