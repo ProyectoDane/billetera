@@ -80,30 +80,26 @@ export default function AddRemoveSavings({navigation}) {
     navigation.navigate(SCREEN_NAME.HOME);
   };
 
-  const renderScene = SceneMap({
-    first: useMemo(
-      () => () =>
-        (
+  const renderScene = useMemo(
+    () =>
+      SceneMap({
+        first: () => (
           <AddRemoveMoneyV2
             moneyArray={initialBillsMoneySavings}
             setCurrentMoney={setActualBillsSavings}
             setTotal={setActualMoneySavings}
           />
         ),
-      [initialBillsMoneySavings],
-    ),
-    second: useMemo(
-      () => () =>
-        (
+        second: () => (
           <AddRemoveMoneyV2
             moneyArray={initialCoinsMoneySavings}
             setCurrentMoney={setActualCoinsSavings}
             setTotal={setActualMoneySavings}
           />
         ),
-      [initialCoinsMoneySavings],
-    ),
-  });
+      }),
+    [totalMoneySavings],
+  );
 
   const svgicon = {width: 58, aspectRatio: 1 / 1, marginRight: 12};
   const flexrow = {flex: 1, flexDirection: 'row', alignItems: 'center'};
