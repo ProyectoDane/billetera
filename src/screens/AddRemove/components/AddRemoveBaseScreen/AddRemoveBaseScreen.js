@@ -149,7 +149,7 @@ export default function AddRemoveBaseScreen({
         )}
       />
     );
-  }, []);
+  }, [actualMoneyWallet]);
 
 
   const flexrow = {flex: 1, flexDirection: 'row', alignItems: 'center'};
