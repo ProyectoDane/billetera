@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {ScrollView, View} from 'react-native';
 import AddRemoveMoneyItem from './AddRemoveMoneyItem';
 
-const AddRemoveMoneyV2 = ({moneyArray, setCurrentMoney, setTotal}) => {
+const AddRemoveMoney = ({moneyArray, setCurrentMoney, setTotal}) => {
   const [moneyMap, setMoneyMap] = useState({});
   const moneyDict = moneyArray.reduce((dict, {image, quantity}) => {
     dict[image] = quantity;
@@ -49,4 +49,4 @@ const AddRemoveMoneyV2 = ({moneyArray, setCurrentMoney, setTotal}) => {
   );
 };
 
-export default AddRemoveMoneyV2;
+export default AddRemoveMoney;

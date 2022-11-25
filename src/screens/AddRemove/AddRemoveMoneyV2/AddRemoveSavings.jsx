@@ -7,7 +7,7 @@ import {colors, SCREEN_NAME} from '../../../constants';
 import SvgPiggyBank from '../../HomeScreen/SvgPiggyBank';
 import {Alert, View} from 'react-native';
 import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
-import AddRemoveMoneyV2 from './AddRemoveMoneyV2';
+import AddRemoveMoney from './AddRemoveMoney';
 import SingleButton from '../../../components/SingleButton';
 import {FontAwesome5} from '@expo/vector-icons';
 import {styles as myWishesStyles} from '../../MyWishes/styles';
@@ -84,14 +84,14 @@ export default function AddRemoveSavings({navigation}) {
     () =>
       SceneMap({
         first: () => (
-          <AddRemoveMoneyV2
+          <AddRemoveMoney
             moneyArray={initialBillsMoneySavings}
             setCurrentMoney={setActualBillsSavings}
             setTotal={setActualMoneySavings}
           />
         ),
         second: () => (
-          <AddRemoveMoneyV2
+          <AddRemoveMoney
             moneyArray={initialCoinsMoneySavings}
             setCurrentMoney={setActualCoinsSavings}
             setTotal={setActualMoneySavings}
