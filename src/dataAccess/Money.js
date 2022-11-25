@@ -34,24 +34,17 @@ async function innerGetMoney(isCoin = 0) {
 }
 
 export const getBills = async () => {
-    if (billsCache.length > 0)
-        return [].concat(billsCache);
-
-    // console.log("full getBills");
+    if (billsCache.length > 0) return billsCache;
 
     let money = await innerGetMoney(0);
-    billsCache = billsCache.concat(money);
+    billsCache = money;
     return money;
 };
-
 
 export const getCoins = async () => {
-    if (coinsCache.length > 0)
-        return [].concat(coinsCache);
+    if (coinsCache.length > 0) return coinsCache;
 
     let money = await innerGetMoney(1);
-    coinsCache = coinsCache.concat(money);
+    coinsCache = money;
     return money;
 };
-
-

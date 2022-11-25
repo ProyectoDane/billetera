@@ -1,7 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import HomeScreen from '../../screens/HomeScreen';
 import Calculator from '../../screens/Calculator';
@@ -24,7 +23,7 @@ import WalletBuy from '../../screens/Buy/WalletBuy';
 import SavingsBuy from '../../screens/Buy/SavingsBuy';
 import SavingsManualPayment from '../../screens/AddRemove/SavingsManualPayment';
 import AddRemoveWallet from '../../screens/AddRemove/AddRemoveWallet';
-import AddRemoveSavings from '../../screens/AddRemove/AddRemoveSavings';
+import AddRemoveSavingsV2 from '../../screens/AddRemove/AddRemoveSavingsV2';
 import WalletManualPayment from '../../screens/AddRemove/WalletManualPayment/WalletManualPayment'
 import Onboarding from '../../screens/Onboarding'
 import LoadingScreen from '../../screens/HomeScreen/LoadingScreen';
@@ -37,7 +36,6 @@ import {appNavigationScreenOptions} from "../../constants/navigation";
 const HomeStack = createStackNavigator();
 const MyWishesStack = createStackNavigator();
 const InformationStack = createStackNavigator();
-const WishesTopTab = createMaterialTopTabNavigator();
 
 const HomeNavigation = () => {
   const forFade = ({ current }) => ({
@@ -222,7 +220,7 @@ const ManualMoneyTabSavings = ({ navigation }) => <SavingsManualPayment navigati
 
 const MoneyTab = ({ navigation }) => <AddRemoveWallet navigation={navigation} />;
 
-const MoneyTabSavings = ({ navigation }) => <AddRemoveSavings navigation={navigation} />;
+const MoneyTabSavings = ({ navigation }) => <AddRemoveSavingsV2 navigation={navigation} />;
 
 const InformationNavigation = () => (
   <InformationStack.Navigator
@@ -280,14 +278,6 @@ const InformationNavigation = () => (
   </InformationStack.Navigator>
 );
 
-
-const WishesTab = () => (
-  <WishesTopTab.Navigator
-      screenOptions={{...appNavigationScreenOptions}}>
-    <WishesTopTab.Screen name={NAVIGATION_TITLE.WISHES} component={MyWishes} />
-    <WishesTopTab.Screen name={NAVIGATION_TITLE.WISHES_FULLFILLED} component={WishesFulfilled} />
-  </WishesTopTab.Navigator>
-);
 const AppNavigation = () => {
   return (
     <NavigationContainer>

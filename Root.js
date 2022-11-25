@@ -17,13 +17,13 @@ const Root = () => {
   const context = useContext(AddRemoveContext);
   const [appIsReady, setAppIsReady] = useState(false);
   const currentUserId = context.currentUser?.id;
+  const forceRefresh = context.appRefresh;
 
   useEffect(() => {
-    // anytime the userId changes will load the money
     if (currentUserId) {
       getMoney(context);
     }
-  }, [currentUserId]);
+  }, [currentUserId, forceRefresh]);
 
   useEffect(() => {
     async function firstLoad() {
