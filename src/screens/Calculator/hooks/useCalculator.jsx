@@ -53,14 +53,14 @@ export const useCalculator = () => {
     let lastChar = currentNumber.toString().charAt(currentNumber.length - 1);
     switch (buttonPressed) {
       case '0':
-        Vibration.vibrate(35);
+        // Vibration.vibrate(35);
         if (buttonPressed === '0' && currentNumber === '0') return;
         break;
       case '+':
       case '-':
       case 'x':
       case '/':
-        Vibration.vibrate(35);
+        // Vibration.vibrate(35);
         let isMultiplicaDivide = buttonPressed === '/' || buttonPressed === 'x';
         if (currentNumber.toString() === '' && isMultiplicaDivide) return;
         if (currentNumber.toString() === '+' && isMultiplicaDivide) return;
@@ -79,7 +79,7 @@ export const useCalculator = () => {
         setCurrentNumber(currentNumber.toString() + buttonPressed);
         break;
       case '.':
-        Vibration.vibrate(35);
+        // Vibration.vibrate(35);
         //No puede haber mas de 1 . seguido
         if (lastChar === '.') return;
 
@@ -119,11 +119,11 @@ export const useCalculator = () => {
       buttonPressed === '0' ||
       buttonPressed === '.'
     ) {
-      Vibration.vibrate(35);
+      // Vibration.vibrate(35);
     }
     switch (buttonPressed) {
       case 'DEL':
-        Vibration.vibrate(35);
+        // Vibration.vibrate(35);
         if (currentNumber === 'ERROR') {
           setLastNumber('');
           setCurrentNumber('');
@@ -134,12 +134,12 @@ export const useCalculator = () => {
         }
         return;
       case 'C':
-        Vibration.vibrate(35);
+        // Vibration.vibrate(35);
         setLastNumber('');
         setCurrentNumber('');
         return;
       case '=':
-        Vibration.vibrate(35);
+        // Vibration.vibrate(35);
         setLastNumber(currentNumber);
         calculator();
         return;
