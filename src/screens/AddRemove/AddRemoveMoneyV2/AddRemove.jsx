@@ -133,13 +133,13 @@ export default function AddRemove({
 
 export const promptAlert = (total, actual, onPress) => {
   return Alert.alert(
-    'Seguro que quieres descartar los cambios?',
-    `Tienes cambios sin guardar. Deseas descartarlos y volver a la pantalla de inicio?
+    'Hay cambios sin guardar'.toUpperCase(),
+    `¿Deseas descartarlos y volver a la pantalla de inicio?
      Saldo actual: ${total} 
-     Saldo sin guardar: ${actual}`,
+     Saldo sin guardar: ${actual}`.toUpperCase(),
     [
-      {text: 'Atras', style: 'cancel', onPress: () => {}},
-      {text: 'Descartar', style: 'destructive', onPress},
+      {text: 'Quedarme aquí'.toUpperCase(), style: 'cancel', onPress: () => {}},
+      {text: 'Descartar'.toUpperCase(), style: 'destructive', onPress},
     ],
   );
 };
