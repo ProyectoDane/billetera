@@ -22,8 +22,7 @@ import NavTitle from '../../components/NavTitle';
 import WalletBuy from '../../screens/Buy/WalletBuy';
 import SavingsBuy from '../../screens/Buy/SavingsBuy';
 import SavingsManualPayment from '../../screens/AddRemove/SavingsManualPayment';
-import AddRemoveWallet from '../../screens/AddRemove/AddRemoveWallet';
-import AddRemoveSavingsV2 from '../../screens/AddRemove/AddRemoveSavingsV2';
+import { AddRemoveWallet, AddRemoveSavings } from '../../screens/AddRemove/AddRemoveMoneyV2';
 import WalletManualPayment from '../../screens/AddRemove/WalletManualPayment/WalletManualPayment'
 import Onboarding from '../../screens/Onboarding'
 import LoadingScreen from '../../screens/HomeScreen/LoadingScreen';
@@ -220,7 +219,7 @@ const ManualMoneyTabSavings = ({ navigation }) => <SavingsManualPayment navigati
 
 const MoneyTab = ({ navigation }) => <AddRemoveWallet navigation={navigation} />;
 
-const MoneyTabSavings = ({ navigation }) => <AddRemoveSavingsV2 navigation={navigation} />;
+const MoneyTabSavings = ({ navigation }) => <AddRemoveSavings navigation={navigation} />;
 
 const InformationNavigation = () => (
   <InformationStack.Navigator

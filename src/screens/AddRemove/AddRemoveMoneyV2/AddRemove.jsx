@@ -1,13 +1,9 @@
-import React, {useContext, useState, useEffect, useMemo} from 'react';
-import {AddRemoveContext} from '../AddRemoveContext';
-import {innerSaveAddRemoveSavings} from '../utils';
-import {calculateChanges} from '../../../utils/functions/calculateChanges';
-import {toastNotification} from '../../../utils/functions/toastNotifcation';
-import {colors, SCREEN_NAME} from '../../../constants';
+import React, {useState, useEffect, useMemo} from 'react';
+import {colors} from '../../../constants';
 import SvgPiggyBank from '../../HomeScreen/SvgPiggyBank';
 import {Alert, View} from 'react-native';
 import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
-import AddRemoveMoneyV2 from './AddRemoveMoneyV2';
+import AddRemoveMoney from './AddRemoveMoney';
 import SingleButton from '../../../components/SingleButton';
 import {FontAwesome5} from '@expo/vector-icons';
 import {styles as myWishesStyles} from '../../MyWishes/styles';
@@ -20,85 +16,60 @@ import CardSection from '../../../components/Card/CardSection';
 import CardText from '../../../components/Card/CardText';
 import Amount from '../../../components/Amount/Amount';
 
-export default function AddRemoveSavings({navigation}) {
-  const context = useContext(AddRemoveContext);
-  const {
-    actualBillsSavings,
-    setActualBillsSavings,
-    actualCoinsSavings,
-    setActualCoinsSavings,
-    totalMoneySavings,
-    actualMoneySavings,
-    setActualMoneySavings,
-    initialBillsMoneySavings,
-    initialCoinsMoneySavings,
-    currentUser,
-    waitRefresh,
-  } = context;
+export default function AddRemove({
+  navigation,
+  initialBills,
+  initialCoins,
+  initialTotal,
+  actualTotal,
+  setActualTotal,
+  setActualBills,
+  setActualCoins,
+  onSave,
+  hasUnsavedChanges,
+  title,
+}) {
   const [isLoading, setIsLoading] = useState(false);
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
     {key: 'first', title: 'BILLETES'},
     {key: 'second', title: 'MONEDAS'},
   ]);
-  const hasUnsavedChanges = calculateChanges(
-    initialBillsMoneySavings,
-    initialCoinsMoneySavings,
-    actualBillsSavings,
-    actualCoinsSavings,
-  );
+
+  const handleSave = async () => {
+    setIsLoading(true);
+    onSave();
+  };
+
+  const handleDiscard = (action) => {
+    setActualTotal(initialTotal);
+    setActualBills(initialBills);
+    setActualCoins(initialCoins);
+    navigation.dispatch(action);
+  };
 
   //Check for dirty changes before exiting
   useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', (e) => {
       const onDiscardPress = () => {
-        setActualMoneySavings(totalMoneySavings);
-        setActualBillsSavings(initialBillsMoneySavings);
-        setActualCoinsSavings(initialCoinsMoneySavings);
-        navigation.dispatch(e.data.action);
+        handleDiscard(e.data.action);
       };
 
       if (!isLoading && hasUnsavedChanges) {
         e.preventDefault();
-        promptAlert(totalMoneySavings, actualMoneySavings, hasUnsavedChanges, onDiscardPress);
+        promptAlert(initialTotal, actualTotal, onDiscardPress);
       } else return;
     });
     return unsubscribe;
-  }, [navigation, totalMoneySavings, actualMoneySavings, hasUnsavedChanges, isLoading]);
-
-  const handleSave = async () => {
-    setIsLoading(true);
-    await innerSaveAddRemoveSavings(
-      currentUser.id,
-      initialCoinsMoneySavings,
-      actualCoinsSavings,
-      initialBillsMoneySavings,
-      actualBillsSavings,
-    );
-    await waitRefresh();
-    toastNotification('SE ACTUALIZO EL DINERO CORRECTAMENTE!', 'success', 'success');
-    navigation.navigate(SCREEN_NAME.HOME);
-  };
+  }, [navigation, initialTotal, actualTotal, hasUnsavedChanges, isLoading]);
 
   const renderScene = useMemo(
     () =>
       SceneMap({
-        first: () => (
-          <AddRemoveMoneyV2
-            moneyArray={initialBillsMoneySavings}
-            setCurrentMoney={setActualBillsSavings}
-            setTotal={setActualMoneySavings}
-          />
-        ),
-        second: () => (
-          <AddRemoveMoneyV2
-            moneyArray={initialCoinsMoneySavings}
-            setCurrentMoney={setActualCoinsSavings}
-            setTotal={setActualMoneySavings}
-          />
-        ),
+        first: () => <AddRemoveMoney money={initialBills} setActual={setActualBills} setTotal={setActualTotal} />,
+        second: () => <AddRemoveMoney money={initialCoins} setActual={setActualCoins} setTotal={setActualTotal} />,
       }),
-    [totalMoneySavings],
+    [initialTotal],
   );
 
   const svgicon = {width: 58, aspectRatio: 1 / 1, marginRight: 12};
@@ -109,9 +80,9 @@ export default function AddRemoveSavings({navigation}) {
         <CardSection>
           <View style={flexrow}>
             <SvgPiggyBank style={svgicon} />
-            <CardText>MIS AHORROS</CardText>
+            <CardText>{title}</CardText>
           </View>
-          <Amount>{actualMoneySavings}</Amount>
+          <Amount>{actualTotal}</Amount>
         </CardSection>
       </Card>
       <View style={{...cardStyles.card, ...shadow, flex: 5, margin: 10, width: 'auto'}}>
@@ -131,9 +102,8 @@ export default function AddRemoveSavings({navigation}) {
                   return (
                     <FontAwesome5 name="money-bill-wave" size={22} color={colors.primary} style={{marginRight: 5}} />
                   );
-                } else {
-                  return <FontAwesome5 name="coins" size={22} color={colors.primary} style={{marginRight: 5}} />;
                 }
+                return <FontAwesome5 name="coins" size={22} color={colors.primary} style={{marginRight: 5}} />;
               }}
               tabStyle={commonStyles.tabStyle}
               labelStyle={commonStyles.tabLabel}
@@ -161,21 +131,15 @@ export default function AddRemoveSavings({navigation}) {
   );
 }
 
-export const promptAlert = (total, actual, hasChanges, onPress) => {
+export const promptAlert = (total, actual, onPress) => {
   return Alert.alert(
-    'Discard changes?',
-    `You have unsaved changes. Are you sure to discard them and leave the screen? ${
-      total - actual
-    } //${total} // ${actual} //${hasChanges}`,
+    'Hay cambios sin guardar'.toUpperCase(),
+    `¿Deseas descartarlos y volver a la pantalla de inicio?
+     Saldo actual: ${total} 
+     Saldo sin guardar: ${actual}`.toUpperCase(),
     [
-      {text: "Don't leave", style: 'cancel', onPress: () => {}},
-      {
-        text: 'Discard',
-        style: 'destructive',
-        // If the user confirmed, then we dispatch the action we blocked earlier
-        // This will continue the action that had triggered the removal of the screen
-        onPress: onPress,
-      },
+      {text: 'Quedarme aquí'.toUpperCase(), style: 'cancel', onPress: () => {}},
+      {text: 'Descartar'.toUpperCase(), style: 'destructive', onPress},
     ],
   );
 };
