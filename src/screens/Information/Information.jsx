@@ -1,7 +1,5 @@
 import React from 'react';
-import {Image, useWindowDimensions, View,} from 'react-native';
-
-import daneLogo from '../../../assets/dane_logo.png';
+import {Image, Text, useWindowDimensions, View,} from 'react-native';
 
 import Layout from '../../components/Layout';
 import {colors, SCREEN_NAME} from '../../constants';
@@ -13,7 +11,7 @@ import {FontAwesome5} from "@expo/vector-icons";
 import CardText from "../../components/Card/CardText";
 import {styles as WalletStyles} from "../MyWallet/styles";
 import {styles as WhisestStyles} from "../WishesHome/styles";
-import {toastNotification} from "../../utils/functions/toastNotifcation";
+const pkg = require('../../../app.json');
 
 const flexrow = {flex: 1, flexDirection: 'row', alignItems: 'center'};
 const Information = ({navigation}) => {
@@ -78,6 +76,9 @@ const Information = ({navigation}) => {
                             </View>
                         </CardSection>
                     </Card>
+                </View>
+                <View style={{...styles.container, paddingHorizontal: 15}}>
+                    <Text>Versión de la app: {pkg.expo.version}</Text>
                 </View>
             </View>
         </Layout>

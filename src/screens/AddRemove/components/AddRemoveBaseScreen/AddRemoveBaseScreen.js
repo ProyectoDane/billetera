@@ -130,6 +130,7 @@ export default function AddRemoveBaseScreen({
   };
 
   const MyTabs = React.useMemo(() => {
+      // console.log(`render tab view ${actualMoneyWallet}`);
     return (
       <TabView
         navigationState={{ index, routes }}
