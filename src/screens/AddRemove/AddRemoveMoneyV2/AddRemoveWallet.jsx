@@ -7,7 +7,7 @@ import {SCREEN_NAME} from '../../../constants';
 
 import AddRemove from './AddRemove';
 
-export default function AddRemoveSavings({navigation}) {
+export default function AddRemoveWallet({navigation}) {
   const {
     actualBillsMoneyWallet: actualBills,
     setActualBillsMoneyWallet: setActualBills,

@@ -72,6 +72,15 @@ export default function AddRemove({
     [initialTotal],
   );
 
+  const getTabBarIcon = useMemo(
+    () =>
+      SceneMap({
+        first: () => <FontAwesome5 name="money-bill-wave" size={20} color={colors.primary} />,
+        second: () => <FontAwesome5 name="coins" size={20} color={colors.primary} />,
+      }),
+    [],
+  );
+
   const svgicon = {width: 58, aspectRatio: 1 / 1, marginRight: 12};
   const flexrow = {flex: 1, flexDirection: 'row', alignItems: 'center'};
   return (
@@ -96,27 +105,14 @@ export default function AddRemove({
               pressColor={'transparent'}
               indicatorStyle={commonStyles.indicatorStyle}
               style={{backgroundColor: colors.white, height: 55}}
-              renderIcon={(props) => {
-                const {route} = props;
-                if (route.key === 'first') {
-                  return (
-                    <FontAwesome5 name="money-bill-wave" size={22} color={colors.primary} style={{marginRight: 5}} />
-                  );
-                }
-                return <FontAwesome5 name="coins" size={22} color={colors.primary} style={{marginRight: 5}} />;
-              }}
+              renderIcon={getTabBarIcon}
               tabStyle={commonStyles.tabStyle}
               labelStyle={commonStyles.tabLabel}
             />
           )}
         />
       </View>
-      <View
-        style={{
-          ...myWishesStyles.bottomButtonContainer,
-          paddingVertical: 0,
-        }}
-      >
+      <View style={{...myWishesStyles.bottomButtonContainer, paddingVertical: 0}}>
         <SingleButton
           icon="money-bill-wave"
           sizeIcon={22}
@@ -133,13 +129,13 @@ export default function AddRemove({
 
 export const promptAlert = (total, actual, onPress) => {
   return Alert.alert(
-    'Seguro que quieres descartar los cambios?',
-    `Tienes cambios sin guardar. Deseas descartarlos y volver a la pantalla de inicio?
+    'Hay cambios sin guardar'.toUpperCase(),
+    `¿Deseas descartarlos y volver a la pantalla de inicio?
      Saldo actual: ${total} 
-     Saldo sin guardar: ${actual}`,
+     Saldo sin guardar: ${actual}`.toUpperCase(),
     [
-      {text: 'Atras', style: 'cancel', onPress: () => {}},
-      {text: 'Descartar', style: 'destructive', onPress},
+      {text: 'Quedarme aquí'.toUpperCase(), style: 'cancel', onPress: () => {}},
+      {text: 'Descartar'.toUpperCase(), style: 'destructive', onPress},
     ],
   );
 };
