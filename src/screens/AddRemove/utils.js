@@ -110,6 +110,24 @@ export function calcularEntraSaleManualPayment(
   }
 }
 
+export function calcularEntraSaleManualPaymentV2(
+  subMoney,
+  initial,
+  novedades,
+) {
+  for (let i = 0; novedades.length > i; i++) {    
+    let initialValue = initial[i].quantity;
+    let actualValue = novedades[i].quantity;
+
+    if (initialValue > actualValue) {
+      subMoney.push({
+        money_id: novedades[i].id,
+        quantity: initialValue - actualValue,
+      });
+    }
+  }
+}
+
 export async function innerSaveManualPayment(
     userId,
   initialCoinsMoneyWallet,
@@ -119,8 +137,8 @@ export async function innerSaveManualPayment(
 ) {
   let subMoney = [];
 
-  calcularEntraSaleManualPayment(subMoney, initialCoinsMoneyWallet, coins);
-  calcularEntraSaleManualPayment(subMoney, initialBillsMoneyWallet, bills);
+  calcularEntraSaleManualPaymentV2(subMoney, initialCoinsMoneyWallet, coins);
+  calcularEntraSaleManualPaymentV2(subMoney, initialBillsMoneyWallet, bills);
 
   if (subMoney.length) {
     for (let property in subMoney) {
@@ -139,13 +157,11 @@ export async function innerSaveManualPaymentSavings(
 ) {
   let subMoney = [];
 
-  calcularEntraSaleManualPayment(subMoney, initialCoinsMoneySavings, coins);
-  calcularEntraSaleManualPayment(subMoney, initialBillsMoneySavings, bills);
-
-  if (subMoney.length) {
-    for (let elem of subMoney) {
-      const { money_id, quantity } = elem;
-      await deleteMoneySaving(userId, money_id, quantity);
-    }
+  calcularEntraSaleManualPaymentV2(subMoney, initialCoinsMoneySavings, coins);
+  calcularEntraSaleManualPaymentV2(subMoney, initialBillsMoneySavings, bills);
+  
+  for (let elem of subMoney) {
+    const { money_id, quantity } = elem;
+    await deleteMoneySaving(userId, money_id, quantity);
   }
 }

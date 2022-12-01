@@ -13,7 +13,7 @@ web-build/
 .DS_Store
 /.idea/
 yarn.lock
-/.eslintcache
+.eslintcache
 /dist/
 /ios/
 /android/

@@ -1,52 +1,36 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import {SCREEN_NAME} from '../../../constants';
 import {formatNum} from '../../../utils/functions/formatNum';
-import getMoney from '../../../utils/functions/loadMoneyToContext';
 import {toastNotification} from '../../../utils/functions/toastNotifcation';
 import {AddRemoveContext} from '../AddRemoveContext';
 import {ManualPaymentContext} from '../ManualPaymentContext';
 import {innerSaveManualPaymentSavings} from '../utils';
-import ManualPaymentBaseScreen from "../components/ManualPaymentBaseScreen/ManualPaymentBaseScreen";
+import ManualPayment from '../ManualPaymentV2/ManualPayment';
 
-export default function SavingsManualPayment({ navigation }) {
-  const [isLoading, setIsLoading] = useState(false);
+export default function SavingsManualPayment({navigation}) {
   const {
-    actualBillsSavings,
-    setActualBillsSavings,
-    actualCoinsSavings,
-    setActualCoinsSavings,
-    initialBillsMoneySavings,
-    initialCoinsMoneySavings,
+    actualBillsSavings: actualBills,
+    setActualBillsSavings: setActualBills,
+    actualCoinsSavings: actualCoins,
+    setActualCoinsSavings: setActualCoins,
+    totalMoneySavings: initialTotal,
+    setActualMoneySavings: setActualTotal,
+    initialBillsMoneySavings: initialBills,
+    initialCoinsMoneySavings: initialCoins,
+    currentUser,
+    waitRefresh,
   } = useContext(AddRemoveContext);
 
-  const { totalPaymentSavings, setTotalPaymentSavings } =
-    useContext(ManualPaymentContext);
-
-  const context = useContext(AddRemoveContext);
-
+  const {totalPaymentSavings, setTotalPaymentSavings} = useContext(ManualPaymentContext);
 
   const handleSave = async () => {
-    setIsLoading(true);
-
-    await innerSaveManualPaymentSavings( context.currentUser.id,
-      initialCoinsMoneySavings,
-      actualCoinsSavings,
-      initialBillsMoneySavings,
-      actualBillsSavings,
-    );
-    await getMoney(context);
-
+    await innerSaveManualPaymentSavings(currentUser.id, initialCoins, actualCoins, initialBills, actualBills);
+    await waitRefresh();
     if (totalPaymentSavings === 0) {
-      toastNotification(
-        'SE REALIZO EL PAGO CORRECTAMENTE!',
-        'success',
-        'success',
-      );
+      toastNotification('SE REALIZO EL PAGO CORRECTAMENTE!', 'success', 'success');
     } else {
       toastNotification(
-        `ACORDATE DE CARGAR TU VUELTO DE ${formatNum(
-          Math.abs(totalPaymentSavings),
-        )} EN TUS AHORROS !`,
+        `ACORDATE DE CARGAR TU VUELTO DE ${formatNum(Math.abs(totalPaymentSavings))} EN TUS AHORROS !`,
         'info',
         'info',
       );
@@ -55,17 +39,17 @@ export default function SavingsManualPayment({ navigation }) {
   };
 
   return (
-      <ManualPaymentBaseScreen
-          navigation={navigation}
-          actualBills={actualBillsSavings}
-          setActualBills={setActualBillsSavings}
-          actualCoins={actualCoinsSavings}
-          setActualCoins={setActualCoinsSavings}
-          initialBillsMoneyWallet={initialBillsMoneySavings}
-          initialCoinsMoneyWallet={initialCoinsMoneySavings}
-          totalPaymentWallet={totalPaymentSavings}
-          setTotalPaymentWallet={setTotalPaymentSavings}
-          handleSave={handleSave}
-      />
+    <ManualPayment
+      navigation={navigation}
+      initialBills={initialBills}
+      initialCoins={initialCoins}
+      initialTotal={initialTotal}
+      setActualBills={setActualBills}
+      setActualCoins={setActualCoins}
+      setActualTotal={setActualTotal}
+      totalPayment={totalPaymentSavings}
+      setTotalPayment={setTotalPaymentSavings}
+      onSave={handleSave}
+    />
   );
 }
