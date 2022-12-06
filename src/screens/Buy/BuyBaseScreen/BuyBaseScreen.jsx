@@ -19,6 +19,7 @@ import {AddRemoveContext} from '../../AddRemove/AddRemoveContext';
 import {bottomButtonContainer} from "../../../constants/styles";
 
 const BuyBaseScreen = ({
+                           setActualTotal,
                            setTotalMoneyWallet,
                            totalMoneyWallet,
                            setInitialCoinsMoneyWallet,
@@ -108,33 +109,25 @@ const BuyBaseScreen = ({
         setOptionBill('');
         setIsLoading(true);
         try {
+            let substract = 0;
+            let newCoins = [...initialCoinsMoneyWallet];
+            let newBills = [...initialBillsMoneyWallet];
             for (let opt of optPay) {
-                if (opt.quantity > 0 && opt.isCoins) {
-                    await deleteMoneyWallet(opt.userId, opt.moneyId, opt.quantity);
-                    setTotalMoneyWallet(totalMoneyWallet - opt.amount * opt.quantity);
-                    const newCoins = initialCoinsMoneyWallet.map((item) => {
+                substract += (opt.amount * opt.quantity);
+                await deleteMoneyWallet(opt.userId, opt.moneyId, opt.quantity);
+                if (opt.quantity > 0) {
+                    const moneyArray = opt.isCoins? newCoins: newBills;
+                    moneyArray.forEach((item) => {
                         if (item.id === opt.moneyId) {
-                            item.quantity = item.quantity - opt.quantity;
-                            return item;
-                        }
-                        return item;
-                    });
-                    setInitialCoinsMoneyWallet(newCoins);
-                }
-                if (opt.quantity > 0 && !opt.isCoins) {
-                    await deleteMoneyWallet(opt.userId, opt.moneyId, opt.quantity);
-                    setTotalMoneyWallet(totalMoneyWallet - opt.amount * opt.quantity);
-                    const newBills = initialBillsMoneyWallet.map((item) => {
-                        if (item.id === opt.moneyId) {
-                            item.quantity = item.quantity - opt.quantity;
-                            return item;
-                        }
-                        return item;
-                    });
-
-                    setInitialBillsMoneyWallet(newBills);
-                }
+                            item.quantity -= opt.quantity;                            
+                        }                     
+                    });        
+                }                
             }
+            setInitialBillsMoneyWallet(newBills);
+            setInitialCoinsMoneyWallet(newCoins);
+            setTotalMoneyWallet(totalMoneyWallet - substract);
+            setActualTotal(totalMoneyWallet - substract);
             setPurchase(true);
             navigation.navigate(SCREEN_NAME.HOME);
 
