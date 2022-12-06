@@ -43,7 +43,11 @@ const ItemWish = ({ name, value, wishId, testID, icon, done, onChange }) => {
     });
 
   const handleAchieve = () => {
-    Alert.alert('ESTAS POR CUMPLIR TU DESEO', ` ACORDATE DE SACAR ${formatNum(value)} DE "MIS AHORROS"`, [
+    Alert.alert('ESTAS POR CUMPLIR TU DESEO', `ACORDATE DE SACAR ${formatNum(value)} DE "MIS AHORROS"`, [      
+      {
+        text: 'CANCELAR',
+        style: 'cancel',
+      },
       {
         text: 'CONTINUAR',
         onPress: async () => {
@@ -52,11 +56,7 @@ const ItemWish = ({ name, value, wishId, testID, icon, done, onChange }) => {
           navigation.dispatch(jumpToWishesFullfilled);
           toastNotification('✓ DESEO CUMPLIDO!', null, 'success');
         },
-      },
-      {
-        text: 'CANCELAR',
-        style: 'cancel',
-      },
+      }
     ]);
   };
 
