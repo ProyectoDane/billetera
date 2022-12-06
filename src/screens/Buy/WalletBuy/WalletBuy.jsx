@@ -11,6 +11,7 @@ const WalletBuy = () => {
   const navigation = useNavigation();
 
   const {
+    setActualMoneyWallet,
     setTotalMoneyWallet,
     totalMoneyWallet,
     setInitialCoinsMoneyWallet,
@@ -28,6 +29,7 @@ const WalletBuy = () => {
 
   return (
       <BuyBaseScreen
+          setActualTotal={setActualMoneyWallet}
           setTotalMoneyWallet={setTotalMoneyWallet}
           totalMoneyWallet={totalMoneyWallet}
           setInitialCoinsMoneyWallet={setInitialCoinsMoneyWallet}

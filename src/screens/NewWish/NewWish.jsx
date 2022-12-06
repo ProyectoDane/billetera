@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Keyboard, Text, TouchableWithoutFeedback, View} from 'react-native';
 import {FormProvider, useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
@@ -12,16 +12,21 @@ import {styles} from './styles';
 import {WishSchema} from '../../validations/FormSchemas';
 import {getWishById, insertWish, updateWish} from '../../dataAccess/Wish';
 import {Wish} from '../../models/Wish';
-import {colors, NAVIGATION_TITLE, SCREEN_NAME} from '../../constants';
+import {colors, NAVIGATION_TITLE } from '../../constants';
 import {toastNotification} from '../../utils/functions/toastNotifcation';
 import {useCarousel} from '../../components/IconCarousel/hooks/useCarousel';
 import {whishesList} from '../../mockData/deseos';
+import { useKeyboard } from '../../utils/hooks/useKeyboard';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const icons = whishesList.map(({ icon, name }) => ({ icon, name }));
 
 const NuevoDeseo = ({ navigation, route }) => {
+  const scrollRef = useRef();
   const [isLoading, setIsLoading] = useState(false);
   const { item, nextStep, prevStep } = useCarousel(icons);
+  const {keyboardHeight, keyboardShown} = useKeyboard();
+  const isKeyboardAnnoying = keyboardShown && keyboardHeight > 190 && keyboardHeight < 290;
 
   const methods = useForm({
     defaultValues: { ...route.params },
@@ -32,6 +37,12 @@ const NuevoDeseo = ({ navigation, route }) => {
   useEffect(() => {
     setValue('name', item.name);
   }, [item.name]);
+
+  useEffect(() =>{
+    if (isKeyboardAnnoying) {
+      scrollRef.current.scrollTo({ x: 0, y: 230, animated: true });
+    }
+  }, [isKeyboardAnnoying])
 
   // Insert wish
   const onSubmitNew = async (data) => {
@@ -71,28 +82,29 @@ const NuevoDeseo = ({ navigation, route }) => {
     <Layout>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={{...styles.newWishContainer}}>
-        <View style={{
-          // backgroundColor: "red",
+        <View style={{          
           flexBasis: 400,
           flexGrow: 1,
         }}>
-          <View style={styles.card}>
-            <Text style={styles.title}>ELEGIR ICONO</Text>
-            <FormProvider {...methods}>
-              <View style={styles.form}>
-                <IconCarousel icon={item.icon} onPrevStep={prevStep} onNextStep={nextStep} />
-                <InputText name="name" label="NOMBRE" placeholder="INGRESE EL NOMBRE DEL DESEO" required />
-                <InputText
-                  name="value"
-                  label="VALOR"
-                  keyboardType={"numeric"}
-                  placeholder="INGRESE EL VALOR DEL DESEO"
-                  required
-                />
-              </View>
-            </FormProvider>
-          </View>
-        </View>
+          <ScrollView ref={scrollRef} contentContainerStyle={{paddingBottom: isKeyboardAnnoying ? 100 : 0}}>
+            <View style={styles.card}>
+              <Text style={styles.title}>ELEGIR ICONO</Text>
+              <FormProvider {...methods}>
+                <View style={styles.form}>
+                  <IconCarousel icon={item.icon} onPrevStep={prevStep} onNextStep={nextStep} />
+                  <InputText name="name" label="NOMBRE" placeholder="INGRESE EL NOMBRE DEL DESEO" required />
+                  <InputText
+                    name="value"
+                    label="VALOR"
+                    keyboardType={"numeric"}
+                    placeholder="INGRESE EL VALOR DEL DESEO"
+                    required
+                  />
+                </View>
+              </FormProvider>
+            </View>
+          </ScrollView>
+        </View>        
         <View style={styles.bottomButtonContainer}>
           <View>
               <SingleButton
@@ -115,7 +127,6 @@ const NuevoDeseo = ({ navigation, route }) => {
                 onPress={navigation.goBack}
               />
           </View>
-
         </View>
       </View>
       </TouchableWithoutFeedback>

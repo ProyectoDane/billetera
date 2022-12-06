@@ -16,6 +16,7 @@ const SavingsBuy = () => {
   const {
     setTotalMoneySavings,
     totalMoneySavings,
+    setActualMoneySavings,
     setInitialCoinsMoneySavings,
     setInitialBillsMoneySavings,
     initialCoinsMoneySavings,
@@ -31,7 +32,8 @@ const SavingsBuy = () => {
 
   return (
       <BuyBaseScreen
-          setTotalMoneyWallet={setTotalMoneySavings}
+          setActualTotal={setActualMoneySavings}
+          setTotalMoneyWallet={setTotalMoneySavings}          
           totalMoneyWallet={totalMoneySavings}
           setInitialCoinsMoneyWallet={setInitialCoinsMoneySavings}
           setInitialBillsMoneyWallet={setInitialBillsMoneySavings}

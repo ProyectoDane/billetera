@@ -37,7 +37,7 @@ const About = () => {
   const members = [
     {"name": "Leandro Favre", "url":"https://www.linkedin.com/in/leandro-f-7a06a8171/"},
     {"name": "Guido Wagner", "url":"https://www.linkedin.com/in/guiw5/"},
-    {"name": "Angles Peña", "url":"https://www.linkedin.com/in/angeles-pe%C3%B1a/"},
+    {"name": "Angeles Peña", "url":"https://www.linkedin.com/in/angeles-pe%C3%B1a/"},
     {"name": "Federico Rodriguez", "url":"https://www.linkedin.com/in/rodriguezfederico/"},
     {"name": "Gonzalo Sansone", "url":"https://www.linkedin.com/in/gonzalo-sansone-b440a3196/"},
     {"name": "Lucia Sauer", "url":"https://www.linkedin.com/in/lucia-julieta-sauer/"},
