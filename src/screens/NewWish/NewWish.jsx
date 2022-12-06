@@ -77,7 +77,7 @@ const NuevoDeseo = ({ navigation, route }) => {
       setIsLoading(false);
     }
   };
-  console.log("asdasd", keyboardHeight);
+
   return (
     <Layout>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
