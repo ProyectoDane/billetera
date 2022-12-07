@@ -5,7 +5,7 @@ const { width } = Dimensions.get('screen');
 const styles = StyleSheet.create({
   slide: {
     width,
-    marginTop: 47,
+    marginTop: 10,
     alignItems: 'center',
   },
   title: {

@@ -41,7 +41,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'column',
     // flexWrap: 'wrap',
     justifyContent: 'flex-start',
-   ...shadow2
+   //...shadow2
   },
   cardContainer: {
     // flex: 0.42,

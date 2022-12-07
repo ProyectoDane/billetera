@@ -20,7 +20,7 @@ const Card = ({ expandable = false, children, containerStyle, style }) => {
 
   const cardWrapper = StyleSheet.flatten([
     {padding: 12},
-    expandable ? {flex: 1} : {flex: 0.42, maxHeight: 160},
+    expandable ? {flex: 1} : {flex: 0.42, },
     containerStyle,
   ]);
   const styles2 = StyleSheet.flatten([expandable ? styles.cardContent : styles.cardContentFlex, style]);

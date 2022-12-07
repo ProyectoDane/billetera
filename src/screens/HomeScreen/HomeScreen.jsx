@@ -1,5 +1,11 @@
 import React, { useContext, useEffect } from 'react';
-import { Text, View, TouchableWithoutFeedback as TouchableWithNativeFeedback, TouchableOpacity } from 'react-native';
+import {
+    Text,
+    View,
+    TouchableWithoutFeedback as TouchableWithNativeFeedback,
+    TouchableOpacity,
+    ScrollView
+} from 'react-native';
 
 import { AddRemoveContext } from '../AddRemove/AddRemoveContext';
 import Layout from '../../components/Layout';
@@ -60,7 +66,7 @@ const HomeScreen = ({ navigation }) => {
   const flexrow = { flex: 1, flexDirection: 'row', alignItems: 'center' };
 
   return (
-    <Layout hideTextFooter>
+    <ScrollView hideTextFooter>
       <View style={{ overflow: 'hidden' }}>
         <View style={styles.headerContainer}>
           <LinearGradient
@@ -81,8 +87,8 @@ const HomeScreen = ({ navigation }) => {
           <View
             style={{
               width: '100%',
-              marginTop: '7%',
-              marginBottom: '7%',
+              marginTop: 10,
+              marginBottom: 10,
               flexDirection: 'row',
               alignItems: 'center',
             }}>
@@ -117,8 +123,8 @@ const HomeScreen = ({ navigation }) => {
           </View>
         </View>
       </View>
-      <View style={styles.cardGroup}>
-        <Card style={{ flex: 1 }}>
+      <View style={{...styles.cardGroup, flex: 1}}>
+        <Card style={{}}>
           <CardSection onPress={() => navigation.navigate(SCREEN_NAME.MY_WALLET)}>
             <View style={flexrow}>
               <SvgWallet style={{ height: 58, aspectRatio: 1 / 1, marginRight: 12 }} />
@@ -163,7 +169,7 @@ const HomeScreen = ({ navigation }) => {
           </CardContent>
         </Card>
       </View>
-    </Layout>
+    </ScrollView>
   );
 };
 
