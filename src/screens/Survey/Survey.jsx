@@ -102,7 +102,7 @@ const Survey = ({ navigation, route }) => {
           )}
           renderLoading={renderActivityIndicator}
           source={{
-            uri: 'https://docs.google.com/forms/d/e/1FAIpQLSdzCaQerAuvmpqL7ADvUGzyIT2HBFF6IxJt0qRdrWbyWMqWXw/viewform?usp=sf_link',
+            uri: 'https://docs.google.com/forms/d/e/1FAIpQLSctP2DQcUXM9YmhS2BUWOM4ycvcQsbWYBl-qHBn26D_5WtY_Q/viewform',
           }}
           onNavigationStateChange={(navState) => {
             if (navState.canGoBack) {
