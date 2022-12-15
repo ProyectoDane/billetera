@@ -45,6 +45,13 @@ const About = () => {
     {"name": "Alexis Sukierman", "url":"https://www.linkedin.com/in/zukierman/"},
   ];
 
+  const thanksTo = [
+    {"name": "Graciela  Roldan Schuth", "url":"https://www.linkedin.com/in/graciela-roldan-schuth-a9a2a3114/?original_referer=http%3A%2F%2Fwww.proyectodane.org%2F"},
+    {"name": "Elisa Nudman", "url":"https://www.linkedin.com/in/elisa-nudman-71527b13/"},
+    {"name": "Maria Eugenia Villamagna", "url":"https://www.linkedin.com/in/eugenia-villamagna-b62bb022/"},
+    {"name": "Bettina Schettini", "url":"https://www.linkedin.com/in/bettina-schettini-3840207"},
+    {"name": "Ana Clara Razzetti", "url":"https://www.linkedin.com/in/anaclararazzetti/"},
+  ];
 
 
   return (
@@ -70,7 +77,15 @@ const About = () => {
           </MarkedList>
         </View>
         <TextUppercase bold style={styles.title}>{labels.aboutScreen.acknowledgment}</TextUppercase>
-        <Text paragraph>{labels.aboutScreen.acknowledgmentText}</Text>
+        <View>
+          <MarkedList counterRenderer={disc}>
+            {thanksTo.map((elem, index)=>(
+                <Text key={index} style={{ flexShrink: 2, marginVertical: 3 }}  onPress={() => Linking.openURL(elem.url)}>
+                  {elem.name} <FontAwesome5  name='linkedin' />
+                </Text>
+            ))}
+          </MarkedList>
+        </View>
         <TextUppercase bold style={styles.title}>{labels.aboutScreen.license}</TextUppercase>
         <Text style={{ textTransform: 'lowercase' }}  onPress={() => Linking.openURL(labels.aboutScreen.licenseLink)}>
           {labels.aboutScreen.licenseLink}
