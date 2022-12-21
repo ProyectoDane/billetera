@@ -43,7 +43,7 @@ const ItemWish = ({ name, value, wishId, testID, icon, done, onChange }) => {
     });
 
   const handleAchieve = () => {
-    Alert.alert('ESTAS POR CUMPLIR TU DESEO', `ACORDATE DE SACAR ${formatNum(value)} DE "MIS AHORROS"`, [      
+    Alert.alert('¡FELICIDADES!', `ACORDATE DE MODIFICAR EL SALDO DE "MIS AHORROS"`, [
       {
         text: 'CANCELAR',
         style: 'cancel',
