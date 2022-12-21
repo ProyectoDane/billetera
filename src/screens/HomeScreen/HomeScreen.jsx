@@ -62,7 +62,7 @@ const HomeScreen = ({ navigation }) => {
     else navigation.setOptions({...appNavigationScreenOptions, headerTitle: 'INICIO'});
   }, [currentUser]);
 
-  const marginTop = { marginTop: hasPurchase ? '12%' : '6%' };
+  const marginTop = { marginTop: hasPurchase ? 10 : 5 };
   const flexrow = { flex: 1, flexDirection: 'row', alignItems: 'center' };
 
   return (
@@ -75,9 +75,9 @@ const HomeScreen = ({ navigation }) => {
             <View style={{ flex: 1, flexDirection: 'row' }}>
               <View style={{ flex: 0.6, marginRight: 10 }}>
                 <View style={{ flex: 1 }}>
-                  <Text style={styles.headerTitle}>¿COMO PAGO?</Text>
+                  <Text style={styles.headerTitle}>COMO PAGO</Text>
                   <Text style={[styles.headerSubtitle, marginTop]}>
-                    UNA MANERA FÁCIL DE <Text style={{ fontWeight: 'bold' }}>APRENDER A USAR TU DINERO</Text>
+                      APRENDE A USAR TU DINERO
                   </Text>
                 </View>
               </View>
