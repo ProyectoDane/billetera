@@ -18,6 +18,7 @@ export const styles = StyleSheet.create({
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
     marginBottom: 10,
+    paddingBottom: 10,
     ...shadow2
   },
   headerTitle: {
@@ -29,19 +30,20 @@ export const styles = StyleSheet.create({
   },
   headerSubtitle: {
     paddingLeft: 20,
-    paddingRight: 10,
+    paddingRight: 20,
     height: 80,
     paddingTop: 5,
     marginBottom: -18,
     color: colors.orange2,
     fontSize: 13,
+    fontWeight: 'bold',
   },
   cardGroup: {
     flex: 1,
     flexDirection: 'column',
     // flexWrap: 'wrap',
     justifyContent: 'flex-start',
-   //...shadow2
+   ...shadow2
   },
   cardContainer: {
     // flex: 0.42,

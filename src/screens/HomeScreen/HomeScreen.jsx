@@ -1,19 +1,12 @@
-import React, { useContext, useEffect } from 'react';
-import {
-    Text,
-    View,
-    TouchableWithoutFeedback as TouchableWithNativeFeedback,
-    TouchableOpacity,
-    ScrollView
-} from 'react-native';
+import React, {useContext, useEffect} from 'react';
+import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 
-import { AddRemoveContext } from '../AddRemove/AddRemoveContext';
-import Layout from '../../components/Layout';
+import {AddRemoveContext} from '../AddRemove/AddRemoveContext';
 
-import {colors, NAVIGATION_TITLE, SCREEN_NAME, TABS_NAME} from '../../constants';
-import { styles } from './styles';
+import {SCREEN_NAME} from '../../constants';
+import {styles} from './styles';
 import {surveyDone, tourDone} from '../../dataAccess/User';
-import { LinearGradient } from 'expo-linear-gradient';
+import {LinearGradient} from 'expo-linear-gradient';
 import SvgCalculator from './SvgCalculator';
 import SvgWishes from './SvgWishes';
 import SvgInformation from './SvgInformation';
@@ -63,9 +56,12 @@ const HomeScreen = ({ navigation }) => {
   }, [currentUser]);
 
   const marginTop = { marginTop: hasPurchase ? 10 : 5 };
-  const flexrow = { flex: 1, flexDirection: 'row', alignItems: 'center' };
+  const flexRow = { flex: 1, flexDirection: 'row', alignItems: 'center' };
+  const flexCol = { flex: 1, flexDirection: 'column', alignItems: 'center' };
 
-  return (
+    let cardTextStyle = {fontSize: 10};
+    let bottomIconsStyles = {marginBottom: 15};
+    return (
     <ScrollView hideTextFooter>
       <View style={{ overflow: 'hidden' }}>
         <View style={styles.headerContainer}>
@@ -84,49 +80,12 @@ const HomeScreen = ({ navigation }) => {
               {hasPurchase ? <HomeHappyImg /> : <HomeInitImg />}
             </View>
           </LinearGradient>
-          <View
-            style={{
-              width: '100%',
-              marginTop: 10,
-              marginBottom: 10,
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
-            <TouchableWithNativeFeedback onPress={() => navigation.navigate(SCREEN_NAME.CALCULATOR_NAV)}>
-              <View style={{ flex: 1, alignItems: 'center' }}>
-                <SvgCalculator />
-                <Text style={{ fontSize: 10, marginTop: 10 }}>CALCULADORA</Text>
-              </View>
-            </TouchableWithNativeFeedback>
-            <View
-              style={{
-                flex: 1,
-                borderLeftWidth: 1,
-                borderRightWidth: 1,
-                borderColor: colors.newBlack,
-                alignItems: 'center',
-                width: '33%',
-              }}>
-              <TouchableWithNativeFeedback onPress={() => navigation.navigate(SCREEN_NAME.WISHES_NAV)}>
-                <View style={{ flex: 1, alignItems: 'center' }}>
-                  <SvgWishes />
-                  <Text style={{ fontSize: 10, marginTop: 10 }}>DESEOS</Text>
-                </View>
-              </TouchableWithNativeFeedback>
-            </View>
-            <TouchableWithNativeFeedback onPress={() => navigation.navigate(SCREEN_NAME.INFORMATION_NAV)}>
-              <View style={{ flex: 1, alignItems: 'center' }}>
-                <SvgInformation />
-                <Text style={{ fontSize: 10, marginTop: 10 }}>INFORMACIÓN</Text>
-              </View>
-            </TouchableWithNativeFeedback>
-          </View>
         </View>
       </View>
       <View style={{...styles.cardGroup, flex: 1}}>
-        <Card style={{}}>
-          <CardSection onPress={() => navigation.navigate(SCREEN_NAME.MY_WALLET)}>
-            <View style={flexrow}>
+        <Card  style={{paddingVertical: 5}}>
+          <CardSection onPress={() => navigation.navigate(SCREEN_NAME.MY_WALLET)} style={{marginBottom: 5}}>
+            <View style={flexRow}>
               <SvgWallet style={{ height: 58, aspectRatio: 1 / 1, marginRight: 12 }} />
               <CardText>Mi Billetera</CardText>
             </View>
@@ -145,10 +104,10 @@ const HomeScreen = ({ navigation }) => {
             </TouchableOpacity>
           </CardActions>
         </Card>
-        <Card>
+        <Card style={{paddingVertical: 5}}>
           <CardContent>
-            <CardSection onPress={() => navigation.navigate(SCREEN_NAME.MY_SAVINGS)}>
-              <View style={flexrow}>
+            <CardSection onPress={() => navigation.navigate(SCREEN_NAME.MY_SAVINGS)} style={{marginBottom: 5}}>
+              <View style={flexRow}>
                 <SvgPiggyBank style={{ width: 58, aspectRatio: 1 / 1, marginRight: 12 }} />
                 <CardText>Mis Ahorros</CardText>
               </View>
@@ -169,6 +128,32 @@ const HomeScreen = ({ navigation }) => {
           </CardContent>
         </Card>
       </View>
+        <View style={{...styles.cardGroup, flex: 1, flexDirection: "row"}}>
+            <Card style={{}}>
+                <CardSection onPress={() => navigation.navigate(SCREEN_NAME.WISHES_NAV)}>
+                    <View style={flexCol}>
+                        <SvgWishes style={bottomIconsStyles} />
+                        <CardText style={cardTextStyle}>DESEOS</CardText>
+                    </View>
+                </CardSection>
+            </Card>
+            <Card style={{}}>
+                <CardSection onPress={() => navigation.navigate(SCREEN_NAME.CALCULATOR_NAV)}>
+                    <View style={flexCol}>
+                        <SvgCalculator style={bottomIconsStyles} />
+                        <CardText style={cardTextStyle}>CALCULADORA</CardText>
+                    </View>
+                </CardSection>
+            </Card>
+            <Card style={{}}>
+                <CardSection onPress={() => navigation.navigate(SCREEN_NAME.INFORMATION_NAV)}>
+                    <View style={{...flexCol, paddingVertical: 15}}>
+                        <SvgInformation style={bottomIconsStyles} />
+                        <CardText style={cardTextStyle}>INFORMACION</CardText>
+                    </View>
+                </CardSection>
+            </Card>
+        </View>
     </ScrollView>
   );
 };
