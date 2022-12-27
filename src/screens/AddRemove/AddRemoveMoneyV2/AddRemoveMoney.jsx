@@ -1,8 +1,9 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {ScrollView, View} from 'react-native';
+import {ScrollView, Text, View} from 'react-native';
 import AddRemoveMoneyItem from './AddRemoveMoneyItem';
+import {colors} from "../../../constants";
 
-const AddRemoveMoney = ({money, setActual, setTotal, isPayment = false}) => {
+const AddRemoveMoney = ({money, setActual, setTotal, isPayment = false, kind = "bills"}) => {
   const [moneyMap, setMoneyMap] = useState({});
   const moneyItems = isPayment ? money.filter((i) => i.quantity > 0) : money;
   const moneyDict = money.reduce((dict, {image, quantity}) => {
@@ -30,6 +31,8 @@ const AddRemoveMoney = ({money, setActual, setTotal, isPayment = false}) => {
     setTotal((prevTotal) => prevTotal + (isPayment ? amount : -amount));
   }, []);
 
+  const kindAsText = kind == "bills" ? "BILLETES" : "MONEDAS"
+
   return (
     <View>
       <ScrollView contentContainerStyle={{paddingVertical: 10, paddingHorizontal: 10}}>
@@ -47,6 +50,11 @@ const AddRemoveMoney = ({money, setActual, setTotal, isPayment = false}) => {
             />
           );
         })}
+        {moneyItems.length == 0 ? (
+            <View style={{marginTop: 20 }}>
+              <Text style={{width: "100%", textAlign: "center", color: colors.newBlack }}>NO TENES {kindAsText}</Text>
+            </View>
+        ) : null}
       </ScrollView>
     </View>
   );

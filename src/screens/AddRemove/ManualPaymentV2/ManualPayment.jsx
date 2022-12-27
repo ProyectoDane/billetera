@@ -10,6 +10,8 @@ import {styles as itemWishStyles} from './../../MyWishes/components/ItemWish/sty
 import {bottomButtonContainer, shadow} from '../../../constants/styles';
 import SingleButton from '../../../components/SingleButton';
 import {View, Text, useWindowDimensions} from 'react-native';
+import SvgCash from "../../MyWallet/SvgCash";
+import SvgBills from "../../MyWallet/SvgBills";
 
 export default function ManualPayment({
   navigation,
@@ -65,16 +67,18 @@ export default function ManualPayment({
     () =>
       SceneMap({
         first: () => <AddRemoveMoney money={initialBills} setActual={setActualBills} setTotal={setTotal} isPayment />,
-        second: () => <AddRemoveMoney money={initialCoins} setActual={setActualCoins} setTotal={setTotal} isPayment />,
+        second: () => <AddRemoveMoney money={initialCoins} setActual={setActualCoins} setTotal={setTotal} isPayment kind={"coins"} />,
       }),
     [initialTotal],
   );
 
+  const svgTabicon = {width: 30, aspectRatio: 1 / 1, marginRight: 0};
+
   const getTabBarIcon = useMemo(
     () =>
       SceneMap({
-        first: () => <FontAwesome5 name="money-bill-wave" size={20} color={colors.primary} />,
-        second: () => <FontAwesome5 name="coins" size={20} color={colors.primary} />,
+          first: () => <SvgCash style={svgTabicon} />,
+          second: () => <SvgBills style={svgTabicon} />,
       }),
     [],
   );
