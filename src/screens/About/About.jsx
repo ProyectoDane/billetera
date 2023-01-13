@@ -39,7 +39,7 @@ const About = () => {
   ];
 
   const thanksTo = [
-    {"name": "Graciela  Roldan Schuth", "url":"https://www.linkedin.com/in/graciela-roldan-schuth-a9a2a3114/?original_referer=http%3A%2F%2Fwww.proyectodane.org%2F"},
+    {"name": "Graciela  Roldan Schuth", "url":"https://www.linkedin.com/in/graciela-roldan-schuth-a9a2a3114/"},
     {"name": "Elisa Nudman", "url":"https://www.linkedin.com/in/elisa-nudman-71527b13/"},
     {"name": "Maria Eugenia Villamagna", "url":"https://www.linkedin.com/in/eugenia-villamagna-b62bb022/"},
     {"name": "Bettina Schettini", "url":"https://www.linkedin.com/in/bettina-schettini-3840207"},

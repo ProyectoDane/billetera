@@ -15,7 +15,7 @@ const Slide = ({ item }) => {
         {img}
       <View style={{...styles.viewText2, }}>
         <Text style={styles.subtitle2}>{subtitle2}</Text>
-        <Text style={styles.subtitle3}>{subtitle3}</Text>
+        <Text style={styles.subtitle2}>{subtitle3}</Text>
       </View>
     </View>
   );

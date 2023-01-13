@@ -37,7 +37,7 @@ export default function MySavings() {
             <CardSection>
               <View style={flexrow}>
                 <SvgPiggyBank style={svgicon} />
-                <CardText>total ahorros</CardText>
+                <CardText>En ahorros</CardText>
               </View>
               <Amount>{totalMoneySavings}</Amount>
             </CardSection>

@@ -98,7 +98,7 @@ export const labels = {
     gallery: 'No hay permisos para acceder a la galería de fotos',
     camera: 'No hay permisos para acceder a la cámara de fotos',
   },
-  insertName: 'Escribí tu nombre',
+  insertName: 'tu nombre',
   aboutScreen: {
     dane: 'Dane',
     descripton:
@@ -107,7 +107,7 @@ export const labels = {
     idea: 'Idea y contenido',
     ideaText: 'A definir',
     development: 'Desarrollo',
-    acknowledgment: 'Agradecimientos',
+    acknowledgment: 'Equipo de Contenidos de DANE',
     acknowledgmentText: 'A definir',
     license: 'Licencia GNU V3',
     licenseLink: 'https://tinc.org.ar/licencias/',

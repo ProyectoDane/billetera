@@ -72,7 +72,7 @@ const ImagePicker = ({setImage}) => {
                         onPress={takePhoto}
                         backgroundColor={colors.primary}
                     />
-                    <Text style={styles.text}>CAMARA</Text>
+                    <Text style={styles.text}>CÁMARA</Text>
                 </View>
             </View>
         </View>

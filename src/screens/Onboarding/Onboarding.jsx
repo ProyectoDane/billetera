@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, StatusBar, useWindowDimensions} from 'react-native';
+import {SafeAreaView, StatusBar, Text, useWindowDimensions, View} from 'react-native';
 
 import OnboardSlide from '../../components/OnboardSlide';
 
@@ -10,10 +10,28 @@ import Pic01 from './assets/pic01.svg';
 import Pic02 from './assets/pic02.svg';
 import Pic03 from './assets/pic03.svg';
 
+import SvgWallet from '../HomeScreen/SvgWallet';
+import SvgPiggyBank from '../HomeScreen/SvgPiggyBank';
+import {FontAwesome5} from "@expo/vector-icons";
 
 const Onboarding = (props) => {
 
   const screenWidth = useWindowDimensions().width * 0.66;
+
+  const text2Style = {
+    ...styles.subtitle2,
+    flex: 10,
+    // backgroundColor: "blue"
+  }
+
+  const slideTextRowStyle = {
+    marginBottom: 5,
+    width: "90%",
+    backgroundColor: "green",
+    display: "flex",
+    flexDirection: "row",
+    alignContent: "center"
+  };
 
   const slides = [
     {
@@ -28,15 +46,15 @@ const Onboarding = (props) => {
       id: '2',
       title: 'CARGA TU BILLETERA',
       subtitle1: 'Y TUS AHORROS',
-      subtitle2: 'CONOCE LOS BILLETES Y LAS MONEDAS',
-      // subtitle3: 'MONEDAS. APRENDE A USARLOS',
+      subtitle2: <Text><FontAwesome5 name={'wallet'} size={16}/> DINERO PARA COMPRAR</Text>,
+      subtitle3:  <Text><FontAwesome5 name={'piggy-bank'} size={16}/> DINERO QUE GUARDAS</Text>,
       img: <Pic02  width={screenWidth}  height={screenWidth} />,
     },
     {
       id: '3',
       title: 'HACE TU',
       subtitle1: 'LISTA DE DESEOS',
-      subtitle2: 'APRENDE A AHORRAR',
+      subtitle2: 'LO QUE TE GUSTARÍA COMPRAR',
       // subtitle3: 'COMPRARTE LO QUE TE PROPONGAS',
       img: <Pic03  width={screenWidth}  height={screenWidth} />,
     },

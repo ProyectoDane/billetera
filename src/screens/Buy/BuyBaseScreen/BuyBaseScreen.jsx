@@ -178,7 +178,7 @@ const BuyBaseScreen = ({
                                 <InputText
                                     name="amount"
                                     //label="IMPORTE DEL PRODUCTO A COMPRAR"
-                                    placeholder="INGRESE EL VALOR DE LA COMPRA"
+                                    placeholder="¿CUÁNTO CUESTA? "
                                     keyboardType="numeric"
                                     required
                                     inputStyle={styles.buyInputText}

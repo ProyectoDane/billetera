@@ -74,7 +74,7 @@ const Profile = ({navigation, route}) => {
                       text={user.name.toUpperCase()}
                       onFinish={changeName}
                       placeholder={labels.insertName}
-                      style={styles.name}
+                      style={{...styles.name, fontSize: 25,}}
                   />
 
                   {user.photo ? (

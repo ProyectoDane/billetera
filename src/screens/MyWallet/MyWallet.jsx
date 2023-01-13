@@ -39,7 +39,7 @@ export default function MyWallet() {
             <CardSection>
               <View style={flexrow}>
                 <SvgWallet style={svgicon} />
-                <CardText>total billetera</CardText>
+                <CardText>En billetera</CardText>
               </View>
               <Amount>{totalMoneyWallet}</Amount>
             </CardSection>

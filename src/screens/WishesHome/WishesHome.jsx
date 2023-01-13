@@ -26,12 +26,7 @@ const WishesHome = ({navigation, route}) => {
                                           color={colors.primary}/>
                         </View>
                         <View style={{flex: 1, flexGrow: 1,}}>
-                            <Text style={{color: colors.primary}}>PARA CALCULAR
-                                EL
-                                SALDO DE CADA DESEO SE CONSIDERA EL TOTAL
-                                DE <Text
-                                    style={{fontWeight: 'bold'}}>MIS
-                                    AHORROS</Text></Text>
+                            <Text style={{color: colors.primary}}>TUS AHORROS SIRVEN PARA PAGAR TUS DESEOS</Text>
                         </View>
                     </View>
                 </View>
