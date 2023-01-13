@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, StatusBar, Text, useWindowDimensions, View} from 'react-native';
+import {SafeAreaView, StatusBar, Text, useWindowDimensions} from 'react-native';
 
 import OnboardSlide from '../../components/OnboardSlide';
 
@@ -9,9 +9,6 @@ import styles from './styles'
 import Pic01 from './assets/pic01.svg';
 import Pic02 from './assets/pic02.svg';
 import Pic03 from './assets/pic03.svg';
-
-import SvgWallet from '../HomeScreen/SvgWallet';
-import SvgPiggyBank from '../HomeScreen/SvgPiggyBank';
 import {FontAwesome5} from "@expo/vector-icons";
 
 const Onboarding = (props) => {
