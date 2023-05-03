@@ -2,7 +2,7 @@
   "expo": {
     "name": "Como Pago",
     "slug": "dane_billetera_JS",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "orientation": "portrait",
     "icon": "./assets/favicon.png",
     "splash": {
@@ -27,8 +27,8 @@
       "bundleIdentifier": "com.dane.comopago"
     },
     "android": {
-      "package": "com.dane.comopago",
-      "versionCode": 3,
+      "package": "com.dane",
+      "versionCode": 5,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
