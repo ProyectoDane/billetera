@@ -16,6 +16,8 @@ import Sarmiento from '../../assets/billetes/50Sarmiento.png';
 import Eva from '../../assets/billetes/20Rosas.png';
 import Roca1 from '../../assets/billetes/100RocaV1.png';
 import Roca2 from '../../assets/billetes/100RocaV2.png';
+import GriersomCarrillo from '../../assets/billetes/2000GRIERSOM-CARRILLO.png';
+import SanMartin from '../../assets/billetes/1000SanMartin.png';
 
 import Malvinas from '../../assets/billetes/50Malvinas.png';
 
@@ -57,6 +59,8 @@ export const PERSON_BILL = {
   EVA_100: Eva,
   ROCA_VIEJO_100: Roca1,
   ROCA_NUEVO_100: Roca2,
+  GRIERSOMCARRILLO_2000: GriersomCarrillo,
+  SAN_MARTIN_1000: SanMartin,
 };
 export const PLACES_BILL = {
   MALVINAS_50: Malvinas,
