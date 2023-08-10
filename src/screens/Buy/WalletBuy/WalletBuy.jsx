@@ -4,10 +4,9 @@ import {deleteMoneyWallet, getDineroWallet} from '../../../dataAccess/Wallet';
 import {AddRemoveContext} from '../../AddRemove/AddRemoveContext';
 import {SCREEN_NAME} from '../../../constants';
 import {ManualPaymentContext} from '../../AddRemove/ManualPaymentContext';
-import BuyBaseScreen from "../BuyBaseScreen/BuyBaseScreen";
+import BuyBaseScreen from '../BuyBaseScreen/BuyBaseScreen';
 
 const WalletBuy = () => {
-
   const navigation = useNavigation();
 
   const {
@@ -20,7 +19,7 @@ const WalletBuy = () => {
     initialBillsMoneyWallet,
   } = useContext(AddRemoveContext);
 
-  const { setTotalPaymentWallet } = useContext(ManualPaymentContext);
+  const {setTotalPaymentWallet} = useContext(ManualPaymentContext);
 
   const handleManualPay = (amount) => {
     setTotalPaymentWallet(amount);
@@ -28,18 +27,18 @@ const WalletBuy = () => {
   };
 
   return (
-      <BuyBaseScreen
-          setActualTotal={setActualMoneyWallet}
-          setTotalMoneyWallet={setTotalMoneyWallet}
-          totalMoneyWallet={totalMoneyWallet}
-          setInitialCoinsMoneyWallet={setInitialCoinsMoneyWallet}
-          setInitialBillsMoneyWallet={setInitialBillsMoneyWallet}
-          initialCoinsMoneyWallet={initialCoinsMoneyWallet}
-          initialBillsMoneyWallet={initialBillsMoneyWallet}
-          getDineroWallet={getDineroWallet}
-          deleteMoneyWallet={deleteMoneyWallet}
-          handleManualPay={handleManualPay}
-      />
+    <BuyBaseScreen
+      setActualTotal={setActualMoneyWallet}
+      setInitialTotal={setTotalMoneyWallet}
+      initialTotal={totalMoneyWallet}
+      setInitialCoins={setInitialCoinsMoneyWallet}
+      setInitialBills={setInitialBillsMoneyWallet}
+      initialCoins={initialCoinsMoneyWallet}
+      initialBills={initialBillsMoneyWallet}
+      getDinero={getDineroWallet}
+      deleteMoney={deleteMoneyWallet}
+      handleManualPay={handleManualPay}
+    />
   );
 };
 

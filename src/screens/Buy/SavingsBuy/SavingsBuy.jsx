@@ -3,12 +3,9 @@ import {useNavigation} from '@react-navigation/native';
 
 import {ManualPaymentContext} from '../../AddRemove/ManualPaymentContext';
 import {AddRemoveContext} from '../../AddRemove/AddRemoveContext';
-import {
-  deleteMoneySaving,
-  getDineroSaving,
-} from '../../../dataAccess/Savings';
+import {deleteMoneySaving, getDineroSaving} from '../../../dataAccess/Savings';
 import {SCREEN_NAME} from '../../../constants';
-import BuyBaseScreen from "../BuyBaseScreen/BuyBaseScreen";
+import BuyBaseScreen from '../BuyBaseScreen/BuyBaseScreen';
 
 const SavingsBuy = () => {
   const navigation = useNavigation();
@@ -23,7 +20,7 @@ const SavingsBuy = () => {
     initialBillsMoneySavings,
   } = useContext(AddRemoveContext);
 
-  const { setTotalPaymentSavings } = useContext(ManualPaymentContext);
+  const {setTotalPaymentSavings} = useContext(ManualPaymentContext);
 
   const handleManualPay = (amount) => {
     setTotalPaymentSavings(amount);
@@ -31,18 +28,18 @@ const SavingsBuy = () => {
   };
 
   return (
-      <BuyBaseScreen
-          setActualTotal={setActualMoneySavings}
-          setTotalMoneyWallet={setTotalMoneySavings}          
-          totalMoneyWallet={totalMoneySavings}
-          setInitialCoinsMoneyWallet={setInitialCoinsMoneySavings}
-          setInitialBillsMoneyWallet={setInitialBillsMoneySavings}
-          initialCoinsMoneyWallet={initialCoinsMoneySavings}
-          initialBillsMoneyWallet={initialBillsMoneySavings}
-          getDineroWallet={getDineroSaving}
-          deleteMoneyWallet={deleteMoneySaving}
-          handleManualPay={handleManualPay}
-      />
+    <BuyBaseScreen
+      setActualTotal={setActualMoneySavings}
+      setInitialTotal={setTotalMoneySavings}
+      initialTotal={totalMoneySavings}
+      setInitialCoins={setInitialCoinsMoneySavings}
+      setInitialBills={setInitialBillsMoneySavings}
+      initialCoins={initialCoinsMoneySavings}
+      initialBills={initialBillsMoneySavings}
+      getDinero={getDineroSaving}
+      deleteMoney={deleteMoneySaving}
+      handleManualPay={handleManualPay}
+    />
   );
 };
 

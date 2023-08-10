@@ -14,9 +14,9 @@ import Card from '../../../components/Card/Card';
 import CardSection from '../../../components/Card/CardSection';
 import CardText from '../../../components/Card/CardText';
 import Amount from '../../../components/Amount/Amount';
-import SvgCash from "../../MyWallet/SvgCash";
-import SvgBills from "../../MyWallet/SvgBills";
-import SvgWallet from "../../HomeScreen/SvgWallet";
+import SvgCash from '../../MyWallet/SvgCash';
+import SvgBills from '../../MyWallet/SvgBills';
+import SvgWallet from '../../HomeScreen/SvgWallet';
 
 export default function AddRemove({
   navigation,
@@ -43,7 +43,7 @@ export default function AddRemove({
     onSave();
   };
 
-  const isWallet = title.indexOf("AHORROS") > -1 ? false: true;
+  const isWallet = title.indexOf('AHORROS') > -1 ? false : true;
 
   const handleDiscard = (action) => {
     setActualTotal(initialTotal);
@@ -51,7 +51,6 @@ export default function AddRemove({
     setActualCoins(initialCoins);
     navigation.dispatch(action);
   };
-
 
   //Check for dirty changes before exiting
   useEffect(() => {
@@ -77,8 +76,6 @@ export default function AddRemove({
     [initialTotal],
   );
 
-
-
   const svgicon = {width: 58, aspectRatio: 1 / 1, marginRight: 12};
   const svgTabicon = {width: 30, aspectRatio: 1 / 1, marginRight: 0};
   const flexrow = {flex: 1, flexDirection: 'row', alignItems: 'center'};
@@ -97,9 +94,7 @@ export default function AddRemove({
       <Card containerStyle={{flex: 0.9, maxHeight: 100}}>
         <CardSection>
           <View style={flexrow}>
-            { isWallet ? (
-            <SvgWallet style={svgicon} />) :
-                (<SvgPiggyBank style={svgicon} />)}
+            {isWallet ? <SvgWallet style={svgicon} /> : <SvgPiggyBank style={svgicon} />}
             <CardText>{title}</CardText>
           </View>
           <Amount>{actualTotal}</Amount>
