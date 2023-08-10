@@ -30,7 +30,7 @@ const BuyBaseScreen = ({
   deleteMoney,
   handleManualPay,
 }) => {
-  const {setPurchase} = useContext(AddRemoveContext);
+  const {setPurchase, forceRefresh} = useContext(AddRemoveContext);
   const [valueBuy, setValueBuy] = useState();
   const [optionBill, setOptionBill] = useState('');
   const [optPay, setOptPay] = useState();
@@ -130,6 +130,7 @@ const BuyBaseScreen = ({
       setInitialTotal(initialTotal - substract);
       setActualTotal(initialTotal - substract);
       setPurchase(true);
+      forceRefresh();
       navigation.navigate(SCREEN_NAME.HOME);
 
       vuelto
