@@ -15,21 +15,31 @@ const AddRemoveMoney = ({money, setActual, setTotal, isPayment = false, kind = '
     setMoneyMap(moneyDict);
   }, [money]);
 
-  const handleAdd = useCallback((key, amount) => {
-    setMoneyMap((prevMoney) => ({...prevMoney, [key]: prevMoney[key] + 1}));
-    setActual((prevMoney) =>
-      prevMoney.map((item) => (item.image === key ? {...item, quantity: item.quantity + (isPayment ? -1 : 1)} : item)),
-    );
-    setTotal((prevTotal) => prevTotal + (isPayment ? -amount : amount));
-  }, []);
+  const handleAdd = useCallback(
+    (key, amount) => {
+      setMoneyMap((prevMoney) => ({...prevMoney, [key]: prevMoney[key] + 1}));
+      setActual((prevMoney) =>
+        prevMoney.map((item) =>
+          item.image === key ? {...item, quantity: item.quantity + (isPayment ? -1 : 1)} : item,
+        ),
+      );
+      setTotal((prevTotal) => prevTotal + (isPayment ? -amount : amount));
+    },
+    [setActual, setTotal],
+  );
 
-  const handleSub = useCallback((key, amount) => {
-    setMoneyMap((prevMoney) => ({...prevMoney, [key]: prevMoney[key] - 1}));
-    setActual((prevMoney) =>
-      prevMoney.map((item) => (item.image === key ? {...item, quantity: item.quantity + (isPayment ? 1 : -1)} : item)),
-    );
-    setTotal((prevTotal) => prevTotal + (isPayment ? amount : -amount));
-  }, []);
+  const handleSub = useCallback(
+    (key, amount) => {
+      setMoneyMap((prevMoney) => ({...prevMoney, [key]: prevMoney[key] - 1}));
+      setActual((prevMoney) =>
+        prevMoney.map((item) =>
+          item.image === key ? {...item, quantity: item.quantity + (isPayment ? 1 : -1)} : item,
+        ),
+      );
+      setTotal((prevTotal) => prevTotal + (isPayment ? amount : -amount));
+    },
+    [setActual, setTotal],
+  );
 
   const kindAsText = kind == 'bills' ? 'BILLETES' : 'MONEDAS';
 
