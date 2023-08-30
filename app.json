@@ -38,7 +38,16 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 33,
+            "targetSdkVersion": 33,
+            "buildToolsVersion": "33.0.0"
+          }
+        }
+      ]
     ],
     "description": "",
     "extra": {
