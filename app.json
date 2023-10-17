@@ -24,7 +24,11 @@
     "ios": {
       "supportsTablet": true,
       "icon": "./assets/favicon_white.png",
-      "bundleIdentifier": "com.dane.comopago"
+      "bundleIdentifier": "com.dane.comopago",
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses the camera to take your profile picture.",
+        "NSPhotoLibraryUsageDescription": "You need to provide photo album access to choose a profile picture."
+      }
     },
     "android": {
       "package": "com.dane",
