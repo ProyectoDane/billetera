@@ -3,7 +3,6 @@ import {colors} from '../../../constants';
 import {formatNum} from '../../../utils/functions/formatNum';
 import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
 import AddRemoveMoney from '../AddRemoveMoneyV2/AddRemoveMoney';
-import {FontAwesome5} from '@expo/vector-icons';
 import {styles as commonStyles} from '../commonAddRemoveStyles';
 import {default as cardStyles} from '../../../components/Card/styles';
 import {styles as itemWishStyles} from './../../MyWishes/components/ItemWish/styles';
