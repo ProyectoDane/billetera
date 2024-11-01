@@ -1,6 +1,7 @@
 import React from 'react';
 import { Image } from 'react-native';
 
+import _10000RemediosBelgrano from '../../../../../assets/billetes/10000RemediosBelgrano.png';
 import _2000GRIERSOM_CARRILLO from '../../../../../assets/billetes/2000GRIERSOM-CARRILLO.png';
 import _1000SanMartin from '../../../../../assets/billetes/1000SanMartin.png';
 import _1000Hornero from '../../../../../assets/billetes/1000Hornero.png';
@@ -31,6 +32,7 @@ import _5CentavosBronce from '../../../../../assets/monedas/5CentavosBronce.png'
 import _5CentavosPlata from '../../../../../assets/monedas/5CentavosPlata.png';
 
 const imageMap = {
+  '10000RemediosBelgrano.png': _10000RemediosBelgrano,
   '2000GRIERSOM-CARRILLO.png': _2000GRIERSOM_CARRILLO,
   '1000SanMartin.png': _1000SanMartin,
   '1000Hornero.png': _1000Hornero,
