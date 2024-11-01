@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View } from 'react-native';
 import PropTypes from 'prop-types';
 import Animated, {
@@ -17,21 +17,17 @@ const AnimatedBox = ({ open = false, children }) => {
       duration: 250,
       easing: Easing.inOut(Easing.ease),
     });
-  }, [open, layoutHeight, height]);
+  }, [open, layoutHeight]);
 
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      height: height.value,
-    };
-  });
+  const animatedStyle = useAnimatedStyle(() => ({ height: height.value }));
+
+  const onLayout = useCallback((event) => setLayoutHeight(event.nativeEvent.layout.height),[]);
 
   return (
     <Animated.View style={[{ overflow: 'hidden' }, animatedStyle]}>
       <View
+        onLayout={onLayout}
         style={{ position: 'absolute', top: 0, left: 0, right: 0 }}
-        onLayout={(event) => {
-          setLayoutHeight(event.nativeEvent.layout.height);
-        }}
       >
         {children}
       </View>

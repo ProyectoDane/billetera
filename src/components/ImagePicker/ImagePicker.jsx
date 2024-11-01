@@ -62,7 +62,7 @@ const ImagePicker = ({setImage}) => {
                         onPress={pickImage}
                         backgroundColor={colors.primary}
                     />
-                    <Text style={styles.text}>GALERIA</Text>
+                    <Text style={styles.text}>GALERÍA</Text>
                 </View>
                 <View>
                     <IconButton
