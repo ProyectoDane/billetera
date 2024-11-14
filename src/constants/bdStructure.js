@@ -22,6 +22,7 @@ export const queryInsertMoney = [
   'INSERT INTO Money (image, amount, isCoins) SELECT "1000SanMartin.png", 1000, 0 WHERE NOT EXISTS(SELECT 1 FROM Money WHERE image = "1000SanMartin.png");',
   'INSERT INTO Money (image, amount, isCoins) SELECT "1000Hornero.png", 1000, 0 WHERE NOT EXISTS(SELECT 1 FROM Money WHERE image = "1000Hornero.png");',
   'INSERT INTO Money (image, amount, isCoins) SELECT "2000GRIERSOM-CARRILLO.png", 2000, 0 WHERE NOT EXISTS(SELECT 1 FROM Money WHERE image = "2000GRIERSOM-CARRILLO.png");',
+  'INSERT INTO Money (image, amount, isCoins) SELECT "10000RemediosBelgrano.png", 10000, 0 WHERE NOT EXISTS(SELECT 1 FROM Money WHERE image = "10000RemediosBelgrano.png");',
   'INSERT INTO Money (image, amount, isCoins) SELECT "1Jacaranda.png", 1, 1 WHERE NOT EXISTS(SELECT 1 FROM Money WHERE image = "1Jacaranda.png");',
   'INSERT INTO Money (image, amount, isCoins) SELECT "1Sol.png", 1, 1 WHERE NOT EXISTS(SELECT 1 FROM Money WHERE image = "1Sol.png");',
   'INSERT INTO Money (image, amount, isCoins) SELECT "2Independencia.png", 2, 1 WHERE NOT EXISTS(SELECT 1 FROM Money WHERE image = "2Independencia.png");',

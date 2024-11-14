@@ -13,7 +13,7 @@ import {styles as WishesStyles} from "../WishesHome/styles";
 
 const flexrow = {flex: 1, flexDirection: 'row', alignItems: 'center'};
 
-const SwitchUser = ({navigation, route}) => {
+const SwitchUser = ({ navigation }) => {
 
     const [users, setUsers] = useState([]);
 

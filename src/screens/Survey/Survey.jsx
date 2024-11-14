@@ -16,22 +16,23 @@ import {AddRemoveContext} from "../AddRemove/AddRemoveContext";
 const Survey = ({ navigation, route }) => {
   const {currentUser} = useContext(AddRemoveContext);
 
-  const [firstTime, setFirstTime] = useState(!!route?.params?.firstTime);
-  const [fromTour, setFromTour] = useState(!!route?.params?.fromTour);
+  const fromTour = !!route?.params?.fromTour;
+  const firstTime = !!route?.params?.firstTime;
   const [done, setDone] = useState(false);
   const isFocused = useIsFocused();
 
 
   useEffect(()=> {
-    console.log(fromTour)
-    const unsuscribe = navigation.addListener('blur', (e) => {
+    const unsubscribe = navigation.addListener('blur', () => {
       if (fromTour) {
         navigation.popToTop();
         navigation.navigate(SCREEN_NAME.HOME);
       }
     });
-    return unsuscribe;
-  },[navigation]);
+    return () => {
+      unsubscribe();
+    };
+  }, [navigation]);
 
   useEffect(() => {
     const init = async () => {
@@ -108,7 +109,7 @@ const Survey = ({ navigation, route }) => {
             if (navState.canGoBack) {
               refWebView.current.stopLoading();
               setDone(true);
-              setFirstTime(true);
+              navigation.setParams({ firstTime: true });
             }
           }}
         />
