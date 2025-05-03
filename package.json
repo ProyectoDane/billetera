@@ -12,7 +12,8 @@
     "test:update": "jest --verbose --coverage --updateSnapshot",
     "test:watch": "jest --verbose --watch",
     "test:coverage:watch": "jest --verbose --watch --coverage",
-    "test:coverage": "jest --verbose --coverage && open ./coverage/lcov-report/index.html"
+    "test:coverage": "jest --verbose --coverage && open ./coverage/lcov-report/index.html",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@expo/metro-config": "~0.18.11",
@@ -26,12 +27,14 @@
     "expo": "^51.0.38",
     "expo-build-properties": "~0.12.5",
     "expo-device": "~6.0.2",
-    "expo-error-recovery": "~4.0.1",
-    "expo-image-picker": "~15.0.7",
+    "expo-error-recovery": "^4.1.1",
+    "expo-font": "~12.0.10",
+    "expo-image-picker": "~15.1.0",
     "expo-linear-gradient": "~13.0.2",
     "expo-splash-screen": "~0.27.6",
     "expo-sqlite": "~14.0.6",
     "expo-updates": "~0.25.27",
+    "patch-package": "^8.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.39.3",
@@ -49,8 +52,7 @@
     "react-native-tab-view": "^3.3.0",
     "react-native-web": "~0.19.10",
     "react-native-webview": "13.8.6",
-    "yup": "^1.2.0",
-    "expo-font": "~12.0.10"
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
