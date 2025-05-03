@@ -2,7 +2,7 @@
   "expo": {
     "name": "Como Pago",
     "slug": "dane_billetera_JS",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "orientation": "portrait",
     "icon": "./assets/favicon.png",
     "splash": {
@@ -46,7 +46,8 @@
             "buildToolsVersion": "35.0.0"
           }
         }
-      ]
+      ],
+      "expo-font"
     ],
     "description": "",
     "extra": {
