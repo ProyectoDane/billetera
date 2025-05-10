@@ -1,111 +1,15 @@
-import { executeSelect, executeQuery2 } from '../db/queries';
+import {deleteDinero, getDinero, insertDinero} from "./dineroBase";
 
-export const getTotalWallet = async (userId = 1) => {
-  let money = [];
-  try {
-    const result = await executeSelect(
-      `SELECT * FROM Wallet WHERE userId = ${userId}`,
-    );
+const TABLE_NAME = 'Wallet';
 
-    if (result.length === 0) {
-      return [];
-    }
-
-    for (let i = 0; i < result.length; i++) {
-      money.push(result.item(i));
-    }
-
-    return money;
-  } catch (err) {
-    console.log('Error: ', err);
-  }
+export const getDineroWallet = async (money_id = 1) => {
+  return getDinero(TABLE_NAME, money_id);
 };
 
-export const getDineroWallet = async (userId = 1) => {
-  let money = [];
-  let query = `SELECT * FROM Wallet w JOIN Money m ON w.moneyId = m.id WHERE w.userId =?`;
-
-  try {
-    let result = await executeQuery2(query, [userId]);
-
-    if (result.rows.length === 0) {
-      return [];
-    }
-
-    for (let i = 0; i < result.rows.length; i++) {
-      money.push(result.rows.item(i));
-    }
-
-    return money;
-  } catch (err) {
-    console.log('Error: ', err);
-  }
+export const insertMoneyToWallet = async (    user_id = 1,    money_id = 2,    quantity = 1) => {
+  return insertDinero(TABLE_NAME, user_id, money_id, quantity);
 };
 
-export const insertMoneyToWallet = async (
-  user_id = 1,
-  //TODO: pasarlo por UI
-  money_id = 2,
-  quantity = 1,
-) => {
-  try {
-    let queryExists = `SELECT * FROM Wallet WHERE userId =? AND moneyId =?`;
-
-    let queryParams = [user_id, money_id];
-
-    let existsResult = await executeQuery2(queryExists, queryParams);
-
-    if (existsResult.rows.length) {
-      // UPDATE
-      let query = `UPDATE Wallet SET quantity = quantity + ? WHERE userId =? AND moneyId =?`;
-      let insertMoney = await executeQuery2(query, [
-        quantity,
-        user_id,
-        money_id,
-      ]);
-
-      return insertMoney;
-    } else {
-      let query = `INSERT INTO Wallet (userId, moneyId, quantity) VALUES (${user_id},${money_id},${quantity})`;
-      let insertMoney = await executeQuery2(query);
-
-      return insertMoney;
-    }
-  } catch (err) {
-    console.log('Error: ', err);
-  }
-};
-
-export const deleteMoneyWallet = async (
-  user_id = 1,
-  //TODO: pasarlo por UI
-  money_id = 2,
-  quantity = 1,
-) => {
-  try {
-    let queryExists = `SELECT * FROM Wallet WHERE userId =? AND moneyId =?`;
-
-    let queryParams = [user_id, money_id];
-
-    let existsResult = await executeQuery2(queryExists, queryParams);
-
-    if (existsResult.rows._array[0].quantity === quantity) {
-      // UPDATE
-      let query = `DELETE FROM Wallet WHERE userId =? AND moneyId =?`;
-      let insertMoney = await executeQuery2(query, [user_id, money_id]);
-
-      return insertMoney;
-    } else {
-      let query = `UPDATE Wallet SET quantity = quantity - ? WHERE userId =? AND moneyId =?`;
-      let insertMoney = await executeQuery2(query, [
-        quantity,
-        user_id,
-        money_id,
-      ]);
-
-      return insertMoney;
-    }
-  } catch (err) {
-    console.log('Error: ', err);
-  }
+export const deleteMoneyWallet = async (    user_id = 1,    money_id = 2,     quantity = 1) => {
+  return deleteDinero(TABLE_NAME, user_id, money_id, quantity);
 };

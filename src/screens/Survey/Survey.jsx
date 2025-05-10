@@ -97,7 +97,7 @@ const Survey = ({ navigation, route }) => {
           testID="survey-web-view"
           ref={refWebView}
           startInLoadingState={true}
-          onError={renderScreenAgain(
+          onError={(event)=> renderScreenAgain(
             labels.surveyScreen.error,
             labels.surveyScreen.again,
           )}

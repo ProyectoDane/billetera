@@ -59,7 +59,7 @@ const Onboarding = (props) => {
   return (
         <SafeAreaView style={styles.container}>
           <StatusBar hidden />
-          <OnboardSlide slides={slides} {...props} />
+           <OnboardSlide slides={slides} {...props} />
         </SafeAreaView>
   );
 };

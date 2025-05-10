@@ -1,17 +1,12 @@
-import { executeSelect, executeQuery } from '../db/queries';
-// import { Wish } from '../models/Wish';
+import {executeQuery3, executeSelect} from '../db/queries';
 
 export const getAllWish = async (done, userId = 1) => {
   let wishes = [];
   try {
-    const result = await executeSelect(
-      `SELECT * FROM wish WHERE userId = ${userId} and done = ${
-        done ? '1' : '0'
-      }`,
-    );
+    const result = await executeSelect(`SELECT * FROM wish WHERE userId = ${userId} and done = ${done ? '1' : '0'}`,[]);
 
-    if (result._array && result._array.length > 0) {
-      wishes = result._array;
+    if (result.length > 0) {
+      wishes = result;
     }
   } catch (err) {
     console.log('Error: ', err);
@@ -39,13 +34,9 @@ export const getWishById = async (wishId) => {
 
 export const insertWish = async (wish) => {
   try {
-    void (await executeQuery([
-      `INSERT INTO wish (name, value, icon, done, userId) VALUES ('${
-        wish.name
-      }', ${wish.value}, '${wish.icon}', ${wish.done ? 1 : 0}, ${
-        wish.userId
-      });`,
-    ]));
+    await executeQuery3(
+        `INSERT INTO wish (name, value, icon, done, userId) VALUES (?, ?, ?, ?, ?);`,
+        [wish.name, wish.value, wish.icon, wish.done ? 1 : 0, wish.userId]);
   } catch (err) {
     console.log('Error: ', err);
   }
@@ -53,9 +44,7 @@ export const insertWish = async (wish) => {
 
 export const fulfillWish = async (wishId) => {
   try {
-    void (await executeQuery([
-      `UPDATE wish SET done = 1 WHERE id = ${wishId}`,
-    ]));
+    await executeQuery3(`UPDATE wish SET done = 1 WHERE id = ?`,    [wishId]);
   } catch (err) {
     console.log('Error: ', err);
   }
@@ -63,9 +52,9 @@ export const fulfillWish = async (wishId) => {
 
 export const updateWish = async (wish) => {
   try {
-    void (await executeQuery([
-      `UPDATE wish SET name = '${wish.name}', value = ${wish.value}, icon='${wish.icon}' WHERE id = ${wish.id}`,
-    ]));
+    void (await executeQuery3(
+      `UPDATE wish SET name = ?, value = ?, icon= ? WHERE id = ?`,
+    [wish.name, wish.value, wish.icon, wish.id]));
   } catch (err) {
     console.log('Error: ', err);
   }
@@ -73,7 +62,7 @@ export const updateWish = async (wish) => {
 
 export const deleteWish = async (wishId) => {
   try {
-    void (await executeQuery([`DELETE FROM wish WHERE id = ${wishId}`]));
+    await executeQuery3(`DELETE FROM wish WHERE id = ?`,[wishId]);
   } catch (err) {
     console.log('Error: ', err);
   }

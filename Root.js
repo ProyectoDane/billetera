@@ -21,7 +21,7 @@ const Root = () => {
 
   useEffect(() => {
     if (currentUserId) {
-      getMoney(context);
+      getMoney(context).then(()=>{ console.log("Get money from db done!"); });
     }
   }, [currentUserId, forceRefresh]);
 
@@ -39,8 +39,10 @@ const Root = () => {
       }
     }
 
-    firstLoad();
+    firstLoad().then();
   }, []);
+
+
 
   const onLayoutRootView = useCallback(() => {
     SplashScreen.hideAsync();
@@ -49,8 +51,8 @@ const Root = () => {
   if (!appIsReady) return null;
   return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <AppNavigation />
-      <FlashMessage position="top" />
+        <AppNavigation />
+        <FlashMessage position="top" />
     </View>
   );
 };

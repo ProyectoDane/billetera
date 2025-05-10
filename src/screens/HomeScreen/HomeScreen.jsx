@@ -154,6 +154,7 @@ const HomeScreen = ({ navigation }) => {
                 </CardSection>
             </Card>
         </View>
+        {/*<Button title="Press me" onPress={() => { throw new Error('Hello, again, Sentry!'); }}/>*/}
     </ScrollView>
   );
 };

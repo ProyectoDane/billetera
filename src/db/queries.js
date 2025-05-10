@@ -1,98 +1,70 @@
 // import { getPendingResultAsync } from 'expo-image-picker';
-import * as SQLite from 'expo-sqlite/legacy';
+import * as SQLite from 'expo-sqlite';
 import {
   queryCreateTables,
   queryInsertMoney,
   queryInsertUser
 } from '../constants/bdStructure';
 
-export const db = SQLite.openDatabase('db.DaneWallet');
+// export const db = SQLite.openDatabaseSync('db.DaneWallet');
+//const db = await SQLite.openDatabaseAsync('db.DaneWallet');
+//const db = null; //await SQLite.openDatabaseAsync('db.DaneWallet');
+let db = null;
 
-export const executeQuery2 = async (query, params) =>
-  new Promise((resolve, reject) => {
-        db.transaction((tx) => {
-          tx.executeSql(
-            query,
-            params,
-            (tx, results) => resolve(results),
-            (_, err) => {
-              reject(err);
-              return false;
-            }
-          );
-        })
-  });
-
-export const insertQuery = async(query, params) => {
-        return db.transaction((tx) => {
-          return tx.executeSql(
-            query,
-            params,
-            (tx,results) => {
-              if (results.rowsAffected > 0) {
-                console.log('Data Inserted Successfully....');
-              } else console.log('Failed....');
-
-              return results
-            }
-          );
-        })
-  };
+/**
+ * Usar para INSERT, UPDATE, DELETE
+ * @param query
+ * @param params
+ * @returns {Promise<*>}
+ */
+export const executeQuery3 = async (query, params) => {
+    // console.log('executeQuery3: ', query, "params:",  params);
+    db.runAsync(query, params);
+}
 
 
-export const executeQuery = async (querys) =>
-  new Promise((resolve, reject) => {
-    querys.length > 0
-      ? db.transaction((tx) => {
-          tx.executeSql(
-            querys[0],
-            [],
-            () => {
-              querys.shift();
-              resolve(executeQuery(querys));
-            },
-            (_, err) => {
-              reject(err);
-              return false;
-            }
-          );
-        })
-      : resolve('');
-  });
+export const executeInitQuery = async (queries) => {
+    if (db === null) { console.log('db is null'); }
+    queries = queries || [];
+    // console.log(`Executing init querys: ${queries.length}`);
+    for (let i = 0; i < queries.length; i++) {
+        //console.log(`Executing query: ${queries[i]}`);
+        await db.execAsync(queries[i]);
+    }
+};
 
-export const executeSelect = async (querys)=>
-  new Promise((resolve, reject) => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        querys,
-        [],
-        (_, { rows }) => {
-          resolve(rows);
-        },
-        (_, err) => {
-          console.log('ERROR', err);
-          reject(err);
+export const executeSelectForSingle = async (query, params)=>
+    // console.log(`executeSelectForSingle: ${query}, ${params}`) ||
+    db.getFirstAsync(query, params);
 
-          return false;
-        }
-      );
-    });
-  });
+
+/**
+ * Para SQL del tipo SELECT solamente...
+ * @param query
+ * @param params
+ * @returns {Promise<*>}
+ */
+export const executeSelect = async (query, params)=>
+    db.getAllAsync(query, params);
 
 export const initialization = async () => {
+    db = await SQLite.openDatabaseAsync('db.DaneWallet');
+    global.db = db;
+    // console.log('db: ', db);
   try {
-    await executeQuery(queryCreateTables);
+    await executeInitQuery(queryCreateTables);
   } catch (err) {
-    console.log('Error: ', err);
+    console.log('Error queryCreateTables: ', err);
   }
   try {
-    await executeQuery(queryInsertMoney);
+    await executeInitQuery(queryInsertMoney);
   } catch (err) {
-    console.log('Error: ', err);
+    console.log('Error queryInsertMoney: ', err);
   }
   try {
-    await executeQuery(queryInsertUser);
+    await executeInitQuery(queryInsertUser);
   } catch (err) {
-    console.log('Error: ', err);
+    console.log('Error queryInsertUser: ', err);
   }
+  console.log("db initialization done!");
 };

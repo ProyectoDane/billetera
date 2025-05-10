@@ -11,13 +11,17 @@ async function innerGetMoney(isCoin = 0) {
         const result = await executeSelect(
             `SELECT *
              FROM Money
-             WHERE isCoins = ${isCoin}
+             WHERE isCoins = ?
              ORDER BY amount DESC, id DESC`,
-        );
+        [isCoin]);
+
+        //console.log(`innerGetMoney -> result = ${result}`)
 
         for (let i = 0; i < result.length; i++) {
-            let item = result.item(i);
+            let item = result[i];
             const {id, amount, image, isCoins: isCoin} = item;
+
+            // console.log(`innerGetMoney -> item = ${JSON.stringify(item)}`)
 
             money.push({
                 id,
@@ -30,6 +34,7 @@ async function innerGetMoney(isCoin = 0) {
     } catch (err) {
         console.log('Error: ', err);
     }
+    // console.log(`innerGetMoney done! -> isCoin = ${isCoin}`)
     return money;
 }
 

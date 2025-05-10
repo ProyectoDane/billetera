@@ -1,19 +1,24 @@
 import React from 'react';
 import Root from './Root';
 
-import { AddRemoveProvider } from './src/screens/AddRemove/AddRemoveContext';
-import { ManualPaymentProvider } from './src/screens/AddRemove/ManualPaymentContext';
-import * as ErrorRecovery from "expo-error-recovery";
+import {AddRemoveProvider} from './src/screens/AddRemove/AddRemoveContext';
+import {ManualPaymentProvider} from './src/screens/AddRemove/ManualPaymentContext';
+import ErrorBoundary from './src/components/ErrorBoundary/ErrorBoundary';
+//import * as ErrorRecovery from "expo-error-recovery";
 // import * as Sentry from 'sentry-expo';
 
 const defaultErrorHandler = ErrorUtils.getGlobalHandler();
 
-const globalErrorHandler = (err, isFatal) => {
-    console.log("globalErrorHandler called!");
-    ErrorRecovery.setRecoveryProps({ info: err });
-    console.log(JSON.stringify(err, null, 2));
-    defaultErrorHandler(err, isFatal);
-};
+// const globalErrorHandler = (err, isFatal) => {
+//     console.log("globalErrorHandler called!");
+//     ErrorRecovery.setRecoveryProps({ info: err,
+//         onError: (error) => {
+//             console.error("Un error ocurrió:", error);
+//             // Aquí puedes manejar el error, por ejemplo, guardarlo o mostrar una pantalla de error
+//         }});
+//     console.log(JSON.stringify(err, null, 2));
+//     defaultErrorHandler(err, isFatal);
+// };
 
 
 // Sentry.init({
@@ -30,13 +35,15 @@ const globalErrorHandler = (err, isFatal) => {
 
 // ErrorUtils.setGlobalHandler(globalErrorHandler);
 
-const App = ({ exp }) => {
-  return (
-    <AddRemoveProvider>
-      <ManualPaymentProvider>
-        <Root />
-      </ManualPaymentProvider>
-    </AddRemoveProvider>
-  );
+const App = ({exp}) => {
+    return (
+        <ErrorBoundary>
+            <AddRemoveProvider>
+                <ManualPaymentProvider>
+                    <Root/>
+                </ManualPaymentProvider>
+            </AddRemoveProvider>
+        </ErrorBoundary>
+    );
 };
 export default App;
